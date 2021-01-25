@@ -1,2 +1,2 @@
-# ohjelmistoprojekti
+# Ohjelmistoprojekti
 Ohjelmistoprojekti kurssin repository
