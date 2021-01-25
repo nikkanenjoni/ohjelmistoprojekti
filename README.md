@@ -16,6 +16,8 @@ Ohjelmistoprojekti kurssin repository
 
 ## Työjonot
 
+Jonossa on featureita, joista tärkein ensimmäisenä, toisiksi tärkein toisena jne. Featureita toteutetaan jonosta tärkein-ensin -periaatteella. 
+
 ## Roolit
 
 ## Kokoukset
