@@ -27,9 +27,15 @@ Jonossa on featureita, joista tärkein ensimmäisenä, toisiksi tärkein toisena
 
 ## Git
 
-Ota ensin klooni repositorysta omalle koneellesi: `git clone git@github.com:nikkanenjoni/ohjelmistoprojekti.git` 
+Ota ensin klooni repositorysta omalle koneellesi: 
+```
+git clone git@github.com:nikkanenjoni/ohjelmistoprojekti.git
+``` 
 
-Jos et ole tehnyt SSH-avaimia ja laittanut niitä github-tilillesi, joudut käyttämään https-protokollaa gitin kanssa. Valitettavasti sen tuki ollaan tosin poistamassa, eli suosittelen tekemään avaimet. Http-protokollalla: `https://github.com/nikkanenjoni/ohjelmistoprojekti.git`
+Jos et ole tehnyt SSH-avaimia ja laittanut niitä github-tilillesi, joudut käyttämään https-protokollaa gitin kanssa. Valitettavasti sen tuki ollaan tosin poistamassa, eli suosittelen tekemään avaimet. Http-protokollalla: 
+```
+https://github.com/nikkanenjoni/ohjelmistoprojekti.git
+```
 
 Kun olet kloonannut repositoryn, mene hakemistoon `ohjelmistoprojekti` ja ota itsellesi `develop` branch
 
