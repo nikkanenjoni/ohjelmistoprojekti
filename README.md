@@ -37,7 +37,7 @@ Kun olet kloonannut repositoryn, mene hakemistoon `ohjelmistoprojekti` ja ota it
 
 Nyt voit siirtyä develop branchiin komennolla: 
 
-`git branch develop`
+`git checkout develop`
 
 Tee nyt itsellesi uusi haara, jossa alat vääntää omaa featureasi:
 
