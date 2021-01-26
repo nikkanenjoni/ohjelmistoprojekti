@@ -1,14 +1,6 @@
 # Ohjelmistoprojekti
 Ohjelmistoprojekti kurssin repository
 
-<<<<<<< HEAD
-## Scrum-syklin yleiskuvaus
-## Sprintit
-## Työjonot
-## Roolit
-## Kokoukset
-## Miksi Scrum toimii?
-=======
 ## Sisältö
 
 - [Scrum-syklin yleiskuvaus](#Scrym-syklin-yleiskuvaus)
@@ -22,6 +14,26 @@ Ohjelmistoprojekti kurssin repository
 ## Scrum-syklin yleiskuvaus
 
 ## Sprintit
+
+#### Aloitus
+
+Sprintti alkaa aina kokouksesta, jossa sovitaan työjonosta ja asetetaan sprintin työjono. Kokouksessa tehdään suunnitelma, miten sprintti toteutetaan ja miten sprintille asetetut tavoitteet saavutetaan. 
+
+Käytännössä tämä tarkoittaa, että katsotaan tuotteen nykyinen tila ja työjono, sekä muut vallitsevat olosuhteet ja sovitaan näiden pohjalta tulevan sprintin työjono suhteessa tiimin käytössäolevaan työvoimaan. 
+
+Kokouksessa pitää saada sovittua tulevan sprintin työjono ja tavoitteet. 
+
+#### Kulku
+
+Sprintti kestää yleensä 2-4 viikkoa. Sprintin aikana työjonoa ei muuteta, joten sprinttien pituus tulee katsoa sellaiseksi, että työjonon muuttamista voidaan odottaa seuraavaan sprinttiin asti. 
+
+Sprintin aikana pidetään päivittäisiä 15 minuutin pikakokouksia, joissa katsotaan, mitä kukakin on saanut tehtyä edellisenä päivänä ja mitä aikoo tehdä tänään. 
+
+Sprintin aikana työjonossa määritellyt asiat suunnitellaan, toteutetaan ja testataan. 
+
+#### Päätös
+
+Sprintin päätteeksi pidetään kokous, jossa esitellään sprintin tuotokset, kuten vaikkapa jokin uusi ominaisuus. Samassa kokouksessa sovitaan myös seuraavata sprintistä. 
 
 ## Työjonot
 
@@ -74,4 +86,3 @@ Nyt olet tehnyt muutoksia, mutta et ole vielä työntänyt niitä githubiin. Ty�
 
 Valmista on!
 
->>>>>>> 8a04cb93ccb0e7d1cad2340891f54711fd675db5
