@@ -15,7 +15,7 @@ Ohjelmistoprojekti kurssin repository
 
 ## Sprintit
 
-#### Aloitus
+### Aloitus
 
 Sprintti alkaa aina kokouksesta, jossa sovitaan työjonosta ja asetetaan sprintin työjono. Kokouksessa tehdään suunnitelma, miten sprintti toteutetaan ja miten sprintille asetetut tavoitteet saavutetaan. 
 
@@ -23,7 +23,7 @@ Käytännössä tämä tarkoittaa, että katsotaan tuotteen nykyinen tila ja ty�
 
 Kokouksessa pitää saada sovittua tulevan sprintin työjono ja tavoitteet. 
 
-#### Kulku
+### Kulku
 
 Sprintti kestää yleensä 2-4 viikkoa. Sprintin aikana työjonoa ei muuteta, joten sprinttien pituus tulee katsoa sellaiseksi, että työjonon muuttamista voidaan odottaa seuraavaan sprinttiin asti. 
 
@@ -31,9 +31,9 @@ Sprintin aikana pidetään päivittäisiä 15 minuutin pikakokouksia, joissa kat
 
 Sprintin aikana työjonossa määritellyt asiat suunnitellaan, toteutetaan ja testataan. 
 
-#### Päätös
+### Päätös
 
-Sprintin päätteeksi pidetään kokous, jossa esitellään sprintin tuotokset, kuten vaikkapa jokin uusi ominaisuus. Samassa kokouksessa sovitaan myös seuraavata sprintistä. 
+Sprintin päätteeksi pidetään kaksi kokousta (Sprint review & Sprint Retrospective). Sprint reviewissa esitellään itse sprintin tuotokset ja Sprint Retrospectivessa keskitytään itse prosessin onnistumiseen. Sprintin tuotoksena voi olla esimerkiksi jokin uusi ominaisuus. Samassa yhteydessä voidaan havainnoida mitä mahdollisuuksia ja rajoituksia kehityksessä on havaittu, jotta näihin voidaan myöhemmissä vaiheissa reagoida entistä paremmin. Kokouksessa myös sovitaan seuraavasta sprintistä.
 
 ## Työjonot
 
