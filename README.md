@@ -51,7 +51,7 @@ Tuotteen omistaj vastaa kehitystiimin tuotteen arvon maksimoimisesta. Tämä saa
 Kehitystiimi on ryhmä, jossas ryhmän jäsenet muuttavat sprinttiin valitun tuotteen kehitysjonon sisällön potentiaalisesti julkaisukelpoiseksi tuoteversioksi jokaisessa sprintissä. Tiimin sisällä jäsenillä voi olla erilaista ja eritasoista osaamista, eri painopisteitä projektin sisällä, mutta kehityksen vastuu kuuluu koko tiimille.
 
 ### Scrummaster
-
+Scrummasterin tehtävänä on huolehtia siitä, että kehitystiimi voi tehdä työtään optimaalisella tavalla. Tiimiläiset raportoivat päivittäin ongelmista, jotka hidastavat töiden etenemistä ja scrummasterin tehtävänä on ratkoa nämä ongelmat. Tämän lisäksi hän johtaa päivittäiset aamupalaverit ja vastaa siitä, että Scrumia noudatetaan oikein.
 
 ## Kokoukset
 
