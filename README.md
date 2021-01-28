@@ -43,6 +43,16 @@ Jonossa on featureita, joista tärkein ensimmäisenä, toisiksi tärkein toisena
 
 ## Kokoukset
 
+Projektin työvaiheita ja niihin liittyviä avoimia kysymyksiä suunnitellaan tarvittaessa päivittäisissä daily scrumeissa.
+Lisäksi järjestetään sprinttien suunnittelukokouksia, ryhmän vastuiden ja kehityksen priorisointijärjestyksen määrittämiseksi.
+
+Sprinttien jälkeen järjestetään sprinttien lopetuskokous, joissa käydään edellinen sprintti läpi (sprint review).Tiimi esittelee, että mitä on saanut sprintissä aikaan, ja tulokset demotaan. Kokouksissa on mukana myös asiakas, eli tuoteomistaja.
+
+Lopetuskokouksen jälkeen pidetään vielä
+lyhyt kritiikkipalaveri eli sprint retrospective, jossa arvioidaan kuluneen sprintin onnistumiset ja kehityskohteet.
+Tämän tarkoituksena on kehittää tiimin
+toimintaa paremmaksi.
+
 ## Miksi Scrum toimii? 
 
 ## Git
