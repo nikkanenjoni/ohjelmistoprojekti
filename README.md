@@ -40,6 +40,17 @@ Sprintin päätteeksi pidetään kaksi kokousta (Sprint review & Sprint Retrospe
 Jonossa on featureita, joista tärkein ensimmäisenä, toisiksi tärkein toisena jne. Featureita toteutetaan jonosta tärkein-ensin -periaatteella. 
 
 ## Roolit
+### Scrum tiimi
+Scrumtiimi koostuu tueteomistajasta, scrummasterista ja kehitystiimistä. Tiimin tehtävänä on päättää sprinteille tavoitteet ja tehtävät sekä vastata siitä, että asetettuihin tavoitteisiin myös päästään. 
+
+### Tuotteen omistaja
+Tuotteen omistaj vastaa kehitystiimin tuotteen arvon maksimoimisesta. Tämä saavutetaan oikeaoppisella vaatimusten määrittelyllä tuotteelle sekä järjestämällä kehitysjono yhteistyössä scrumtiimin kanssa. Tehtävänä on myös valvoa, että tiimi noudattaa vaatimusmäärittelyssä esiintyineitä vaatimuksia. 
+
+### Kehitystiimi
+Kehitystiimi on ryhmä, jossas ryhmän jäsenet muuttavat sprinttiin valitun tuotteen kehitysjonon sisällön potentiaalisesti julkaisukelpoiseksi tuoteversioksi jokaisessa sprintissä. Tiimin sisällä jäsenillä voi olla erilaista ja eritasoista osaamista, eri painopisteitä projektin sisällä, mutta kehityksen vastuu kuuluu koko tiimille.
+
+### Scrummaster
+
 
 ## Kokoukset
 
