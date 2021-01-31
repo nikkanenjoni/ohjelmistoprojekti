@@ -66,7 +66,7 @@ lyhyt kritiikkipalaveri eli sprint retrospective, jossa arvioidaan kuluneen spri
 Tämän tarkoituksena on kehittää tiimin
 toimintaa paremmaksi.
 
-
+## Miksi Scrum toimii?
 
 Scrum on yksi suosituimmista projektimenetelmistä. Se on sekä käytettävissä yksinään, tai myös jonkun perinteisemmän projektinhallintamenetelmän rinnalla. Koska ohjelmistoprojekteja tehdään yleensä tiimeissä, on Scrum luonnollinen menetelmä koska se on suunniteltu tiimityöskentelyyn, jossa kuitenkin on sekä määritelty projektipäälikkö, sekä selkeät ohjeet projektien edistämiseen. Lisäksi Scrum tukee ohjelmistokehitystä ketteryytensä vuoksi: Mahdollisiin suunnitelmamuutoksiin on mahdollista reagoida lyhyiden sprinttien vuoksi. Scrumin pääperiaatteita ovat pyrkimykset tehokkuuteen, fiksuun työskentelyyn ja laatuun.
 
