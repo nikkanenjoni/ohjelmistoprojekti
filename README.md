@@ -1,17 +1,19 @@
 # Ohjelmistoprojekti
+
 Ohjelmistoprojekti kurssin repository
 
 ## Sisältö
 
 - [Scrum-syklin yleiskuvaus](#Scrym-syklin-yleiskuvaus)
 - [Sprintit](#Sprintit)
-- [Työjonot](#Tyojonot)
+- [Työjonot](#Työjonot)
 - [Roolit](#Roolit)
 - [Kokoukset](#Kokoukset)
-- [Miksi Scrum toimii?](#Miksi-Scrum-toimii)
 - [Git](#Git)
 
 ## Scrum-syklin yleiskuvaus
+
+Scrum muodostuu sprinteistä, joiden kesto on 2-4 viikkoa. Ennen sprintin alkua pidetään kokous, jossa sovitaan sprintin tavoitteet. Tämän jälkeen sprintin aikana pidetään lyhyitä päivittäisi kokouksia, joissa sovitaan päivän tavoitteet. 
 
 ## Sprintit
 
@@ -50,11 +52,19 @@ Tuotteen omistaj vastaa kehitystiimin tuotteen arvon maksimoimisesta. Tämä saa
 Kehitystiimi on ryhmä, jossas ryhmän jäsenet muuttavat sprinttiin valitun tuotteen kehitysjonon sisällön potentiaalisesti julkaisukelpoiseksi tuoteversioksi jokaisessa sprintissä. Tiimin sisällä jäsenillä voi olla erilaista ja eritasoista osaamista, eri painopisteitä projektin sisällä, mutta kehityksen vastuu kuuluu koko tiimille.
 
 ### Scrummaster
-
+Scrummasterin tehtävänä on huolehtia siitä, että kehitystiimi voi tehdä työtään optimaalisella tavalla. Tiimiläiset raportoivat päivittäin ongelmista, jotka hidastavat töiden etenemistä ja scrummasterin tehtävänä on ratkoa nämä ongelmat. Tämän lisäksi hän johtaa päivittäiset aamupalaverit ja vastaa siitä, että Scrumia noudatetaan oikein.
 
 ## Kokoukset
 
-## Miksi Scrum toimii? 
+Projektin työvaiheita ja niihin liittyviä avoimia kysymyksiä suunnitellaan tarvittaessa päivittäisissä daily scrumeissa.
+Lisäksi järjestetään sprinttien suunnittelukokouksia, ryhmän vastuiden ja kehityksen priorisointijärjestyksen määrittämiseksi.
+
+Sprinttien jälkeen järjestetään sprinttien lopetuskokous, joissa käydään edellinen sprintti läpi (sprint review).Tiimi esittelee, että mitä on saanut sprintissä aikaan, ja tulokset demotaan. Kokouksissa on mukana myös asiakas, eli tuoteomistaja.
+
+Lopetuskokouksen jälkeen pidetään vielä
+lyhyt kritiikkipalaveri eli sprint retrospective, jossa arvioidaan kuluneen sprintin onnistumiset ja kehityskohteet.
+Tämän tarkoituksena on kehittää tiimin
+toimintaa paremmaksi.
 
 ## Git
 
