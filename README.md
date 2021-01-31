@@ -9,10 +9,11 @@ Ohjelmistoprojekti kurssin repository
 - [Työjonot](#Työjonot)
 - [Roolit](#Roolit)
 - [Kokoukset](#Kokoukset)
-- [Miksi Scrum toimii?](#Miksi-Scrum-toimii)
 - [Git](#Git)
 
 ## Scrum-syklin yleiskuvaus
+
+Scrum muodostuu sprinteistä, joiden kesto on 2-4 viikkoa. Ennen sprintin alkua pidetään kokous, jossa sovitaan sprintin tavoitteet. Tämän jälkeen sprintin aikana pidetään lyhyitä päivittäisi kokouksia, joissa sovitaan päivän tavoitteet. 
 
 ## Sprintit
 
@@ -64,8 +65,6 @@ Lopetuskokouksen jälkeen pidetään vielä
 lyhyt kritiikkipalaveri eli sprint retrospective, jossa arvioidaan kuluneen sprintin onnistumiset ja kehityskohteet.
 Tämän tarkoituksena on kehittää tiimin
 toimintaa paremmaksi.
-
-## Miksi Scrum toimii? 
 
 ## Git
 
