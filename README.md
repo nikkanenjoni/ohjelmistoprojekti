@@ -66,6 +66,18 @@ lyhyt kritiikkipalaveri eli sprint retrospective, jossa arvioidaan kuluneen spri
 Tämän tarkoituksena on kehittää tiimin
 toimintaa paremmaksi.
 
+## Miksi Scrum toimii?
+
+Scrum on yksi suosituimmista projektimenetelmistä. Se on sekä käytettävissä yksinään, tai myös jonkun perinteisemmän projektinhallintamenetelmän rinnalla. Koska ohjelmistoprojekteja tehdään yleensä tiimeissä, on Scrum luonnollinen menetelmä koska se on suunniteltu tiimityöskentelyyn, jossa kuitenkin on sekä määritelty projektipäälikkö, sekä selkeät ohjeet projektien edistämiseen. Lisäksi Scrum tukee ohjelmistokehitystä ketteryytensä vuoksi: Mahdollisiin suunnitelmamuutoksiin on mahdollista reagoida lyhyiden sprinttien vuoksi. Scrumin pääperiaatteita ovat pyrkimykset tehokkuuteen, fiksuun työskentelyyn ja laatuun.
+
+### Kommunikaatio
+
+Myös kommunikaatio tiimin kesken on Scrum-menetelmää noudattaessa helppoa. Päivittäiset Daily Scrum-kokoukset pitävät kommunikaation tiimin kesken yksinkertaisena ja helpottavat reagointia eri ongelmakohtiin. Daily Scrumit mahdollistavat myös tiimin keskinäisen, nopean ideoinnin, ja näin ollen parhaimmillaan parantavat lopputuotteen laatua.
+
+### Läpinäkyvyys
+
+Scrumin etu on myös projektivaiheiden läpinäkyvyys. Kaikki tiimin jäsenet tietää missä mennään missäkin vaiheessa, ja mitä taskeja projektivaiheeseen liittyy. Tämä lisää johdonmukaisuutta ja myös projektin hallittavuutta.
+
 ## Git
 
 Ota ensin klooni repositorysta omalle koneellesi: 
