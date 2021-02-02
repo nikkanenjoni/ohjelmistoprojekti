@@ -4,7 +4,7 @@ This is a repo for our work at [ohjelmistoprojekti 1](https://opinto-opas.haaga-
 
 ## Links
 
-[Scrum-help](SCRUM.md) (*in Finnish*)
-[TicketGuru README.md](linko/README.md) (*in Finnish*)
+- [Scrum-help](SCRUM.md) (*in Finnish*)
+- [TicketGuru README.md](linko/README.md) (*in Finnish*)
 
 
