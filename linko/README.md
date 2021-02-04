@@ -36,9 +36,12 @@ tietoa ja keskittyä siihen.
 
 ## Käyttöliittymä
 
-Esitetään käyttöliittymän tärkeimmät (vain ne!) näkymät sekä niiden väliset siirtymät käyttöliittymäkaaviona. 
-
-Jos näkymän tarkoitus ei ole itsestään selvä, se pitää kuvata lyhyesti.
+### Etusivu & myy lippuja
+![Import](Kayttoliittyma/Sivu1.png "Import")
+### Luo tapahtuma
+![Import](Kayttoliittyma/Sivu2.png "Import")
+### Muokkaa tapahtumaa & myyntiraportti
+![Import](Kayttoliittyma/Sivu3.png "Import")
 
 ## Tietokanta
 
