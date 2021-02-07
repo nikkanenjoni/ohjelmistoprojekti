@@ -1,4 +1,4 @@
-# Projektin nimi
+# TicketGuru
 
 Tiimi: Koskela Ville, Lindholm Sofia, Nikkanen Joni
 
