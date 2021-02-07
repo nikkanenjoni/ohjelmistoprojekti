@@ -33,6 +33,12 @@ tietoa ja keskittyä siihen.
 | 4   | Myymäläpäällikkö | Myymäläpäällikkönä toivon, että pystyn raportoimaan tapahtumajärjestäjälle mahdollisimman yksiselitteisesti lipunmyyntiä ja seuraamaan kuinka paljon lippuja kuhunkin tapahtumaan on vielä jäljellä. |
 | 5   | Ostaja1 | Ostajana haluan, että lipunmyyjä löytää haluamani tapahtuman helposti, ja lipun saa nopeasti mukaan. Haluan myös, että tapahtumaan pystyy ostamaan useamman lipun. |
 | 6    | Lipun tarkastaja | Lipun tarkastajana haluan, että lipussa on toimiva koodi, joka on helposti luettavissa, jotta kanssakäynti tapahtumakävijöiden kanssa on mahdollisimman nopeaa. Haluan myös, että lippu on helposti tunnistettavissa. |
+| 7   | Lipunmyyjä | Lipunmyyjänä toivon, että eri alennusryhmien liput ovat helposti löydettävissä, jotta niidenkin myyminen on mutkatonta. |
+| 8   | Lippunmyyjä | Lipunmyyjänä toivon, että näen yhteenvedon ostotapahtumasta ennen lippujen tulostamista, jotta voin tarkistaa tilauksen sisällön ennen vahvistamista. |
+| 9 | Lipunmyyjä | Lipunmyyjänä haluan, että näen paljonko lippuja tapahtumaan on jäljellä, jotta määrä on helposti kerrottavissa eteenpäin. |
+| 10  | Lipunmyyjä | Lipunmyyjänä haluan, että suosittuja tapahtumia pystyy selaamaan, koska se helpottaisi tapahtumien etsintää. |
+| 11 | Lipunmyyjä | Lipunmyyjänä haluan, että pystyn hakemaan tapahtumia päivämäärällä, koska asiakas haluaa joskus etsiä tapahtumia tietyllä päivämäärällä. |
+| 12 | Myymäläpäällikkö | Myymäläpäällikkönä toivon, että pystyn tulostamaan tapahtumajärjestäjälle raportteja, koska tapahtumajärjestäjät haluavat seurata kävijämääriä. |
 
 ## Käyttöliittymä
 
