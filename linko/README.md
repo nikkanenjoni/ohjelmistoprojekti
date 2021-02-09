@@ -39,11 +39,11 @@ Järjestelmän määrittelyyn tullaan palaamaan vielä tarkemmin myöhemmin. Tä
 ## Käyttöliittymä
 
 ### Etusivu & myy lippuja
-![Import](Kayttoliittyma/Sivu1.png "Import")
+![Import](Docs/Kuvat/Kayttoliittyma/Sivu1.png "Import")
 ### Luo tapahtuma
-![Import](Kayttoliittyma/Sivu2.png "Import")
+![Import](Docs/Kuvat/Kayttoliittyma/Sivu2.png "Import")
 ### Muokkaa tapahtumaa & myyntiraportti
-![Import](Kayttoliittyma/Sivu3.png "Import")
+![Import](Docs/Kuvat/Kayttoliittyma/Sivu3.png "Import")
 
 ## Tietokanta
 
