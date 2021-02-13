@@ -67,7 +67,7 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 
 **TÄSTÄ YLÖS VOI POISTAA, KUNHAN ALLA OLEVA VASTAA YLLÄ OLEVAA OHJETTA**
 
-### Order (tilaus/osto)
+### Order
 
 *Tähän tauluun tallennetaan kaikki tapahtuneet kaupat*
 
@@ -76,15 +76,15 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 | orderID     | int PK | Ostotapahtuman Id |
 | timestamp | timestamp | Ostotapahtuman päivä & aika |
 
-### TicketOrder (lippuosto)
+### TicketOrder
 
 *Tämä taulu purkaa 'monen suhde moneen' -relaatiot lippu- ja ostotaulujen välistä. Tässä taulussa pidetään tieto ostetuista lipuista.*
 
 | Kenttä | Tyyppi | Kuvaus |
 | :---- | :---- | :----- |
 | id   | int PK | Lippumyynnin ID |
-| orderID | int FK | Viittaus ostotapahtumaan, jossa tämä lippu on ostettu |
-| ticketID | int FK | Viittaus lippuun, jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
+| orderID | int FK | Viittaus [ostotapahtumaan](#Order), jossa tämä lippu on ostettu |
+| ticketID | int FK | Viittaus [lippuun](#Ticket), jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
 | price | double | Tallettaa tiedon, mihin hintaan juuri tämä kyseinen lippu on myyty |
 
 ## Tekninen kuvaus
