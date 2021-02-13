@@ -65,6 +65,28 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 > avatar | int FK | Tilin avatar, viittaus [avatar](#Avatar)-tauluun
 > kayttaja | int FK | Viittaus käyttäjään [käyttäjä](#Kayttaja)-taulussa
 
+**TÄSTÄ YLÖS VOI POISTAA, KUNHAN ALLA OLEVA VASTAA YLLÄ OLEVAA OHJETTA**
+
+### Order (tilaus/osto)
+
+*Tähän tauluun tallennetaan kaikki tapahtuneet kaupat*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| orderID     | int PK | Ostotapahtuman Id |
+| timestamp | timestamp | Ostotapahtuman päivä & aika |
+
+### TicketOrder (lippuosto)
+
+*Tämä taulu purkaa 'monen suhde moneen' -relaatiot lippu- ja ostotaulujen välistä. Tässä taulussa pidetään tieto ostetuista lipuista.*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lippumyynnin ID |
+| orderID | int FK | Viittaus ostotapahtumaan, jossa tämä lippu on ostettu |
+| ticketID | int FK | Viittaus lippuun, jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
+| price | double | Tallettaa tiedon, mihin hintaan juuri tämä kyseinen lippu on myyty |
+
 ## Tekninen kuvaus
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
