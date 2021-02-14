@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+// täältä löytyy kunnat
 @Entity
 public class City {
 
