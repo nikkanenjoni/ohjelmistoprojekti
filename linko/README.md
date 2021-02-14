@@ -76,10 +76,12 @@ Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_Relaatiokaavio.pdf](Do
 | Kenttä | Tyyppi | Kuvaus | 
 | :----  | :---- | :-----  |
 | eventID     | int PK | Tapahtuman Id |
+| city| FK| Kunnan nimi|
 | event| string| Tapahtuman nimi|
-| event| string| Tapahtuman nimi|
-| event| string| Tapahtuman nimi|
-| event| string| Tapahtuman nimi|
+| eventPlace| string| Tapahtumapaikan nimi|
+| capacity| int| maksimilippumäärä|
+| description| string| vapaavalintainen kuvaus|
+| datetime| LocalDateTime| päivämäärä ja kellonaika|
 
 ### City
 
