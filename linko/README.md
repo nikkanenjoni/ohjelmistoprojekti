@@ -87,6 +87,28 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 | ticketID | int FK | Viittaus [lippuun](#Ticket), jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
 | price | double | Tallettaa tiedon, mihin hintaan juuri tämä kyseinen lippu on myyty |
 
+### Ticket
+
+*Tähän tauluun tallennetaan kaikki liput ja niiden tiedot, jotka ovat tiettyyn tapahtumaan saatavilla.*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lippu ID |
+| ticketTypeID | int FK | Viittaus [lipputyyppiin](#TicketType), joka kertoo minkä tyyppinen lippu on kyseessä |
+| price | double | Lipulle määritettävä hinta | 
+| eventID | int FK | Viittaus [tapahtumaan](#Event), johon tämä lippu on ostettu |
+| description | string | Kuvaus lipusta.  |
+
+### TicketType
+
+*Tässä taulussa listataan kaikki lipputyypit, jotka ovat tapahtumiin saatavilla*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lipputyyppi ID |
+| ticketType | string | Lippityypin nimi, jolla se on yksilöitävissä. Esimerkiksi opiskelija|
+
+
 ## Tekninen kuvaus
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
