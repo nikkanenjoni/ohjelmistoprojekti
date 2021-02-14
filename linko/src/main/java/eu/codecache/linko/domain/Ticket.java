@@ -4,31 +4,94 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
 
 @Entity
 public class Ticket {
+	
 	@Id
+	@NotNull
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long TicketID, TicketTypeID, EventID;
+	private Long ticketID;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name = "ticketTypeID")
+	@NotNull
+	private TicketType ticketType;
+	
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name = "eventID")
+	@NotNull
+	private Event event;
+	
+	@NotNull
+	@DecimalMin("0.0")
+	@DecimalMax("1000.0")
 	private double price;
+	
 	private String description;
 	
-	public Ticket() {}
 	
-	public Ticket(Long TicketID, Long TicketTypeID, Long EventID, double price, String description) {
-		this.TicketID = TicketID;
-		this.TicketTypeID = TicketTypeID;
-		this.EventID = EventID;
+	public Ticket() {
+		// empty default constructor
+	}
+	
+	public Ticket(TicketType ticketType, Event event, double price, String description) {
+		super();
+		this.ticketType = ticketType;
+		this.event = event;
 		this.price = price; 
 		this.description = description;
 	}
-	
 
-	@Override
-	public String toString() {
-		return "Ticket [TicketID=" + TicketID + ", TicketTypeID=" + TicketTypeID + ", EventID=" + EventID + ", price="
-				+ price + ", description=" + description + "]";
+	public Long getTicketID() {
+		return ticketID;
 	}
+
+	public void setTicketID(Long ticketID) {
+		this.ticketID = ticketID;
+	}
+
+	public TicketType getTicketType() {
+		return ticketType;
+	}
+
+	public void setTicketType(TicketType ticketType) {
+		this.ticketType = ticketType;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	
 	
 }

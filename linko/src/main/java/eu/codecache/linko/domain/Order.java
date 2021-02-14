@@ -27,7 +27,7 @@ public class Order {
 //	@JsonIgnore
 //	@JoinColumn(name = "eventID")
 //	@NotNull
-//	private Ecent event;
+//	private Event event;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
