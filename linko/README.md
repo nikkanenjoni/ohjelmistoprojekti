@@ -67,6 +67,30 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 
 **TÄSTÄ YLÖS VOI POISTAA, KUNHAN ALLA OLEVA VASTAA YLLÄ OLEVAA OHJETTA**
 
+
+Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_Relaatiokaavio.pdf](Docs/TicketGuru_Relaatiokaavio.pdf)
+### Event
+
+*Tähän tauluun tallennetaan kaikki tapahtumat*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| eventID     | int PK | Tapahtuman Id |
+| event| string| Tapahtuman nimi|
+| event| string| Tapahtuman nimi|
+| event| string| Tapahtuman nimi|
+| event| string| Tapahtuman nimi|
+
+### City
+
+*Tähän tauluun tallennetaan kaikki kunnat. Tällä hetkellä tarkin sijaintimääritys, tarkennetaan tarvittaessa (esim. postinumerotasolle).*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| cityID     | int PK | Kunnan Id |
+| city | string | Kunnan nimi |
+
+
 ### Order
 
 *Tähän tauluun tallennetaan kaikki tapahtuneet kaupat*
