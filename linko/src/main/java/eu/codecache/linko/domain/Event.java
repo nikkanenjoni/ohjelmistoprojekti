@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-
+// tapahtuman tiedot (paikka, aika, nimi, kapasiteetti)
 @Entity
 public class Event {
 
