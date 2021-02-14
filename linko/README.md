@@ -65,6 +65,50 @@ attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän t
 > avatar | int FK | Tilin avatar, viittaus [avatar](#Avatar)-tauluun
 > kayttaja | int FK | Viittaus käyttäjään [käyttäjä](#Kayttaja)-taulussa
 
+**TÄSTÄ YLÖS VOI POISTAA, KUNHAN ALLA OLEVA VASTAA YLLÄ OLEVAA OHJETTA**
+
+### Order
+
+*Tähän tauluun tallennetaan kaikki tapahtuneet kaupat*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| orderID     | int PK | Ostotapahtuman Id |
+| timestamp | timestamp | Ostotapahtuman päivä & aika |
+
+### TicketOrder
+
+*Tämä taulu purkaa 'monen suhde moneen' -relaatiot lippu- ja ostotaulujen välistä. Tässä taulussa pidetään tieto ostetuista lipuista.*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lippumyynnin ID |
+| orderID | int FK | Viittaus [ostotapahtumaan](#Order), jossa tämä lippu on ostettu |
+| ticketID | int FK | Viittaus [lippuun](#Ticket), jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
+| price | double | Tallettaa tiedon, mihin hintaan juuri tämä kyseinen lippu on myyty |
+
+### Ticket
+
+*Tähän tauluun tallennetaan kaikki liput ja niiden tiedot, jotka ovat tiettyyn tapahtumaan saatavilla.*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lippu ID |
+| ticketTypeID | int FK | Viittaus [lipputyyppiin](#TicketType), joka kertoo minkä tyyppinen lippu on kyseessä |
+| price | double | Lipulle määritettävä hinta | 
+| eventID | int FK | Viittaus [tapahtumaan](#Event), johon tämä lippu on ostettu |
+| description | string | Kuvaus lipusta.  |
+
+### TicketType
+
+*Tässä taulussa listataan kaikki lipputyypit, jotka ovat tapahtumiin saatavilla*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lipputyyppi ID |
+| ticketType | string | Lippityypin nimi, jolla se on yksilöitävissä. Esimerkiksi opiskelija|
+
+
 ## Tekninen kuvaus
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
