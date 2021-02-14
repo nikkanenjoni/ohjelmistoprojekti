@@ -39,7 +39,7 @@ public class Event {
 	private String description;
 	
 	@NotNull
-	private LocalDateTime datetime;
+	private LocalDateTime dateTime;
 
 	public Event() {
 		// default constructor
@@ -86,24 +86,24 @@ public class Event {
 	}
 
 	public LocalDateTime getDatetime() {
-		return datetime;
+		return dateTime;
 	}
 
-	public void setDatetime(LocalDateTime datetime) {
-		this.datetime = datetime;
+	public void setDatetime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	
 	// constructor
 	public Event(@NotNull String event, @NotNull City city, @NotNull String eventPlace, @NotNull int capacity,
-			String description, @NotNull LocalDateTime datetime) {
+			String description, @NotNull LocalDateTime dateTime) {
 		super();
 		this.event = event;
 		this.city = city;
 		this.eventPlace = eventPlace;
 		this.capacity = capacity;
 		this.description = description;
-		this.datetime = datetime;
+		this.dateTime = dateTime;
 	}
 
 	
