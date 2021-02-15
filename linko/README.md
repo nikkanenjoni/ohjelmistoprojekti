@@ -48,7 +48,7 @@ Järjestelmän määrittelyyn tullaan palaamaan vielä tarkemmin myöhemmin. Tä
 ## Tietokanta
 
 Ohjelmistoa varten on suunniteltu relaatiotietokanta.
-Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_Relaatiokaavio.pdf](Docs/TicketGuru_Relaatiokaavio.pdf)
+Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_relaatiokaavio.pdf](Docs/TicketGuru_relaatiokaavio.pdf)
 
 Alla vielä tietohakemisto eri luokkien attribuuteista.
 
