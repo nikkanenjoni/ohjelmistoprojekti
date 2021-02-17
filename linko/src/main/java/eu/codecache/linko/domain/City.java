@@ -19,7 +19,9 @@ public class City {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
-	@OneToMany
+	// Let's take a closer look to this annotation later,
+	// for now I just comment it out as running the application fails because of it
+//	@OneToMany
 	private long cityID;
 	
 	// kuntanimi

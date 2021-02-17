@@ -18,7 +18,8 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
-	@OneToMany
+	// Application won't run with this annotation, let's solve it later
+//	@OneToMany
 	private long eventID;
 	
 	@NotNull
