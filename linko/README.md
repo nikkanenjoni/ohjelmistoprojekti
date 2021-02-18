@@ -140,17 +140,35 @@ Polku: GET api/orders/
 Näytä tietty tapahtuma:
 Polku: GET api/order/:pk
 
+##### Ticket
+Näytä kaikki tapahtumat:
+Polku: GET api/tickets/
+
+Näytä tietty tapahtuma:
+Polku: GET api/ticket/:pk
+
+
 #### POST
 
 Postilla luodaan uusia tietoja.
 
 ##### Event
+
 Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
+
 Polku: POST api/event/:pk
 
 ##### Order
+
 Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
+
 Polku: POST api/order/:pk
+
+##### Ticket
+
+Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
+
+Polku: POST api/ticket/:pk
 
 
 ####
