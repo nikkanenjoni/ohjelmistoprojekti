@@ -120,6 +120,41 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 ## Tekninen kuvaus
 
+### REST-API Dokumentaatio
+
+#### GET
+
+Getillä näytetään halutut tiedot.
+
+##### Event
+Näytä kaikki tapahtumat:
+Polku: GET api/events/
+
+Näytä tietty tapahtuma:
+Polku: GET api/event/:pk
+
+##### Order
+Näytä kaikki tapahtumat:
+Polku: GET api/orders/
+
+Näytä tietty tapahtuma:
+Polku: GET api/order/:pk
+
+#### POST
+
+Postilla luodaan uusia tietoja.
+
+##### Event
+Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
+Polku: POST api/event/:pk
+
+##### Order
+Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
+Polku: POST api/order/:pk
+
+
+####
+
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
 ratkaisut, esim.
 
