@@ -130,25 +130,38 @@ tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
 Getillä näytetään halutut tiedot.
 
 ##### Event
+
 Näytä kaikki tapahtumat:
-Polku: GET api/events/
+
+Polku: GET localhost:8080/events/
 
 Näytä tietty tapahtuma:
-Polku: GET api/event/:pk
+
+Polku: GET localhost:8080/event/:pk
 
 ##### Order
-Näytä kaikki tapahtumat:
-Polku: GET api/orders/
 
-Näytä tietty tapahtuma:
-Polku: GET api/order/:pk
+
+Näytä kaikki tilaukset:
+
+Polku: GET localhost:8080/orders/
+
+
+Näytä tietty tilaus:
+
+Polku: GET localhost:8080/order/:pk
 
 ##### Ticket
+
+
 Näytä kaikki tapahtumat:
-Polku: GET api/tickets/
+
+Polku: GET localhost:8080/tickets/
+
 
 Näytä tietty tapahtuma:
-Polku: GET api/ticket/:pk
+
+Polku: GET localhost:8080/ticket/:pk
 
 
 #### POST
@@ -162,38 +175,21 @@ dataa olemassaolevalle resurssille.
 
 Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
 
-Polku: POST api/event/:pk
+Polku: POST localhost:8080/event/:pk
 
 ##### Order
 
 Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
 
-Polku: POST api/order/:pk
+Polku: POST localhost:8080/order/:pk
 
 ##### Ticket
 
 Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
 
-Polku: POST api/ticket/:pk
+Polku: POST localhost:8080/ticket/:pk
 
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> feature
 ####
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
