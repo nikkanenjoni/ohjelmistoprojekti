@@ -178,7 +178,7 @@ Polku: POST api/order/:pk
 
 ##### Ticket
 
-Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
+Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä.
 
 Polku: POST api/ticket/:pk
 
