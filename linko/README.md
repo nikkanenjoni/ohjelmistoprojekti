@@ -48,7 +48,7 @@ Järjestelmän määrittelyyn tullaan palaamaan vielä tarkemmin myöhemmin. Tä
 ## Tietokanta
 
 Ohjelmistoa varten on suunniteltu relaatiotietokanta.
-Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_Relaatiokaavio.pdf](Docs/TicketGuru_Relaatiokaavio.pdf)
+Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_relaatiokaavio.pdf](Docs/TicketGuru_relaatiokaavio.pdf)
 
 Alla vielä tietohakemisto eri luokkien attribuuteista.
 
@@ -119,6 +119,78 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 
 ## Tekninen kuvaus
+
+### REST-API Dokumentaatio
+
+HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille
+tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
+
+#### GET
+
+Getillä näytetään halutut tiedot.
+
+##### Event
+Näytä kaikki tapahtumat:
+Polku: GET api/events/
+
+Näytä tietty tapahtuma:
+Polku: GET api/event/:pk
+
+##### Order
+Näytä kaikki tapahtumat:
+Polku: GET api/orders/
+
+Näytä tietty tapahtuma:
+Polku: GET api/order/:pk
+
+##### Ticket
+Näytä kaikki tapahtumat:
+Polku: GET api/tickets/
+
+Näytä tietty tapahtuma:
+Polku: GET api/ticket/:pk
+
+
+#### POST
+
+Postilla luodaan uusia tietoja. POST luo uuden resurssin. Uudelle resurssille annetaan URI, jonka palvelin
+palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään
+dataa olemassaolevalle resurssille.
+
+##### Event
+
+Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
+
+Polku: POST api/event/:pk
+
+##### Order
+
+Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
+
+Polku: POST api/order/:pk
+
+##### Ticket
+
+Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
+
+Polku: POST api/ticket/:pk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+####
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
 ratkaisut, esim.
