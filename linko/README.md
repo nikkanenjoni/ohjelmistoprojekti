@@ -120,6 +120,78 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 ## Tekninen kuvaus
 
+### REST-API Dokumentaatio
+
+HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille
+tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
+
+#### GET
+
+Getillä näytetään halutut tiedot.
+
+##### Event
+
+Näytä kaikki tapahtumat:
+
+Polku: GET localhost:8080/events/
+
+Näytä tietty tapahtuma:
+
+Polku: GET localhost:8080/event/:pk
+
+##### Order
+
+
+Näytä kaikki tilaukset:
+
+Polku: GET localhost:8080/orders/
+
+
+Näytä tietty tilaus:
+
+Polku: GET localhost:8080/order/:pk
+
+##### Ticket
+
+
+Näytä kaikki tapahtumat:
+
+Polku: GET localhost:8080/tickets/
+
+
+Näytä tietty tapahtuma:
+
+Polku: GET localhost:8080/ticket/:pk
+
+
+#### POST
+
+Postilla luodaan uusia tietoja. POST luo uuden resurssin. Uudelle resurssille annetaan URI, jonka palvelin
+palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään
+dataa olemassaolevalle resurssille.
+
+
+##### Event
+
+Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
+
+Polku: POST localhost:8080/event/:pk
+
+##### Order
+
+Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
+
+Polku: POST localhost:8080/order/:pk
+
+##### Ticket
+
+Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
+
+Polku: POST localhost:8080/ticket/:pk
+
+
+####
+
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
 ratkaisut, esim.
 
