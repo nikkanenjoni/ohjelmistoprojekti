@@ -122,6 +122,12 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 ### REST-API Dokumentaatio
 
+<<<<<<< HEAD
+=======
+HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille
+tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
+
+>>>>>>> feature
 #### GET
 
 Getillä näytetään halutut tiedot.
@@ -150,7 +156,13 @@ Polku: GET api/ticket/:pk
 
 #### POST
 
+<<<<<<< HEAD
 Postilla luodaan uusia tietoja.
+=======
+Postilla luodaan uusia tietoja. POST luo uuden resurssin. Uudelle resurssille annetaan URI, jonka palvelin
+palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään
+dataa olemassaolevalle resurssille.
+>>>>>>> feature
 
 ##### Event
 
@@ -171,6 +183,23 @@ Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputy
 Polku: POST api/ticket/:pk
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> feature
 ####
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
