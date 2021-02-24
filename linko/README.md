@@ -122,8 +122,7 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 ### REST-API Dokumentaatio
 
-HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille
-tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
+HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
 
 #### GET
 
@@ -167,8 +166,7 @@ Polku: GET localhost:8080/ticket/:pk
 #### POST
 
 Postilla luodaan uusia tietoja. POST luo uuden resurssin. Uudelle resurssille annetaan URI, jonka palvelin
-palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään
-dataa olemassaolevalle resurssille.
+palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään dataa olemassaolevalle resurssille.
 
 
 ##### Event
@@ -189,6 +187,49 @@ Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputy
 
 Polku: POST localhost:8080/ticket/:pk
 
+#### PUT
+
+PUT-komennolla päivitetään tietoja. PUT korvaa olemassa olevan resurssin kokonaisuudessaan.
+
+##### Event
+
+Tapahtuman päivittäminen.
+
+Polku: PUT localhost:8080/event/:pk
+
+##### Order
+
+Tilauksen päivittäminen.
+
+Polku: PUT localhost:8080/order/:pk
+
+##### Ticket
+
+Yksittäisen lipun päivittäminen.
+
+Polku: PUT localhost:8080/ticket/:pk
+
+#### DELETE
+
+Delete poistaa resurssin kokonaisuudessaan. Poistettava resurssi tunnistetaan pyynnön URI:lla.
+
+##### Event
+
+Tapahtuman poistaminen.
+
+Polku: DELETE localhost:8080/event/:pk
+
+##### Order
+
+Tilauksen poistaminen.
+
+Polku: DELETE localhost:8080/order/:pk
+
+##### Ticket
+
+Lipun poistaminen.
+
+Polku: DELETE localhost:8080/ticket/:pk
 
 ####
 
