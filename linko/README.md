@@ -128,6 +128,12 @@ HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssil
 [Tarkempi kuvaus](Docs/CRUD_rajapinta_kuvaus.md) Sisältöesimerkit, endpointit, paluukoodit, virheviestit
 
 
+
+
+
+
+
+## Alla valmistekstiä.
 ####
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
