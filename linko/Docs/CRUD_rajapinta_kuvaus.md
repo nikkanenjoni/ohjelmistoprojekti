@@ -17,18 +17,12 @@ Tapahtuma ID:llä 1234 tietokannassa, jonne käyttäjä on tallentanut tapahtuma
 {
 
     "id": 1234;
-
-   "event" = "Anna Puu juhlakiertue";
-
+    "event" = "Anna Puu juhlakiertue";
     "city" = "Helsinki";
-
 	"eventPlace" = "Tavastia";
-
 	"capacity" = 500;
-
 	"description" = "";
-
 	"dateTime" = "2022/08/22 19:00:00";
 	}
-    
-}
+
+
