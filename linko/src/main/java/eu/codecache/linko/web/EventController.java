@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
 
+
 @Controller
 public class EventController {
 	
