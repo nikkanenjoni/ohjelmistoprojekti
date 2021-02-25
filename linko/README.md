@@ -122,116 +122,11 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 ### REST-API Dokumentaatio
 
-HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä polkuineen alla.
 
-#### GET
+HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä löytyy seuraavasta linkistä:
 
-Getillä näytetään halutut tiedot.
+[Tarkempi kuvaus](Docs/CRUD_rajapinta_kuvaus.md) Sisältöesimerkit, endpointit, paluukoodit, virheviestit
 
-##### Event
-
-Näytä kaikki tapahtumat:
-
-Polku: GET localhost:8080/events/
-
-Näytä tietty tapahtuma:
-
-Polku: GET localhost:8080/events/:pk
-
-[Tarkempi kuvaus](Docs/CRUD_rajapinta_kuvaus.md) Sisältöesimerkit, paluukoodit, virheviestit
-
-##### Order
-
-
-Näytä kaikki tilaukset:
-
-Polku: GET localhost:8080/orders/
-
-
-Näytä tietty tilaus:
-
-Polku: GET localhost:8080/orders/:pk
-
-##### Ticket
-
-
-Näytä kaikki tapahtumat:
-
-Polku: GET localhost:8080/tickets/
-
-
-Näytä tietty tapahtuma:
-
-Polku: GET localhost:8080/tickets/:pk
-
-
-#### POST
-
-Postilla luodaan uusia tietoja. POST luo uuden resurssin. Uudelle resurssille annetaan URI, jonka palvelin
-palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään dataa olemassaolevalle resurssille.
-
-
-##### Event
-
-Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
-
-Polku: POST localhost:8080/events/:pk
-
-##### Order
-
-Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
-
-Polku: POST localhost:8080/orders/:pk
-
-##### Ticket
-
-Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
-
-Polku: POST localhost:8080/tickets/:pk
-
-#### PUT
-
-PUT-komennolla päivitetään tietoja. PUT korvaa olemassa olevan resurssin kokonaisuudessaan.
-
-##### Event
-
-Tapahtuman päivittäminen.
-
-Polku: PUT localhost:8080/events/:pk
-
-##### Order
-
-Tilauksen päivittäminen.
-
-Polku: PUT localhost:8080/orders/:pk
-
-##### Ticket
-
-Yksittäisen lipun päivittäminen.
-
-Polku: PUT localhost:8080/tickets/:pk
-
-#### DELETE
-
-Delete poistaa resurssin kokonaisuudessaan. Poistettava resurssi tunnistetaan pyynnön URI:lla.
-
-##### Event
-
-Tapahtuman poistaminen.
-
-Polku: DELETE localhost:8080/events/:pk
-
-##### Order
-
-Tilauksen poistaminen.
-
-Polku: DELETE localhost:8080/orders/:pk
-
-##### Ticket
-
-Lipun poistaminen.
-
-Polku: DELETE localhost:8080/tickets/:pk
 
 ####
 
