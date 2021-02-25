@@ -33,8 +33,8 @@ Tapahtuma ID:llä 1234 tietokannassa, jonne käyttäjä on tallentanut tapahtuma
 
 
 {
-    "id": 1234, 
-    "event" = "Anna Puu juhlakiertue";  
+    "id": 1234;  
+    "event" = "Anna Puu juhlakiertue";   
     "city" = "Helsinki";
 	"eventPlace" = "Tavastia";
 	"capacity" = 500;
