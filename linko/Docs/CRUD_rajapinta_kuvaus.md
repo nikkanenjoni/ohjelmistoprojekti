@@ -10,17 +10,25 @@ Get the details of the currently Authenticated User along with basic subscriptio
 Onnistunut vastaus
 Code : 200 OK
 
-#### Sisältöesimerkkejä:
+### Sisältöesimerkkejä:
 
 Tapahtuma ID:llä 1234 tietokannassa, jonne käyttäjä on tallentanut tapahtuman nimen, ajan ja tapahtumapaikan.
 
 {
-    "id": 1234,
+
+    "id": 1234;
+
    "event" = "Anna Puu juhlakiertue";
+
     "city" = "Helsinki";
+
 	"eventPlace" = "Tavastia";
+
 	"capacity" = 500;
+
 	"description" = "";
+
 	"dateTime" = "2022/08/22 19:00:00";
 	}
+    
 }
