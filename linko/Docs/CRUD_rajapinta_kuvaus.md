@@ -59,10 +59,12 @@ Polku: GET localhost:8080/orders/:pk
 
 
 Näytä kaikki liput:
+
 Polku: GET localhost:8080/tickets/
 
 
 Näytä tietty lippu:
+
 Polku: GET localhost:8080/tickets/:pk
 
 
@@ -78,15 +80,19 @@ palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään da
 Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
 Polku: POST localhost:8080/events/:pk
 
+
 #### Order (Täydennetään myöhemmin)
 
 Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
+
 Polku: POST localhost:8080/orders/:pk
 
 #### Ticket (Täydennetään myöhemmin)
 
 Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä.
+
 Polku: POST localhost:8080/tickets/:pk
+
 
 ## PUT
 
@@ -95,33 +101,45 @@ PUT-komennolla päivitetään tietoja. PUT korvaa olemassa olevan resurssin koko
 ### Event
 
 Tapahtuman päivittäminen.
+
 Polku: PUT localhost:8080/events/:pk
+
 
 ### Order (Täydennetään myöhemmin)
 
 Tilauksen päivittäminen.
+
 Polku: PUT localhost:8080/orders/:pk
+
 
 ### Ticket (Täydennetään myöhemmin)
 
 Yksittäisen lipun päivittäminen.
+
 Polku: PUT localhost:8080/tickets/:pk
+
 
 ## DELETE
 
 Delete poistaa resurssin kokonaisuudessaan. Poistettava resurssi tunnistetaan pyynnön URI:lla.
 
+
 ##### Event
 
 Tapahtuman poistaminen.
+
 Polku: DELETE localhost:8080/events/:pk
+
 
 ##### Order (Täydennetään myöhemmin)
 
 Tilauksen poistaminen.
+
 Polku: DELETE localhost:8080/orders/:pk
+
 
 ##### Ticket (Täydennetään myöhemmin)
 
 Lipun poistaminen.
+
 Polku: DELETE localhost:8080/tickets/:pk
