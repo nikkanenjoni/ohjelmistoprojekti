@@ -26,7 +26,7 @@ public class Event {
 	private String event;
 	
 	@ManyToOne
-	@JoinColumn(name = "CityID")
+	@JoinColumn(name = "cityID")
 	@NotNull
 	private City city;
 	
