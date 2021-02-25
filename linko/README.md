@@ -136,7 +136,7 @@ Polku: GET localhost:8080/events/
 
 Näytä tietty tapahtuma:
 
-Polku: GET localhost:8080/event/:pk
+Polku: GET localhost:8080/events/:pk
 
 ##### Order
 
