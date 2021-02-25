@@ -18,7 +18,7 @@ import eu.codecache.linko.domain.EventRepository;
 @Controller
 public class EventController {
 	
-	// viittaus EventRepositoryyn
+	// viittaus EventRepositoryyn. Autowire the repository so that we can retrieve and save data to database.
 	@Autowired
 	public EventRepository repository;
 
@@ -34,8 +34,8 @@ public class EventController {
 	
 	
 	// Delete-toiminnallisuus:
-	 @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET) //{id} is the path variable. you can delete by localhost/8080/idnumber
-	 public String deleteBook(@PathVariable("id") Long eventID, Model model) { // saves it to the variable BookId
+	 @RequestMapping(value = "/events/delete/{id}", method = RequestMethod.GET) //{id} is the path variable. you can delete by localhost/8080/idnumber
+	 public String deleteBook(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
 	 	repository.deleteById(eventID);
 	     return "redirect:../events";
 	 }  
