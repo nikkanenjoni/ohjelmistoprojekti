@@ -2,6 +2,7 @@ package eu.codecache.linko.web;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,15 +28,24 @@ public class EventController {
 		return "test";
 	}
 	
+	// näytä kaikki tapahtumat
 	@GetMapping("/events")
-	public List<Event> retrieveAllEvents() {
-		return (List<Event>) repository.findAll();
+	public List<Event> all() {
+		return repository.findAll();
 	}
+	
+	// näytä yksi tapahtuma
+	// Single item
+	 @GetMapping("/events/{id}")
+	public Optional<Event> findById(Long eventID) {
+
+	    return repository.findById(eventID);
+	 }
 	
 	
 	// Delete-toiminnallisuus:
 	 @RequestMapping(value = "/events/delete/{id}", method = RequestMethod.GET) //{id} is the path variable. you can delete by localhost/8080/idnumber
-	 public String deleteBook(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
+	 public String deleteEvent(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
 	 	repository.deleteById(eventID);
 	     return "redirect:../events";
 	 }  
