@@ -31,6 +31,7 @@ Code: 404 Not found
 
 Tapahtuma ID:llä 1234 tietokannassa, jonne käyttäjä on tallentanut tapahtuman nimen, ajan ja tapahtumapaikan. Kuvaus ei ole pakollinen.
 
+
 {
     "id": 1234,
     "event" = "Anna Puu juhlakiertue";
@@ -43,32 +44,30 @@ Tapahtuma ID:llä 1234 tietokannassa, jonne käyttäjä on tallentanut tapahtuma
 }
 
 
+
 ### Order (Täydennetään myöhemmin)
 
 
 Näytä kaikki tilaukset:
-
 Polku: GET localhost:8080/orders/
 
 
 Näytä tietty tilaus:
-
 Polku: GET localhost:8080/orders/:pk
 
-### Ticket (Täydennetään myöhemmin)
+#### Ticket (Täydennetään myöhemmin)
 
 
-Näytä kaikki tapahtumat:
-
+Näytä kaikki liput:
 Polku: GET localhost:8080/tickets/
 
 
-Näytä tietty tapahtuma:
-
+Näytä tietty lippu:
 Polku: GET localhost:8080/tickets/:pk
 
 
 ## POST
+
 
 Postilla luodaan uusia tietoja. POST luo uuden resurssin. Uudelle resurssille annetaan URI, jonka palvelin
 palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään dataa olemassaolevalle resurssille.
@@ -77,19 +76,16 @@ palauttaa kutsujalle. POST-pyyntöä käytetään usein myös lähettämään da
 #### Event
 
 Uuden tapahtuman luomiseen. Vaatii käyttäjäoikeudet.
-
 Polku: POST localhost:8080/events/:pk
 
-#### Order
+#### Order (Täydennetään myöhemmin)
 
 Uuden tilauksen luomiseen, tapahtuu lippuoston yhteydessä.
-
 Polku: POST localhost:8080/orders/:pk
 
-#### Ticket
+#### Ticket (Täydennetään myöhemmin)
 
-Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä. Lipussa lippuID, lipputyyppi ja tapahtuman tiedot.
-
+Uuden lipun luomiseen, tapahtuu lippuoston yhteydessä.
 Polku: POST localhost:8080/tickets/:pk
 
 ## PUT
@@ -99,19 +95,16 @@ PUT-komennolla päivitetään tietoja. PUT korvaa olemassa olevan resurssin koko
 ### Event
 
 Tapahtuman päivittäminen.
-
 Polku: PUT localhost:8080/events/:pk
 
 ### Order (Täydennetään myöhemmin)
 
 Tilauksen päivittäminen.
-
 Polku: PUT localhost:8080/orders/:pk
 
 ### Ticket (Täydennetään myöhemmin)
 
 Yksittäisen lipun päivittäminen.
-
 Polku: PUT localhost:8080/tickets/:pk
 
 ## DELETE
@@ -121,17 +114,14 @@ Delete poistaa resurssin kokonaisuudessaan. Poistettava resurssi tunnistetaan py
 ##### Event
 
 Tapahtuman poistaminen.
-
 Polku: DELETE localhost:8080/events/:pk
 
 ##### Order (Täydennetään myöhemmin)
 
 Tilauksen poistaminen.
-
 Polku: DELETE localhost:8080/orders/:pk
 
 ##### Ticket (Täydennetään myöhemmin)
 
 Lipun poistaminen.
-
 Polku: DELETE localhost:8080/tickets/:pk
