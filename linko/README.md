@@ -138,6 +138,8 @@ Näytä tietty tapahtuma:
 
 Polku: GET localhost:8080/events/:pk
 
+[Tarkempi kuvaus](Docs/CRUD_rajapinta_kuvaus.md) Sisältöesimerkit, paluukoodit, virheviestit
+
 ##### Order
 
 
