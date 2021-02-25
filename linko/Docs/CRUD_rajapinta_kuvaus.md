@@ -1,14 +1,19 @@
 # Tänne CRUD-toimintopyynnön metodi, polku, polkuparametrit, query-parametrit ja sisältö ja niistä vastauksen paluukoodi ja sisältö
 
-# GET
+## GET
 
-## Näytä valitun tapahtuman tiedot.
-Get the details of the currently Authenticated User along with basic subscription information.
+#### Näytä valitun tapahtuman tiedot.
+Sisältää tapahtuman nimen, tapahtumapaikan, kapasiteetin, kuvauksen ja tapahtuma-ajan.
 
 ### Vastauksen paluukoodit
 
-Onnistunut vastaus
-Code : 200 OK
+Onnistunut vastaus:
+
+Koodi : 200
+
+Epäonnistunut vastaus:
+
+Koodi : 404 NOT FOUND
 
 ### Sisältöesimerkkejä:
 
@@ -23,6 +28,7 @@ Tapahtuma ID:llä 1234 tietokannassa, jonne käyttäjä on tallentanut tapahtuma
 	"capacity" = 500;
 	"description" = "";
 	"dateTime" = "2022/08/22 19:00:00";
-	}
+
+}
 
 
