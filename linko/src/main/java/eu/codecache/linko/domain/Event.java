@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // tapahtuman tiedot (paikka, aika, nimi, kapasiteetti)
 @Entity
 public class Event {
@@ -25,9 +27,10 @@ public class Event {
 	@NotNull
 	private String event;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cityID")
-	@NotNull
+	// @NotNull
 	private City city;
 
 	@NotNull

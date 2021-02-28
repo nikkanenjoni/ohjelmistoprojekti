@@ -17,6 +17,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	
 	// delete-toiminnallisuus
 	void deleteById(long eventID);
+	
+	
 
 	
 }

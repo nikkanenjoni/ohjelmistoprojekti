@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+//import eu.codecache.linko.domain.City;
+import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
 import eu.codecache.linko.exception.EventNotFoundException;
@@ -32,10 +34,11 @@ import eu.codecache.linko.exception.EventNotFoundException;
 @RestController
 public class EventController {
 
-	// viittaus EventRepositoryyn. Autowire the repository so that we can retrieve
+	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that we can retrieve
 	// and save data to database.
 	@Autowired
 	public EventRepository repository;
+	public CityRepository cityrepository;
 
 	// displays ALL events in the database
 	@GetMapping("/api/events")
@@ -46,6 +49,7 @@ public class EventController {
 	@PostMapping("/api/event")
 	public @ResponseBody Event newEvent(Event event) {
 		repository.save(event);
+		
 		return event;
 	}
 
@@ -89,11 +93,11 @@ public class EventController {
 	}
 
 	// Delete-toiminnallisuus:
-	@RequestMapping(value = "/events/delete/{id}", method = RequestMethod.GET) // {id} is the path variable. you can
+	@RequestMapping(value = "/api/events/delete/{id}", method = RequestMethod.GET) // {id} is the path variable. you can
 																				// delete by localhost/8080/idnumber
 	public String deleteEvent(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
 		repository.deleteById(eventID);
-		return "redirect:../events";
+		return "Event deleted";
 	}
 
 }

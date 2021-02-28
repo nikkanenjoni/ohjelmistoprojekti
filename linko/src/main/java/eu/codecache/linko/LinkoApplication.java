@@ -38,6 +38,8 @@ public class LinkoApplication {
 					6, "", LocalDateTime.now()));
 			eRepo.save(new Event("Antin rokkibändi", cRepo.findCityByCity("Rovaniemi").get(0), "Kellariklubi", 150,
 					"Hieno bändi!", LocalDateTime.now()));
+			eRepo.save(new Event("Matin rokkibändi", cRepo.findCityByCity("Rovaniemi").get(0), "Pieniklubi", 100,
+					"Hieno bändi!", LocalDateTime.now()));
 		};
 	}
 
