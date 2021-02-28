@@ -2,8 +2,8 @@ package eu.codecache.linko.domain;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TicketRepository extends CrudRepository<Ticket, Long> {
+public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	
 }
