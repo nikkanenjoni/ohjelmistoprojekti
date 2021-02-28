@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // tapahtuman tiedot (paikka, aika, nimi, kapasiteetti)
 @Entity
 public class Event {
@@ -21,29 +23,33 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
 	private long eventID;
-	
+
 	@NotNull
 	private String event;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cityID")
-	@NotNull
+	// @NotNull
 	private City city;
-	
-	
+
 	@NotNull
 	private String eventPlace;
-	
+
 	@NotNull
 	private int capacity;
-	
+
 	private String description;
-	
+
 	@NotNull
 	private LocalDateTime dateTime;
 
 	public Event() {
 		// default constructor
+	}
+
+	public void setEventID(long eventID) {
+		this.eventID = eventID;
 	}
 
 	public String getEvent() {
@@ -93,7 +99,7 @@ public class Event {
 	public void setDatetime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
-	
+
 	// constructor
 	public Event(@NotNull String event, @NotNull City city, @NotNull String eventPlace, @NotNull int capacity,
 			String description, @NotNull LocalDateTime dateTime) {
@@ -105,9 +111,5 @@ public class Event {
 		this.description = description;
 		this.dateTime = dateTime;
 	}
-
-	
-
-
 
 }

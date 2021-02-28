@@ -25,7 +25,7 @@ public class City {
 	private long cityID;
 	
 	// kuntanimi
-	@NotNull
+	//@NotNull
 	private String city;
 
 	public String getCity() {
@@ -41,7 +41,7 @@ public class City {
 		
 	}
 	
-	public City(@NotNull String city) {
+	public City(/*@NotNull*/ String city) {
 		super();
 		this.city = city;
 	}
