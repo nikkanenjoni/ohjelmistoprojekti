@@ -15,11 +15,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Event {
 
+	// Application won't run with this annotation, let's solve it later
+//	@OneToMany
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
-	// Application won't run with this annotation, let's solve it later
-//	@OneToMany
 	private long eventID;
 	
 	@NotNull
@@ -93,7 +93,6 @@ public class Event {
 	public void setDatetime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
-
 	
 	// constructor
 	public Event(@NotNull String event, @NotNull City city, @NotNull String eventPlace, @NotNull int capacity,

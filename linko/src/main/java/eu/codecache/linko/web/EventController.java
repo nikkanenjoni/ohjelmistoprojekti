@@ -3,12 +3,9 @@ package eu.codecache.linko.web;
 
 import java.util.List;
 import java.util.Optional;
-<<<<<<< HEAD
 
 import javax.validation.Valid;
 
-=======
->>>>>>> 3ad69f86818069f808dc2a61f872a53513cf8b01
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
@@ -23,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
 
-
-@Controller
+/*
+ * Changed from @Controller -> @RestController (Ville)
+ */
+@RestController
 public class EventController {
 	
 	// viittaus EventRepositoryyn. Autowire the repository so that we can retrieve and save data to database.
@@ -41,12 +41,11 @@ public class EventController {
 	}
 	
 	// näytä kaikki tapahtumat
-	@GetMapping("/events")
-	public List<Event> all() {
+	@GetMapping("/api/events")
+	public @ResponseBody List<Event> all() {
 		return repository.findAll();
 	}
 	
-<<<<<<< HEAD
 	@PostMapping("/events")
 		Event newEmployee(@RequestBody Event newEvent) {
 		return repository.save(newEvent);
@@ -56,7 +55,6 @@ public class EventController {
 	public Event update(@RequestBody Event eventID) {
 	    return repository.save(eventID);
 	}
-=======
 	// näytä yksi tapahtuma
 	// Single item
 	 @GetMapping("/events/{id}")
@@ -64,8 +62,6 @@ public class EventController {
 
 	    return repository.findById(eventID);
 	 }
-	
->>>>>>> 3ad69f86818069f808dc2a61f872a53513cf8b01
 	
 	// Delete-toiminnallisuus:
 	 @RequestMapping(value = "/events/delete/{id}", method = RequestMethod.GET) //{id} is the path variable. you can delete by localhost/8080/idnumber
