@@ -1,5 +1,42 @@
 # Tänne CRUD-toimintopyynnön metodi, polku, polkuparametrit, query-parametrit ja sisältö ja niistä vastauksen paluukoodi ja sisältö
 
+# RestAPI 
+
+Currently only http://localhost:8080/api works as test base for the Rest-api. 
+All endpoints are open at the moment. Authentication is added later. 
+
+## Events endpoint
+
+Each endpoint is used to view events or to add/update/delete them.
+
+| Method | Endpoint | Access | Description|
+|----|----|----|----|
+| GET | /api/events | -- | Lists ALL events in database |
+| GET | /api/event/:id | -- | Displays information of event with given `:id` |
+| POST | /api/event | -- | Adds new event to database |
+| PUT | /api/event/:id | -- | Updates the event with given `:id` |
+| DELETE | /api/event/:id | -- | Deleted the event with given `:id` |
+
+### GET events
+
+Lists all events
+
+**URL** : `/api/events/`
+
+**Method** : `GET`
+
+**Auth required** : *not available*
+
+#### Success
+
+**Code** : `200 OK`
+
+**Content** : An example of possible content including three events. 
+
+```JSON
+[{"event":"Hippafesti","city":{"city":"Rovaniemi"},"eventPlace":"Hippakenttä","capacity":1000,"description":"Kuvaus tapahtumasta tähän.","datetime":"2021-02-28T13:27:44.796903"},{"event":"Musadiggarit","city":{"city":"Ilmala"},"eventPlace":"Mutakenttä jäähallin takana","capacity":6,"description":"","datetime":"2021-02-28T13:27:44.820266"},{"event":"Antin rokkibändi","city":{"city":"Rovaniemi"},"eventPlace":"Kellariklubi","capacity":150,"description":"Hieno bändi!","datetime":"2021-02-28T13:27:44.8259"}]
+```
+
 ## GET
 
 
