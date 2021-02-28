@@ -25,8 +25,6 @@ Each endpoint is used to view events or to add/update/delete them.
 
 ## GET events
 
-<details>
-
 Lists all events
 
 **URL** : `/api/events/`
@@ -35,67 +33,68 @@ Lists all events
 
 **Auth required** : *not available*
 
+<details>
+
+
 #### Success
 
-**Code** : `200 OK`
-
-**Content** : An example of possible content including three events. 
-
-```JSON
-[
-    {
-        "event":"Hippafesti",
-        "city":
-        {
-            "city":"Rovaniemi"
-        },
-        "eventPlace":"Hippakenttä",
-        "capacity":1000,
-        "description":"Kuvaus tapahtumasta tähän.",
-        "datetime":"2021-02-28T13:27:44.796903"
-    },
-    {
-        "event":"Musadiggarit",
-        "city":
-        {
-            "city":"Ilmala"
-        },
-        "eventPlace":"Mutakenttä jäähallin takana",
-        "capacity":6,
-        "description":"",
-        "datetime":"2021-02-28T13:27:44.820266"
-    },
-    {
-        "event":"Antin rokkibändi",
-        "city":
-        {
-            "city":"Rovaniemi"
-        },
-        "eventPlace":"Kellariklubi",
-        "capacity":150,
-        "description":"Hieno bändi!",
-        "datetime":"2021-02-28T13:27:44.8259"
-    }
-]
-```
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content including three events. 
+> 
+> ```JSON
+> [
+>     {
+>         "event":"Hippafesti",
+>         "city":
+>         {
+>             "city":"Rovaniemi"
+>         },
+>         "eventPlace":"Hippakenttä",
+>         "capacity":1000,
+>         "description":"Kuvaus tapahtumasta tähän.",
+>         "datetime":"2021-02-28T13:27:44.796903"
+>     },
+>     {
+>         "event":"Musadiggarit",
+>         "city":
+>         {
+>             "city":"Ilmala"
+>         },
+>         "eventPlace":"Mutakenttä jäähallin takana",
+>         "capacity":6,
+>         "description":"",
+>         "datetime":"2021-02-28T13:27:44.820266"
+>     },
+>     {
+>         "event":"Antin rokkibändi",
+>         "city":
+>         {
+>             "city":"Rovaniemi"
+>         },
+>         "eventPlace":"Kellariklubi",
+>         "capacity":150,
+>         "description":"Hieno bändi!",
+>         "datetime":"2021-02-28T13:27:44.8259"
+>     }
+> ]
+> ```
 
 </details>
 
 
 ## POST event
 
-<details>
-
 Allow creation of new events to database. 
 
 **URL** : `/api/event`
 
 **Method** : `POST`
-
+ 
 **Auth required** : *not available*
-
+ 
 **Data constrains**
-
+ 
 Following JSON-body is required.
 
 ```JSON
@@ -109,42 +108,45 @@ Following JSON-body is required.
 }
 ```
 
+<details>
+
+
 #### Success
 
-**Condition** : If all information given was valid. 
-
-**Code** : `201 CREATED`
-
-**Content example**
-
-```JSON
-{
-    "event":"Hippafesti",
-    "city":
-    {
-        "city":"Rovaniemi"
-    },
-    "eventPlace":"Hippakenttä",
-    "capacity":1000,
-    "description":"Kuvaus tapahtumasta tähän.",
-    "datetime":"2021-02-28T13:27:44.796903"
-}
-```
-
-#### Error
-
-**Condition** : Some of the information given wasn't tested valid. 
-
-**Code** : `400 BAD REQUEST`
-
-**Content example**
-
-```JSON
-{
-    "event":"This field has to be atleast 10 charactes long",
-    "capacity": "This field cannot be null"
-}
-```
+> **Condition** : If all information given was valid. 
+> 
+> **Code** : `201 CREATED`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "event":"Hippafesti",
+>     "city":
+>     {
+>         "city":"Rovaniemi"
+>     },
+>     "eventPlace":"Hippakenttä",
+>     "capacity":1000,
+>     "description":"Kuvaus tapahtumasta tähän.",
+>     "datetime":"2021-02-28T13:27:44.796903"
+> }
+> ```
+> 
+> #### Error
+> 
+> **Condition** : Some of the information given wasn't tested valid. 
+> 
+> **Code** : `400 BAD REQUEST`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "event":"This field has to be atleast 10 charactes long",
+>     "capacity": "This field cannot be null"
+> }
+> ```
 
 </details>
 
