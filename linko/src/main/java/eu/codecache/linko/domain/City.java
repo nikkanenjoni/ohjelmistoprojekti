@@ -35,7 +35,12 @@ public class City {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
+	
+	// We need a default constructor for SpringBoot
+	public City() {
+		
+	}
+	
 	public City(@NotNull String city) {
 		super();
 		this.city = city;
