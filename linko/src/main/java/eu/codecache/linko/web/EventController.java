@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
+import eu.codecache.linko.exception.EventNotFoundException;
 
 /*
  * Changed from @Controller -> @RestController (Ville)
@@ -51,31 +52,40 @@ public class EventController {
 	@PutMapping("/api/event/{id}")
 	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) {
 		// first let's see if we have an event with the id
-		List<Event> oldEventList = repository.findByEventID(eventID);
-		if (oldEventList.size() > 0) {
-			// ok, we have found the event
-			Event oldEvent = oldEventList.get(0);
-			// update it with the new information
-			oldEvent.setEvent(event.getEvent());
-			oldEvent.setEventPlace(event.getEventPlace());
-			oldEvent.setCapacity(event.getCapacity());
-			oldEvent.setDatetime(event.getDatetime());
-			// now we should be able to (over)write to database without accidentally
-			// creating a new event
-			repository.save(oldEvent);
-			// return the updated event
-			return oldEvent;
+		try {
+			List<Event> oldEventList = repository.findByEventID(eventID);
+			if (oldEventList.size() > 0) {
+				// ok, we have found the event
+				Event oldEvent = oldEventList.get(0);
+				// update it with the new information
+				oldEvent.setEvent(event.getEvent());
+				oldEvent.setEventPlace(event.getEventPlace());
+				oldEvent.setCapacity(event.getCapacity());
+				oldEvent.setDatetime(event.getDatetime());
+				// now we should be able to (over)write to database without accidentally
+				// creating a new event
+				repository.save(oldEvent);
+				// return the updated event
+				return oldEvent;
+			}
+			// if we didn't find the event, throw exception
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+			// this has to be cleaned up later...
+		} catch (EventNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
-		// if we didn't find the event, throw exception 
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 	}
 
 	// näytä yksi tapahtuma
 	// Single item
-	@GetMapping("/events/{id}")
-	public Optional<Event> findById(Long eventID) {
+	@GetMapping("/api/event/{id}")
+	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) {
 
-		return repository.findById(eventID);
+		try {
+			return repository.findByEventID(eventID).get(0);
+		} catch (EventNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+		}
 	}
 
 	// Delete-toiminnallisuus:
