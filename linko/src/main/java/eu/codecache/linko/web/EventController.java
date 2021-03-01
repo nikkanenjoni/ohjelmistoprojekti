@@ -1,15 +1,15 @@
 package eu.codecache.linko.web;
 
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
-import javax.validation.Valid;
+//import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
+//import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,14 +47,14 @@ public class EventController {
 		return repository.findAll();
 	}
 
-	@PostMapping("/api/event")
+	@PostMapping("/api/events")
 	public @ResponseBody Event newEvent(@RequestBody Event event) {
 		repository.save(event);
 
 		return event;
 	}
 
-	@PutMapping("/api/event/{id}")
+	@PutMapping("/api/events/{id}")
 	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) {
 		// first let's see if we have an event with the id
 		try {
@@ -77,7 +77,7 @@ public class EventController {
 
 	// näytä yksi tapahtuma
 	// Single item
-	@GetMapping("/api/event/{id}")
+	@GetMapping("/api/events/{id}")
 	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) {
 
 		try {
