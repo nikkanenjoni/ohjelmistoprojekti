@@ -47,7 +47,7 @@ public class EventController {
 	}
 
 	@PostMapping("/api/event")
-	public @ResponseBody Event newEvent(Event event) {
+	public @ResponseBody Event newEvent(@RequestBody Event event) {
 		repository.save(event);
 		
 		return event;

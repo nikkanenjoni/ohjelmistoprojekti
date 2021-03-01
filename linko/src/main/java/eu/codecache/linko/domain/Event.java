@@ -101,7 +101,7 @@ public class Event {
 	}
 
 	// constructor
-	public Event(@NotNull String event, @NotNull City city, @NotNull String eventPlace, @NotNull int capacity,
+	public Event(@NotNull String event, City city, @NotNull String eventPlace, @NotNull int capacity,
 			String description, @NotNull LocalDateTime dateTime) {
 		super();
 		this.event = event;
