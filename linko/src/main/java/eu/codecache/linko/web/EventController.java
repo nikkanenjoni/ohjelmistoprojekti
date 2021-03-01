@@ -34,7 +34,8 @@ import eu.codecache.linko.exception.EventNotFoundException;
 @RestController
 public class EventController {
 
-	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that we can retrieve
+	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that
+	// we can retrieve
 	// and save data to database.
 	@Autowired
 	public EventRepository repository;
@@ -49,7 +50,7 @@ public class EventController {
 	@PostMapping("/api/event")
 	public @ResponseBody Event newEvent(@RequestBody Event event) {
 		repository.save(event);
-		
+
 		return event;
 	}
 
@@ -57,24 +58,18 @@ public class EventController {
 	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) {
 		// first let's see if we have an event with the id
 		try {
-			List<Event> oldEventList = repository.findByEventID(eventID);
-			if (oldEventList.size() > 0) {
-				// ok, we have found the event
-				Event oldEvent = oldEventList.get(0);
-				// update it with the new information
-				oldEvent.setEvent(event.getEvent());
-				oldEvent.setEventPlace(event.getEventPlace());
-				oldEvent.setCapacity(event.getCapacity());
-				oldEvent.setDatetime(event.getDatetime());
-				// now we should be able to (over)write to database without accidentally
-				// creating a new event
-				repository.save(oldEvent);
-				// return the updated event
-				return oldEvent;
-			}
-			// if we didn't find the event, throw exception
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-			// this has to be cleaned up later...
+			Event dbEvent = repository.findByEventID(eventID);
+			// ok, we have found the event
+			// update it with the new information
+			dbEvent.setEvent(event.getEvent());
+			dbEvent.setEventPlace(event.getEventPlace());
+			dbEvent.setCapacity(event.getCapacity());
+			dbEvent.setDatetime(event.getDatetime());
+			// now we should be able to (over)write to database without accidentally
+			// creating a new event
+			repository.save(dbEvent);
+			// return the updated event
+			return dbEvent;
 		} catch (EventNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
@@ -86,7 +81,7 @@ public class EventController {
 	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) {
 
 		try {
-			return repository.findByEventID(eventID).get(0);
+			return repository.findByEventID(eventID);
 		} catch (EventNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
@@ -94,7 +89,7 @@ public class EventController {
 
 	// Delete-toiminnallisuus:
 	@RequestMapping(value = "/api/events/delete/{id}", method = RequestMethod.GET) // {id} is the path variable. you can
-																				// delete by localhost/8080/idnumber
+																					// delete by localhost/8080/idnumber
 	public String deleteEvent(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
 		repository.deleteById(eventID);
 		return "Event deleted";

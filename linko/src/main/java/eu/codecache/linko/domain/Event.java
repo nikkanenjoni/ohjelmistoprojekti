@@ -47,6 +47,10 @@ public class Event {
 	public Event() {
 		// default constructor
 	}
+	
+	public long getEventID() {
+		return eventID;
+	}
 
 	public void setEventID(long eventID) {
 		this.eventID = eventID;
