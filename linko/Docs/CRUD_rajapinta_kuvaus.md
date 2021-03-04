@@ -14,10 +14,10 @@ Each endpoint is used to view events or to add/update/delete them.
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
 | `GET` | [/api/events](#GET-events) | -- | Lists ALL events in database |
-| `GET` | [/api/event/:id](#GET-event-id) | -- | Displays information of event with given `:id` |
-| `POST` | [/api/event](#POST-event) | -- | Adds new event to database |
-| `PUT` | [/api/event/:id](#PUT-event-id) | -- | Updates the event with given `:id` |
-| `DELETE` | [/api/event/:id](#DELETE-event-id) | -- | Deleted the event with given `:id` |
+| `GET` | [/api/events/:id](#GET-event-id) | -- | Displays information of event with given `:id` |
+| `POST` | [/api/events](#POST-event) | -- | Adds new event to database |
+| `PUT` | [/api/events/:id](#PUT-event-id) | -- | Updates the event with given `:id` |
+| `DELETE` | [/api/events/:id](#DELETE-event-id) | -- | Deleted the event with given `:id` |
 
 
 
@@ -85,7 +85,7 @@ Lists all events
 
 Views information of a spesific event. 
 
-**URL** : `/api/event/:id`
+**URL** : `/api/events/:id`
 
 **Method** : GET 
 
@@ -135,7 +135,7 @@ Views information of a spesific event.
 
 Allow creation of new events to database. 
 
-**URL** : `/api/event`
+**URL** : `/api/events`
 
 **Method** : `POST`
  
@@ -202,7 +202,7 @@ Following JSON-body is required.
 
 This endpoint allows updating of a specific event. 
 
-**URL** : `/api/event/:id`
+**URL** : `/api/events/:id`
 
 **Method** : `PUT`
 
@@ -261,7 +261,7 @@ Following JSON-body is required.
 
 This endpoint allows deleting of a specific event from database. 
 
-**URL** : `/api/event/:id`
+**URL** : `/api/events/:id`
 
 **Method** : `DELETE`
  
