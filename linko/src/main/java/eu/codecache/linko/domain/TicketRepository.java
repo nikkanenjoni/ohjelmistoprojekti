@@ -12,6 +12,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	// get-toiminnallisuus ( hae kaikki liput )
 	List<Ticket> findAll();
 
+<<<<<<< HEAD
 	// get, yksi lippu
 	// this is not working as intented, if eventID is not found,
 	// it return empty event instead of throwing EventNotFoundException
@@ -20,5 +21,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
 	// delete-toiminnallisuus
 	void deleteById(long ticketID);
+=======
+>>>>>>> 0af9358c4db6c5cd4ba11662c3a2de6f4f6df851
 
 }
