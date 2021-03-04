@@ -9,5 +9,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	
 	// get all tickets-toiminnallisuus (TicketController)
 	List<Ticket> findAll();
-	
+
+
 }
