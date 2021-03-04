@@ -41,28 +41,29 @@ public class TicketController {
 	//controlleriin liittyvät repot (alustavasti)
 	@Autowired
 	public OrderRepository Orepository;
-	public TicketRepository repository;
+	public TicketRepository Trepository;
 	public TicketOrderRepository ticketorderRepo;
 	
 	// displays ALL tickets in the database
 	@GetMapping("/api/tickets")
 	public @ResponseBody List<Ticket> all() {
-		return repository.findAll();
+		return Trepository.findAll();
 	}
 	
 
 	@PostMapping("/api/tickets")
 	public @ResponseBody Ticket newTicket(@RequestBody Ticket ticket) {
-		repository.save(ticket);
+		Trepository.save(ticket);
 
 		return ticket;
 	}
 
+	
 	@PutMapping("/api/tickets/{id}")
 	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @RequestBody Ticket ticket) {
 		// first let's see if we have an event with the id
 		try {
-			Ticket dbTicket = repository.findByTicketID(ticketID);
+			Ticket dbTicket = Trepository.findByTicketID(ticketID);
 			// ok, we have found the event
 			// update it with the new information
 			dbTicket.setTicketType(ticket.getTicketType());
@@ -70,21 +71,22 @@ public class TicketController {
 			dbTicket.setDescription(ticket.getDescription());
 			// now we should be able to (over)write to database without accidentally
 			// creating a new event
-			repository.save(dbTicket);
+			Trepository.save(dbTicket);
 			// return the updated event
 			return dbTicket;
 		} catch (TicketNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
-
+	
+	
 	// näytä yksi tapahtuma
 	// Single item
 	@GetMapping("/api/tickets/{id}")
 	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
 
 		try {
-			return repository.findByTicketID(ticketID);
+			return Trepository.findByTicketID(ticketID);
 		} catch (TicketNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
@@ -94,7 +96,7 @@ public class TicketController {
 	@RequestMapping(value = "/api/tickets/delete/{id}", method = RequestMethod.GET) // {id} is the path variable. you can
 																					// delete by localhost/8080/idnumber
 	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) { // saves it to the variable ticketID
-		repository.deleteById(ticketID);
+		Trepository.deleteById(ticketID);
 		return "Ticket deleted";
 	}
 

@@ -1,7 +1,8 @@
 package eu.codecache.linko;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
+
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,12 +13,16 @@ import eu.codecache.linko.domain.City;
 import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
+import eu.codecache.linko.domain.Order;
+import eu.codecache.linko.domain.OrderRepository;
 import eu.codecache.linko.domain.Ticket;
+import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.TicketRepository;
 import eu.codecache.linko.domain.TicketType;
 import eu.codecache.linko.domain.TicketTypeRepository;
 
-@SpringBootApplication
+//@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"eu.codecache"})
 public class LinkoApplication {
 
 	public static void main(String[] args) {
@@ -25,7 +30,7 @@ public class LinkoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner h2Filler(CityRepository cRepo, EventRepository eRepo, TicketRepository tRepo, TicketTypeRepository tyRepo) {
+	public CommandLineRunner h2Filler(CityRepository cRepo, EventRepository eRepo, TicketRepository tRepo, TicketTypeRepository tyRepo, TicketOrderRepository toRepo, OrderRepository oRepo) {
 		return (args) -> {
 			System.out.println("Running CommandLineRunner");
 			/*
@@ -50,6 +55,8 @@ public class LinkoApplication {
 			tRepo.save(new Ticket(tyRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(5), 20.00, ""));
 			tRepo.save(new Ticket(tyRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(5), 20.00, ""));
 			tRepo.save(new Ticket(tyRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(6), 20.00, ""));
+			// lisätään tässä muutama order
+			//oRepo.save(new Order());
 					
 		};
 	}
