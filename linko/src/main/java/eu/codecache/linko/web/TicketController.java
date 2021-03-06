@@ -32,73 +32,62 @@ import eu.codecache.linko.domain.OrderRepository;
 import eu.codecache.linko.domain.Ticket;
 import eu.codecache.linko.domain.TicketRepository;
 import eu.codecache.linko.exception.EventNotFoundException;
-import eu.codecache.linko.exception.TicketNotFoundException;
 
 @RestController
 public class TicketController {
 
-	
-	//controlleriin liittyvät repot (alustavasti)
 	@Autowired
-	public OrderRepository Orepository;
-	public TicketRepository Trepository;
-	public TicketOrderRepository ticketorderRepo;
-	
+	public OrderRepository oRepository;
+	public TicketRepository tRepository;
+	public TicketOrderRepository ticketOrderRepo;
+
 	// displays ALL tickets in the database
 	@GetMapping("/api/tickets")
 	public @ResponseBody List<Ticket> all() {
-		return Trepository.findAll();
+		return tRepository.findAll();
 	}
-	
 
 	@PostMapping("/api/tickets")
 	public @ResponseBody Ticket newTicket(@RequestBody Ticket ticket) {
-		Trepository.save(ticket);
-
+		tRepository.save(ticket);
 		return ticket;
 	}
 
-	
+	/*
+	 * this one needs quite some fixing, but we have bigger priorities at the moment
+	 */
 	@PutMapping("/api/tickets/{id}")
 	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @RequestBody Ticket ticket) {
 		// first let's see if we have an event with the id
-		try {
-			Ticket dbTicket = Trepository.findByTicketID(ticketID);
-			// ok, we have found the event
-			// update it with the new information
-			dbTicket.setTicketType(ticket.getTicketType());
-			dbTicket.setEvent(ticket.getEvent());
-			dbTicket.setDescription(ticket.getDescription());
-			// now we should be able to (over)write to database without accidentally
-			// creating a new event
-			Trepository.save(dbTicket);
-			// return the updated event
-			return dbTicket;
-		} catch (TicketNotFoundException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-		}
+		Ticket dbTicket = tRepository.findByTicketID(ticketID);
+		// ok, we have found the event
+		// update it with the new information
+		dbTicket.setTicketType(ticket.getTicketType());
+		dbTicket.setEvent(ticket.getEvent());
+		dbTicket.setDescription(ticket.getDescription());
+		// now we should be able to (over)write to database without accidentally
+		// creating a new event
+		tRepository.save(dbTicket);
+		// return the updated event
+		return dbTicket;
 	}
-	
-	
-	// näytä yksi tapahtuma
+
 	// Single item
 	@GetMapping("/api/tickets/{id}")
 	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
-
-		try {
-			return Trepository.findByTicketID(ticketID);
-		} catch (TicketNotFoundException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-		}
+		/*
+		 * For now, let's keep this simple & stupid -> we don't handle case where ticket
+		 * with the ID isn't found (let's fix that later, but for now, an issue on
+		 * Github is enough)
+		 */
+		return tRepository.findByTicketID(ticketID);
 	}
 
-	// Delete-toiminnallisuus:
-	@RequestMapping(value = "/api/tickets/delete/{id}", method = RequestMethod.GET) // {id} is the path variable. you can
-																					// delete by localhost/8080/idnumber
-	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) { // saves it to the variable ticketID
-		Trepository.deleteById(ticketID);
+	// Delete-functionality:
+	@RequestMapping(value = "/api/tickets/delete/{id}", method = RequestMethod.GET)
+	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) {
+		tRepository.deleteById(ticketID);
 		return "Ticket deleted";
 	}
 
 }
-

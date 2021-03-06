@@ -1,44 +1,59 @@
 package eu.codecache.linko.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class Order {
+public class Orders {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@NotNull
 	private long orderID;
 
-	// I think this shouldn't be here but instead in the Ticket class
-//	@ManyToOne
-//	@JsonIgnore
-//	@JoinColumn(name = "eventID")
-//	@NotNull
-//	private Event event;
-
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date timestamp;
+	private LocalDateTime datetime;
 
-	public Order() {
+	@OneToMany(mappedBy = "order")
+	private List<TicketOrder> tickets;
+
+	public Orders() {
 		// default constructor
 	}
 
-	public Order(Date timestamp) {
-		this.timestamp = timestamp;
+	public Orders(LocalDateTime datetime) {
+		this.datetime = datetime;
+	}
+
+	public long getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(long orderID) {
+		this.orderID = orderID;
+	}
+
+	public LocalDateTime getDatetime() {
+		return datetime;
+	}
+
+	public void setDatetime(LocalDateTime datetime) {
+		this.datetime = datetime;
+	}
+
+	public List<TicketOrder> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<TicketOrder> tickets) {
+		this.tickets = tickets;
 	}
 
 	@Override
@@ -57,7 +72,7 @@ public class Order {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		Orders other = (Orders) obj;
 		if (orderID != other.orderID)
 			return false;
 		return true;

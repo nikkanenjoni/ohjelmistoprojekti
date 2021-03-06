@@ -24,7 +24,7 @@ public class TicketOrder {
 	@JsonIgnore
 	@JoinColumn(name = "orderID")
 	@NotNull
-	private Order order;
+	private Orders order;
 
 	@ManyToOne
 	@JsonIgnore
@@ -41,7 +41,7 @@ public class TicketOrder {
 		// empty default constructor
 	}
 
-	public TicketOrder(Order order, Ticket ticket, double price) {
+	public TicketOrder(Orders order, Ticket ticket, double price) {
 		super();
 		this.order = order;
 		this.ticket = ticket;
@@ -56,11 +56,11 @@ public class TicketOrder {
 		this.ticketOrderID = ticketOrderID;
 	}
 
-	public Order getOrder() {
+	public Orders getOrder() {
 		return order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(Orders order) {
 		this.order = order;
 	}
 

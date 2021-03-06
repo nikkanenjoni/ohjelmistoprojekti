@@ -1,8 +1,7 @@
 package eu.codecache.linko;
 
 import java.time.LocalDateTime;
-
-
+import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,16 +12,17 @@ import eu.codecache.linko.domain.City;
 import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
-import eu.codecache.linko.domain.Order;
 import eu.codecache.linko.domain.OrderRepository;
+import eu.codecache.linko.domain.Orders;
 import eu.codecache.linko.domain.Ticket;
+import eu.codecache.linko.domain.TicketOrder;
 import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.TicketRepository;
 import eu.codecache.linko.domain.TicketType;
 import eu.codecache.linko.domain.TicketTypeRepository;
 
 //@SpringBootApplication
-@SpringBootApplication(scanBasePackages = {"eu.codecache"})
+@SpringBootApplication(scanBasePackages = { "eu.codecache" })
 public class LinkoApplication {
 
 	public static void main(String[] args) {
@@ -30,19 +30,20 @@ public class LinkoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner h2Filler(CityRepository cRepo, EventRepository eRepo, TicketRepository tRepo, TicketTypeRepository tyRepo, TicketOrderRepository toRepo, OrderRepository oRepo) {
+	public CommandLineRunner h2Filler(CityRepository cRepo, EventRepository eRepo, TicketRepository tRepo,
+			TicketTypeRepository ttRepo, TicketOrderRepository toRepo, OrderRepository oRepo) {
 		return (args) -> {
 			System.out.println("Running CommandLineRunner");
 			/*
 			 * Let's fill H2-database with some testdata to test the server & API
 			 * 
-			 * To make queries directly to database (and to confirm there is data), 
-			 * visit: localhost:8080/h2
+			 * To make queries directly to database (and to confirm there is data), visit:
+			 * localhost:8080/h2
 			 */
 			cRepo.save(new City("Ilmala"));
 			cRepo.save(new City("Rovaniemi"));
-			tyRepo.save(new TicketType("Normaali"));
-			tyRepo.save(new TicketType("Opiskelija"));
+			ttRepo.save(new TicketType("Normaali"));
+			ttRepo.save(new TicketType("Opiskelija"));
 			eRepo.save(new Event("Hippafesti", cRepo.findCityByCity("Rovaniemi").get(0), "Hippakenttä", 1000,
 					"Kuvaus tapahtumasta tähän.", LocalDateTime.now()));
 			eRepo.save(new Event("Musadiggarit", cRepo.findCityByCity("Ilmala").get(0), "Mutakenttä jäähallin takana",
@@ -51,16 +52,23 @@ public class LinkoApplication {
 					"Hieno bändi!", LocalDateTime.now()));
 			eRepo.save(new Event("Matin rokkibändi", cRepo.findCityByCity("Rovaniemi").get(0), "Pieniklubi", 100,
 					"Hieno bändi!", LocalDateTime.now()));
-			// lisätään tässä muutama lippu:
-			tRepo.save(new Ticket(tyRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(5), 20.00, ""));
-			tRepo.save(new Ticket(tyRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(5), 20.00, ""));
-			tRepo.save(new Ticket(tyRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(6), 20.00, ""));
-			// lisätään tässä muutama order
-			//oRepo.save(new Order());
-					
+			// let's add some tickets:
+			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(5), 20.00,
+					""));
+			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(5), 20.00,
+					""));
+			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(6), 20.00,
+					""));
+			// let's add orders:
+			oRepo.save(new Orders(LocalDateTime.now()));
+			oRepo.save(new Orders(LocalDateTime.now()));
+			// now let's get one of the orders and add ticket to it
+			List<Orders> orders = oRepo.findAll();
+			List<Ticket> tickets = tRepo.findAll();
+			toRepo.save(new TicketOrder(orders.get(0), tickets.get(0), tickets.get(0).getPrice()));
+			toRepo.save(new TicketOrder(orders.get(0), tickets.get(1), tickets.get(1).getPrice()));
+
 		};
 	}
-	
-	
 
 }
