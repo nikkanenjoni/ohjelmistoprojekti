@@ -44,7 +44,13 @@ public class OrderController {
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
 			@RequestBody TicketOrderDTO ticketOrderDTO) {
+		/*
+		 * We should make sure we have a valid order here!
+		 */
 		Orders order = orderRepository.findByOrderID(orderID);
+		/*
+		 * ... and same goes for the ticket
+		 */
 		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
 		double price = ticketOrderDTO.getTicketPrice();
 		TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
