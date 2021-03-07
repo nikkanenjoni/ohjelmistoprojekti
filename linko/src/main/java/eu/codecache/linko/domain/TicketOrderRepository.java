@@ -9,5 +9,10 @@ public interface TicketOrderRepository extends JpaRepository<TicketOrder, Long> 
 	// we need to find what tickets are included in specific order
 	List<TicketOrder> findByOrder(Orders order);
 	
-	// For now I guess this is all we need...
+	// We need to find a specific ticketOrder
+	TicketOrder findByTicketOrderID(Long ticktOrderID);
+	
+	// delete ticket, ticketorder:
+	void deleteById(long ticketOrderID);
+
 }

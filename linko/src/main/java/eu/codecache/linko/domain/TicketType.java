@@ -41,6 +41,13 @@ public class TicketType {
 	public void setTicketType(String ticketType) {
 		this.ticketType = ticketType;
 	}
+
+	public TicketType(Long ticketTypeID, String ticketType) {
+		super();
+		this.ticketTypeID = ticketTypeID;
+		this.ticketType = ticketType;
+	}
+	
 	
 	
 
