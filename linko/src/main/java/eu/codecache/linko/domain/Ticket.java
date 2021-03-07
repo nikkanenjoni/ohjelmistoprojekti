@@ -21,17 +21,15 @@ public class Ticket {
 	private Long ticketID;
 	
 	@ManyToOne
-	@JsonIgnore
 	@JoinColumn(name = "ticketTypeID")
 	@NotNull
 	private TicketType ticketType;
 	
 	@ManyToOne
-	@JsonIgnore
 	@JoinColumn(name = "eventID")
 	@NotNull
 	private Event event;
-	
+
 	@NotNull
 	@DecimalMin("0.0")
 	@DecimalMax("1000.0")

@@ -27,7 +27,6 @@ public class TicketOrder {
 	private Orders order;
 
 	@ManyToOne
-	@JsonIgnore
 	@JoinColumn(name = "ticketID")
 	@NotNull
 	private Ticket ticket;
