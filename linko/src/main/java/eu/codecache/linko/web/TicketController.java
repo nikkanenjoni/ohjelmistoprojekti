@@ -65,6 +65,7 @@ public class TicketController {
 		// update it with the new information
 		dbTicket.setTicketType(ticket.getTicketType());
 		dbTicket.setEvent(ticket.getEvent());
+		dbTicket.setPrice(ticket.getPrice());
 		dbTicket.setDescription(ticket.getDescription());
 		// now we should be able to (over)write to database without accidentally
 		// creating a new event
