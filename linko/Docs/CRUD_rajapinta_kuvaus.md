@@ -424,8 +424,7 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
->     "order":"This field has to be atleast 10 charactes long",
->     "capacity": "This field cannot be null"
+>     "datetime":"2021-02-28T13:27:44.
 > }
 > ```
 
@@ -445,15 +444,10 @@ This endpoint allows updating of a specific order.
  
 Following JSON-body is required.
 
-```JSON
-{
-    "order":"name-of-the-order",
-    "city":"name-of-the-city",
-    "orderPlace":"Address of the order",
-    "capacity":1,
-    "description":"An optional description of the order",
-    "datetime":"order date & time in without a time-zone in the ISO-8601"
-}
+ ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
 ```
 
 <details>
@@ -468,15 +462,7 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
->     "order":"Hippafesti",
->     "city":
->     {
->         "city":"Rovaniemi"
->     },
->     "orderPlace":"Hippakenttä",
->     "capacity":1000,
->     "description":"Kuvaus tapahtumasta tähän.",
->     "datetime":"2021-02-28T13:27:44.796903"
+>     "datetime":"2021-02-28T13:27:44.
 > }
 > ```
 
