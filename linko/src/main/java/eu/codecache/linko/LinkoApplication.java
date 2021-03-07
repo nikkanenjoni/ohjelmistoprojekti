@@ -53,7 +53,7 @@ public class LinkoApplication {
 			eRepo.save(new Event("Matin rokkibändi", cRepo.findCityByCity("Rovaniemi").get(0), "Pieniklubi", 100,
 					"Hieno bändi!", LocalDateTime.now()));
 			// let's add some tickets:
-			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Eläkeläinen").get(0), eRepo.findByEventID(5), 20.00,
+			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(5), 20.00,
 					""));
 			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(5), 20.00,
 					""));
