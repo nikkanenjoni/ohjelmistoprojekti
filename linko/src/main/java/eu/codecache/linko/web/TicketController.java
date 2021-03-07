@@ -26,11 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import eu.codecache.linko.domain.CityRepository;
-import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
-import eu.codecache.linko.domain.OrderRepository;
-import eu.codecache.linko.domain.Ticket;
-import eu.codecache.linko.domain.TicketRepository;
+
+
 import eu.codecache.linko.exception.EventNotFoundException;
 
 @RestController
