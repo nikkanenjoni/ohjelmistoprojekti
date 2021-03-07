@@ -7,6 +7,9 @@ All endpoints are open at the moment. Authentication is added later.
 
 - [Events endpoint](#Events-endpoint)
 - [Tickets endpoint](#Tickets-endpoint)
+- [TicketTypes endpoint](#TicketTypes-endpoint)
+- [Orders endpoint](#Orders-endpoint)
+
 
 ## Events endpoint
 
@@ -289,6 +292,207 @@ This endpoint allows deleting of a specific event from database.
 
 </details>
 
+## Orders endpoint
+
+Each endpoint is used to view orders or to add/update/delete them.
+
+| Method | Endpoint | Access | Description|
+|----|----|----|----|
+| `GET` | [/api/orders](#GET-orders) | -- | Lists ALL orders in database |
+| `GET` | [/api/orders/:id](#GET-order-id) | -- | Displays information of order with given `:id` |
+| `POST` | [/api/orders](#POST-order) | -- | Adds new order to database |
+| `PUT` | [/api/orders/:id](#PUT-order-id) | -- | Updates the order with given `:id` |
+| `DELETE` | [/api/orders/:id](#DELETE-order-id) | -- | Deleted the order with given `:id` |
+
+
+
+## GET orders
+
+Lists all orders
+
+**URL** : `/api/orders/`
+
+**Method** : `GET`
+
+**Auth required** : *not available*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : Orders include a timestamp for the ordertime.
+> 
+> ```JSON
+> {
+>     "datetime":"2021-03-07T13:27:44.
+> }
+> ```
+> ```
+
+</details>
+
+
+## GET order id
+
+Views information of a spesific order. 
+
+**URL** : `/api/orders/:id`
+
+**Method** : GET 
+
+**Auth required** : *not available*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content for a successful request of an order. 
+> 
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+
+#### Error
+
+> **Condition** : Requested `id` is not found from database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "order":"NOT FOUND"
+> }
+> ```
+
+
+</details>
+
+## POST order
+
+Allow creation of new orders to database. 
+
+**URL** : `/api/orders`
+
+**Method** : `POST`
+ 
+**Auth required** : *not available*
+ 
+**Data constrains**
+ 
+Following JSON-body is required.
+
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+>
+
+<details>
+
+
+#### Success
+
+> **Condition** : If all information given was valid. 
+> 
+> **Code** : `201 CREATED`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+ 
+#### Error
+ 
+> **Condition** : Some of the information given wasn't tested valid. 
+> 
+> **Code** : `400 BAD REQUEST`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+
+</details>
+
+## PUT order id 
+
+This endpoint allows updating of a specific order. 
+
+**URL** : `/api/orders/:id`
+
+**Method** : `PUT`
+
+**Auth required** : *not available* 
+
+**Data constrains**
+ 
+Following JSON-body is required.
+
+ ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+```
+
+<details>
+
+#### Success
+
+> **Condition** : order with the `id` exists in the database. 
+> 
+> **Code** : `200 OK`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+
+#### Error
+
+> **Condition** : order with the `id` didn't exist in the database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content** : `{}`
+
+</details>
+
+## DELETE order
+
+This endpoint allows deleting of a specific order from database.
+
+**URL** : `/api/orders/:id/:id2`
+
+
+**Method** : `DELETE`
+ 
+**Auth required** : *not available*
+ 
+<details>
+
+-- ERROR ja SUCCESS-viestit tänne
+
+</details>
+
 
 ## Tickets endpoint
 
@@ -299,7 +503,7 @@ Each endpoint is used to view tickets or to add/update/delete them.
 | `GET` | [/api/tickets](#GET-ticket) | -- | Lists ALL tickets in database |
 | `GET` | [/api/tickets/:id](#GET-ticket-id) | -- | Displays information of ticket with given `:id` |
 | `POST` | [/api/tickets](#POST-ticket) | -- | Adds new ticket to database |
-| `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | -- | Deleted the event with given `:id` |
+| `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | -- | Deleted the ticket with given `:id` |
 
 
 
@@ -511,3 +715,6 @@ This endpoint allows deleting of a specific ticket from database.
 > **Content** : `{}`
 
 </details>
+
+
+## TicketTypes-endpoint
