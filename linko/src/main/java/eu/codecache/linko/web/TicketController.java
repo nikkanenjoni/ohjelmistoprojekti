@@ -14,6 +14,8 @@ import eu.codecache.linko.domain.OrderRepository;
 import eu.codecache.linko.domain.Ticket;
 import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.TicketRepository;
+import eu.codecache.linko.domain.TicketType;
+import eu.codecache.linko.domain.TicketTypeRepository;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +39,7 @@ public class TicketController {
 	@Autowired
 	public OrderRepository oRepository;
 	public TicketRepository tRepository;
+	public TicketTypeRepository tyRepository;
 	public TicketOrderRepository ticketOrderRepo;
 
 	// displays ALL tickets in the database
@@ -86,6 +89,23 @@ public class TicketController {
 	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) {
 		tRepository.deleteById(ticketID);
 		return "Ticket deleted";
+	}
+	
+	/*TICKETTYPE*/
+	 
+	// Get all tickettypes:
+	// displays ALL tickets in the database
+	@GetMapping("/api/tickettypes")
+	public @ResponseBody List<TicketType> All() {
+		return tyRepository.findAll();
+	
+	}
+
+	// Save a new ticketType
+	@PostMapping("/api/tickettypes")
+	public @ResponseBody TicketType newTicketType(@RequestBody TicketType ticketType) {
+		tyRepository.save(ticketType);
+		return ticketType;
 	}
 
 }

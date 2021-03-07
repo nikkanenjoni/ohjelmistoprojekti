@@ -1,10 +1,13 @@
 package eu.codecache.linko.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,4 +60,29 @@ public class OrderController {
 		toRepo.save(ticketOrder);
 		return order;
 	}
+	
+	/*  SOFIAN SOTKUA TÄSTÄ ETEENPÄIN TICKET ORDER GET JA DELETE 
+	
+	// Get ticketOrder, first orders
+	@GetMapping(API_BASE + "/{id}")
+	public @ResponseBody Orders getOrder(@PathVariable("id") Long orderID) {
+		return orderRepository.findByOrderID(orderID);
+	}
+	// Get ticketOrder, then ticketorders, where id2=ticketOrderID
+	@GetMapping(API_BASE + "/{id}?{id2}")
+	public @ResponseBody TicketOrder getTicketOrder(@PathVariable("id2") Long ticketOrderID, Model model) {
+		return toRepo.findByTicketOrderID(ticketOrderID);
+	}
+	
+	// Delete ticketOrder (delete one ticket from ticketorder):
+	@RequestMapping(value = API_BASE + "/{id2}?{id}", method = RequestMethod.GET) // {id} is the path variable. you can
+	public String deleteTicketOrder(@PathVariable("id") Long ticketOrderID, @PathVariable("id2") Long orderID) {
+	toRepo.deleteById(ticketOrderID);
+	// alla testailua
+	//Order orderID=Order.getOrderID(@PathVariable("id2") Long orderID, Model model) {
+	
+	return "Ticket removed from order";
+}
+*/
+
 }
