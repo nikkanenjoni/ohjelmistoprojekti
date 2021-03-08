@@ -30,7 +30,6 @@ import org.springframework.web.server.ResponseStatusException;
 import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.EventRepository;
 
-
 import eu.codecache.linko.exception.EventNotFoundException;
 
 @RestController
@@ -38,8 +37,11 @@ public class TicketController {
 
 	@Autowired
 	public OrderRepository oRepository;
+	@Autowired
 	public TicketRepository tRepository;
+	@Autowired
 	public TicketTypeRepository tyRepository;
+	@Autowired
 	public TicketOrderRepository ticketOrderRepo;
 
 	// displays ALL tickets in the database
@@ -48,10 +50,15 @@ public class TicketController {
 		return tRepository.findAll();
 	}
 
+	// Post new ticket by giving it 1) type, 2) event and 3) price
+	// This needs to be documented !!!
 	@PostMapping("/api/tickets")
 	public @ResponseBody Ticket newTicket(@RequestBody Ticket ticket) {
-		tRepository.save(ticket);
-		return ticket;
+		long newID = tRepository.save(ticket).getTicketID();
+		tRepository.flush();
+		// I just can't understand why this returns all null while GetMapping with
+		// same return statement works as expected
+		return tRepository.findByTicketID(newID);
 	}
 
 	/*
@@ -85,21 +92,24 @@ public class TicketController {
 		return tRepository.findByTicketID(ticketID);
 	}
 
+	/*
+	 * This method is broken, I've commented it out for now (Ville)
+	 */
 	// Delete-functionality:
-	@RequestMapping(value = "/api/tickets/delete/{id}", method = RequestMethod.GET)
-	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) {
-		tRepository.deleteById(ticketID);
-		return "Ticket deleted";
-	}
-	
-	/*TICKETTYPE*/
-	 
+//	@RequestMapping(value = "/api/tickets/delete/{id}", method = RequestMethod.GET)
+//	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) {
+//		tRepository.deleteById(ticketID);
+//		return "Ticket deleted";
+//	}
+
+	/* TICKETTYPE */
+
 	// Get all tickettypes:
 	// displays ALL tickets in the database
 	@GetMapping("/api/tickettypes")
 	public @ResponseBody List<TicketType> All() {
 		return tyRepository.findAll();
-	
+
 	}
 
 	// Save a new ticketType

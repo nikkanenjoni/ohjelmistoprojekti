@@ -1,5 +1,7 @@
 package eu.codecache.linko.web;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +40,14 @@ public class OrderController {
 		return orderRepository.findByOrderID(orderID);
 	}
 
+	// Now we can POST an empty POST-request and we will receive orderID as response
+	// thus we can start adding tickets to the order by id returned
 	@PostMapping(API_BASE)
-	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
-		orderRepository.save(orders);
-		return orders;
+	public @ResponseBody Orders postOrder() {
+//	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
+		Orders order = new Orders(LocalDateTime.now());
+		orderRepository.save(order);
+		return order;
 	}
 
 	@PostMapping(API_BASE + "/{id}")
@@ -60,29 +66,62 @@ public class OrderController {
 		toRepo.save(ticketOrder);
 		return order;
 	}
-	
-	/*  SOFIAN SOTKUA TÄSTÄ ETEENPÄIN TICKET ORDER GET JA DELETE 
-	
-	// Get ticketOrder, first orders
-	@GetMapping(API_BASE + "/{id}")
-	public @ResponseBody Orders getOrder(@PathVariable("id") Long orderID) {
+
+	// Delete will only delete tickets from order,
+	// We DO NOT delete whole orders, instead we make them cancelled,
+	// but that will require some tweaks to dokumentation first, so
+	// let's not implement that for now
+
+	// Delete ticket from order
+	@RequestMapping(value = API_BASE + "/{id}/ticketorder/{id2}", method = RequestMethod.DELETE)
+	public @ResponseBody Orders deleteTicketFromOrder(@PathVariable("id") Long orderID,
+			@PathVariable("id2") Long ticketOrderID) {
+		Orders order = orderRepository.findByOrderID(orderID);
+		if (order == null) {
+			// There is no order with the given id
+			// This needs better handling!
+			return null;
+		}
+		TicketOrder ticketOrder = toRepo.findByTicketOrderID(ticketOrderID);
+		if (ticketOrder == null) {
+			// Now ticketOrder found, better handling needed again!
+			return null;
+		}
+		if (ticketOrder.getOrder().getOrderID() != order.getOrderID()) {
+			// We did fetch order and ticketOrder from database, but they don't match
+			// this ticket DOES NOT belong to the given order!
+			return null;
+		} else {
+			// this ticket DOES belong to given order, let's remove it from the order
+			toRepo.delete(ticketOrder);
+		}
 		return orderRepository.findByOrderID(orderID);
 	}
-	// Get ticketOrder, then ticketorders, where id2=ticketOrderID
-	@GetMapping(API_BASE + "/{id}?{id2}")
-	public @ResponseBody TicketOrder getTicketOrder(@PathVariable("id2") Long ticketOrderID, Model model) {
-		return toRepo.findByTicketOrderID(ticketOrderID);
-	}
-	
-	// Delete ticketOrder (delete one ticket from ticketorder):
-	@RequestMapping(value = API_BASE + "/{id2}?{id}", method = RequestMethod.GET) // {id} is the path variable. you can
-	public String deleteTicketOrder(@PathVariable("id") Long ticketOrderID, @PathVariable("id2") Long orderID) {
-	toRepo.deleteById(ticketOrderID);
-	// alla testailua
-	//Order orderID=Order.getOrderID(@PathVariable("id2") Long orderID, Model model) {
-	
-	return "Ticket removed from order";
-}
-*/
+
+	/*
+	 * SOFIAN SOTKUA TÄSTÄ ETEENPÄIN TICKET ORDER GET JA DELETE
+	 * 
+	 * // Get ticketOrder, first orders
+	 * 
+	 * @GetMapping(API_BASE + "/{id}") public @ResponseBody Orders
+	 * getOrder(@PathVariable("id") Long orderID) { return
+	 * orderRepository.findByOrderID(orderID); } // Get ticketOrder, then
+	 * ticketorders, where id2=ticketOrderID
+	 * 
+	 * @GetMapping(API_BASE + "/{id}?{id2}") public @ResponseBody TicketOrder
+	 * getTicketOrder(@PathVariable("id2") Long ticketOrderID, Model model) { return
+	 * toRepo.findByTicketOrderID(ticketOrderID); }
+	 * 
+	 * // Delete ticketOrder (delete one ticket from ticketorder):
+	 * 
+	 * @RequestMapping(value = API_BASE + "/{id2}?{id}", method = RequestMethod.GET)
+	 * // {id} is the path variable. you can public String
+	 * deleteTicketOrder(@PathVariable("id") Long
+	 * ticketOrderID, @PathVariable("id2") Long orderID) {
+	 * toRepo.deleteById(ticketOrderID); // alla testailua //Order
+	 * orderID=Order.getOrderID(@PathVariable("id2") Long orderID, Model model) {
+	 * 
+	 * return "Ticket removed from order"; }
+	 */
 
 }
