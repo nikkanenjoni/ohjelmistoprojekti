@@ -357,9 +357,9 @@ Views information of a spesific order.
 > 
 > ```JSON
 > {
->     "orderID": 12,
->     "datetime": "2021-03-08T12:59:21.81998",
->     "tickets": [
+>   "orderID": 12,
+>       "datetime": "2021-03-08T12:59:21.81998",
+>       "tickets": [
 >         {
 >             "ticketOrderID": 14,
 >             "ticket": {
@@ -402,8 +402,6 @@ Views information of a spesific order.
 >             },
 >             "price": 20.0
 >        }
->     ]
-> }
 > ```
 
 #### Error
@@ -621,7 +619,6 @@ Lists all tickets
 
 <details>
 
-
 #### Success
 
 > **Code** : `200 OK`
@@ -629,41 +626,58 @@ Lists all tickets
 > **Content** : An example of possible content including three tickets. 
 > 
 > ```JSON
-> [
 >     {
->         "event":"Hippafesti",
->         "city":
->         {
->             "city":"Rovaniemi"
->         },
->         "eventPlace":"Hippakenttä",
->         "capacity":1000,
->         "description":"Kuvaus tapahtumasta tähän.",
->         "datetime":"2021-02-28T13:27:44.796903"
->     },
->     {
->         "event":"Musadiggarit",
->         "city":
->         {
->             "city":"Ilmala"
->         },
->         "eventPlace":"Mutakenttä jäähallin takana",
->         "capacity":6,
->         "description":"",
->         "datetime":"2021-02-28T13:27:44.820266"
->     },
->     {
->         "event":"Antin rokkibändi",
->         "city":
->         {
->             "city":"Rovaniemi"
->         },
->         "eventPlace":"Kellariklubi",
->         "capacity":150,
->         "description":"Hieno bändi!",
->         "datetime":"2021-02-28T13:27:44.8259"
->     }
-> ]
+>        "ticketID": 9,
+>        "ticketType": {
+>            "ticketTypeID": 4,
+>            "ticketType": "Opiskelija"
+>        },
+>        "event": {
+>            "eventID": 5,
+>            "event": "Hippafesti",
+>            "eventPlace": "Hippakenttä",
+>            "capacity": 1000,
+>            "description": "Kuvaus tapahtumasta tähän.",
+>            "datetime": "2021-03-08T17:09:43.957227"
+>        },
+>        "price": 20.0,
+>        "description": ""
+>    },
+>    {
+>        "ticketID": 10,
+>        "ticketType": {
+>            "ticketTypeID": 3,
+>            "ticketType": "Normaali"
+>        },
+>        "event": {
+>            "eventID": 5,
+>            "event": "Hippafesti",
+>            "eventPlace": "Hippakenttä",
+>            "capacity": 1000,
+>            "description": "Kuvaus tapahtumasta tähän.",
+>            "datetime": "2021-03-08T17:09:43.957227"
+>        },
+>        "price": 20.0,
+>        "description": ""
+>    },
+>    {
+>        "ticketID": 11,
+>        "ticketType": {
+>            "ticketTypeID": 4,
+>            "ticketType": "Opiskelija"
+>        },
+>        "event": {
+>            "eventID": 6,
+>            "event": "Musadiggarit",
+>            "eventPlace": "Mutakenttä jäähallin takana",
+>            "capacity": 6,
+>            "description": "",
+>            "datetime": "2021-03-08T17:09:43.969195"
+>        },
+>        "price": 20.0,
+>        "description": ""
+>    }
+>]
 > ```
 
 </details>
@@ -689,17 +703,23 @@ Views information of a spesific ticket.
 > **Content** : An example of possible content for a successful request of an ticket. 
 > 
 > ```JSON
-> {
->     "event":"Hippafesti",
->     "city":
->     {
->         "city":"Rovaniemi"
->     },
->     "eventPlace":"Hippakenttä",
->     "capacity":1000,
->     "description":"Kuvaus tapahtumasta tähän.",
->     "datetime":"2021-02-28T13:27:44.796903"
-> }
+>   {
+>    "ticketID": 9,
+>    "ticketType": {
+>        "ticketTypeID": 4,
+>        "ticketType": "Opiskelija"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 20.0,
+>    "description": ""
+>   }
 > ```
 
 #### Error
