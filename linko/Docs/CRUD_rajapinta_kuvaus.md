@@ -301,6 +301,7 @@ Each endpoint is used to view orders or to add/update/delete them.
 | `GET` | [/api/orders](#GET-orders) | -- | Lists ALL orders in database |
 | `GET` | [/api/orders/:id](#GET-order-id) | -- | Displays information of order with given `:id` |
 | `POST` | [/api/orders](#POST-order) | -- | Adds new order to database |
+| `POST` | [/api/orders/:id](#POST-order-id) | -- | Add a ticket to the order with `:id` |
 | `PUT` | [/api/orders/:id](#PUT-order-id) | -- | Updates the order with given `:id` |
 | `DELETE` | [/api/orders/:id](#DELETE-order-id) | -- | Deleted the order with given `:id` |
 
@@ -356,7 +357,52 @@ Views information of a spesific order.
 > 
 > ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44.
+>     "orderID": 12,
+>     "datetime": "2021-03-08T12:59:21.81998",
+>     "tickets": [
+>         {
+>             "ticketOrderID": 14,
+>             "ticket": {
+>                 "ticketID": 9,
+>                 "ticketType": {
+>                     "ticketTypeID": 4,
+>                     "ticketType": "Opiskelija"
+>                 },
+>                 "event": {
+>                     "eventID": 5,
+>                     "event": "Hippafesti",
+>                     "eventPlace": "Hippakenttä",
+>                     "capacity": 1000,
+>                     "description": "Kuvaus tapahtumasta tähän.",
+>                     "datetime": "2021-03-08T12:59:21.783632"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             },
+>             "price": 20.0
+>         },
+>         {
+>             "ticketOrderID": 15,
+>             "ticket": {
+>                 "ticketID": 10,
+>                 "ticketType": {
+>                     "ticketTypeID": 3,
+>                     "ticketType": "Normaali"
+>                 },
+>                 "event": {
+>                     "eventID": 5,
+>                     "event": "Hippafesti",
+>                     "eventPlace": "Hippakenttä",
+>                     "capacity": 1000,
+>                     "description": "Kuvaus tapahtumasta tähän.",
+>                     "datetime": "2021-03-08T12:59:21.783632"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             },
+>             "price": 20.0
+>        }
+>     ]
 > }
 > ```
 
@@ -389,12 +435,10 @@ Allow creation of new orders to database.
  
 **Data constrains**
  
-Following JSON-body is required.
+No JSON-body is required. 
 
 > ```JSON
-> {
->     "datetime":"2021-02-28T13:27:44.
-> }
+> {}
 >
 
 <details>
@@ -410,7 +454,65 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
+>     "orderID":16,
+>     "datetime":"2021-02-28T13:27:44.",
+>     "tickets":null
+> }
+> ```
+ 
+#### Error
+ 
+> **Condition** : Some of the information given wasn't tested valid. 
+> 
+> **Code** : `400 BAD REQUEST`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
 >     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+
+</details>
+
+## POST order id
+
+Allows adding tickets to an order. 
+
+**URL** : `/api/orders/:id`
+
+**Method** : `POST`
+ 
+**Auth required** : *not available*
+ 
+**Data constrains**
+ 
+Following JSON-body is required.
+
+> ```JSON
+> {
+>     "ticketID":0,
+>     "ticketPrice":00.00
+> }
+> ```
+
+<details>
+
+
+#### Success
+
+> **Condition** : If all information given was valid. 
+> 
+> **Code** : `201 CREATED`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "orderID":16,
+>     "datetime":"2021-02-28T13:27:44.",
+>     "tickets":null
 > }
 > ```
  
@@ -478,9 +580,9 @@ Following JSON-body is required.
 
 ## DELETE order
 
-This endpoint allows deleting of a specific order from database.
+This endpoint allows deleting of a ticket from an order. 
 
-**URL** : `/api/orders/:id/:id2`
+**URL** : `/api/orders/:id/ticketorder/:id`
 
 
 **Method** : `DELETE`
@@ -632,14 +734,17 @@ Allow creation of new ticket to database.
 Following JSON-body is required.
 
 ```JSON
-{
-    "event":"name-of-the-event",
-    "city":"name-of-the-city",
-    "eventPlace":"Address of the event",
-    "capacity":1,
-    "description":"An optional description of the event",
-    "datetime":"event date & time in without a time-zone in the ISO-8601"
-}
+    {
+        "ticketType": {
+            "ticketTypeID": 0
+        },
+        "event": {
+            "eventID": 0
+        },
+        "price": 00.00,
+        "description": ""
+    }
+
 ```
 
 <details>
