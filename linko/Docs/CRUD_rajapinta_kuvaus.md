@@ -619,7 +619,6 @@ Lists all tickets
 
 <details>
 
-
 #### Success
 
 > **Code** : `200 OK`
