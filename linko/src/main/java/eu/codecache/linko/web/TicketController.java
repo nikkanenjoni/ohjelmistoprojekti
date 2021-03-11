@@ -91,6 +91,14 @@ public class TicketController {
 		 */
 		return tRepository.findByTicketID(ticketID);
 	}
+	
+	// Delete ticket
+	@RequestMapping(value = "/api/tickets/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
+																					// delete by localhost/8080/idnumber
+	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) { // saves it to the variable eventID
+		tRepository.deleteById(ticketID);
+		return "Ticket deleted";
+	}
 
 	/*
 	 * This method is broken, I've commented it out for now (Ville)
@@ -118,5 +126,15 @@ public class TicketController {
 		tyRepository.save(ticketType);
 		return ticketType;
 	}
+	
+	
+	// Delete a ticketType
+	
+	@RequestMapping(value = "/api/tickettypes/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
+	// delete by localhost/8080/idnumber
+public String deleteTicketType(@PathVariable("id") Long ticketTypeID, Model model) { // saves it to the variable eventID
+tyRepository.deleteById(ticketTypeID);
+return "TicketType deleted";
+}
 
 }
