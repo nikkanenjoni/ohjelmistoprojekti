@@ -88,7 +88,7 @@ public class EventController {
 	}
 
 	// Delete-toiminnallisuus:
-	@RequestMapping(value = "/api/events/delete/{id}", method = RequestMethod.GET) // {id} is the path variable. you can
+	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
 																					// delete by localhost/8080/idnumber
 	public String deleteEvent(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
 		repository.deleteById(eventID);
