@@ -13,5 +13,8 @@ public interface TicketTypeRepository extends JpaRepository<TicketType, Long> {
 	
 	// List all tickettypes
 	List<TicketType> findAll();
+	
+	// delete a ticketType
+	void deleteById(long ticketTypeID);
 
 }
