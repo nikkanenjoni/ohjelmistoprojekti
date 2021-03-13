@@ -60,6 +60,13 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<!-- https://stackoverflow.com/questions/35266289/how-to-get-list-of-objects-via-requestbody-in-spring-boot-api -->
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
 
 	</dependencies>
 
