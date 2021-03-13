@@ -1,8 +1,10 @@
 package eu.codecache.linko.web;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import eu.codecache.linko.domain.Orders;
 import eu.codecache.linko.domain.Ticket;
@@ -50,20 +53,30 @@ public class OrderController {
 		return order;
 	}
 
+	/*
+	 * This method allows us to save tickets to an order
+	 */
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
-			@RequestBody TicketOrderDTO ticketOrderDTO) {
+			@RequestBody List<TicketOrderDTO> ticketOrderDTOs) {
 		/*
-		 * We should make sure we have a valid order here!
+		 * Throw 404 if event isn't found
 		 */
 		Orders order = orderRepository.findByOrderID(orderID);
+		if (order == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 		/*
-		 * ... and same goes for the ticket
+		 * go trough tickets in the order and save all valid tickets
 		 */
-		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
-		double price = ticketOrderDTO.getTicketPrice();
-		TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
-		toRepo.save(ticketOrder);
+		for (TicketOrderDTO ticketOrderDTO : ticketOrderDTOs) {
+			Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
+			if (ticket != null) {
+				double price = ticketOrderDTO.getTicketPrice();
+				TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
+				toRepo.save(ticketOrder);
+			}
+		}
 		return order;
 	}
 

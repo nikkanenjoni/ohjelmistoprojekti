@@ -15,9 +15,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	// this is not working as intented, if eventID is not found,
 	// it return empty event instead of throwing EventNotFoundException
 	// ... I wonder if this could be fixed somehow?
-	Event findByEventID(long eventID) throws EventNotFoundException;
+	Event findByEventID(long eventID);
 
 	// delete-toiminnallisuus
-	void deleteById(long eventID) throws EventNotFoundException;
+	void deleteById(long eventID);
 
 }

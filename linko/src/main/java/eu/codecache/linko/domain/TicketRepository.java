@@ -18,13 +18,13 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
 
 	// get single ticket
-	Ticket findByTicketID(long ticketID) throws TicketNotFoundException;
+	Ticket findByTicketID(long ticketID);
 	
 	// Lists tickets by event
 	List<Ticket> findByEvent(Event event);
 
 	// delete-toiminnallisuus
-	void deleteById(long ticketID) throws TicketNotFoundException;
+	void deleteById(long ticketID);
 
 
 }
