@@ -31,6 +31,7 @@ import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.EventRepository;
 
 import eu.codecache.linko.exception.EventNotFoundException;
+import eu.codecache.linko.exception.TicketNotFoundException;
 
 @RestController
 public class TicketController {
@@ -56,59 +57,60 @@ public class TicketController {
 	// This needs to be documented !!!
 	@PostMapping("/api/tickets")
 	public @ResponseBody Ticket newTicket(@RequestBody Ticket ticket) {
-		long newID = tRepository.save(ticket).getTicketID();
-		tRepository.flush();
-		// I just can't understand why this returns all null while GetMapping with
-		// same return statement works as expected
-		return tRepository.findByTicketID(newID);
-	}
-
+		//long newID = tRepository.save(ticket).getTicketID();
+		//tRepository.flush();
+		tRepository.save(ticket);
+		return ticket;
+		}
 	/*
 	 * this one needs quite some fixing, but we have bigger priorities at the moment
 	 */
 	@PutMapping("/api/tickets/{id}")
-	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @RequestBody Ticket ticket) {
+	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @RequestBody Ticket ticket) throws Exception {
 		// first let's see if we have an event with the id
-		Ticket dbTicket = tRepository.findByTicketID(ticketID);
-		// ok, we have found the event
-		// update it with the new information
-		dbTicket.setTicketType(ticket.getTicketType());
-		dbTicket.setEvent(ticket.getEvent());
-		dbTicket.setPrice(ticket.getPrice());
-		dbTicket.setDescription(ticket.getDescription());
-		// now we should be able to (over)write to database without accidentally
-		// creating a new event
-		tRepository.save(dbTicket);
-		// return the updated event
-		return dbTicket;
+		try {
+			Ticket dbTicket = tRepository.findByTicketID(ticketID);
+			// ok, we have found the event
+			// update it with the new information
+			dbTicket.setTicketType(ticket.getTicketType());
+			dbTicket.setEvent(ticket.getEvent());
+			dbTicket.setPrice(ticket.getPrice());
+			dbTicket.setDescription(ticket.getDescription());
+			// now we should be able to (over)write to database without accidentally
+			// creating a new event
+			tRepository.save(dbTicket);
+			// return the updated event
+			return dbTicket;
+		} catch (TicketNotFoundException e) {
+				throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
+		}
 	}
-
 	// Single item
 	@GetMapping("/api/tickets/{id}")
-//	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
-	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) {
-		try {
-			Event event = eRepository.findByEventID(eventID);
-			return tRepository.findByEvent(event);
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
+	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) throws TicketNotFoundException {
+		if(ticketID == null) {
+			throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");	
+		}else{
+			return tRepository.findByTicketID(ticketID);	
 		/*
 		 * For now, let's keep this simple & stupid -> we don't handle case where ticket
 		 * with the ID isn't found (let's fix that later, but for now, an issue on
 		 * Github is enough)
 		 */
 //		return tRepository.findByTicketID(ticketID);
+		}
 	}
 
 	// Delete ticket
-	@RequestMapping(value = "/api/tickets/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
-																				// delete by localhost/8080/idnumber
-	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) { // saves it to the variable eventID
+	@RequestMapping(value = "/api/tickets/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can																			// delete by localhost/8080/idnumber
+	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) throws TicketNotFoundException { // saves it to the variable eventID
+		if(ticketID == null) {
+			throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");	
+		} else {
 		tRepository.deleteById(ticketID);
 		return "Ticket deleted";
+		}
 	}
-
 	/*
 	 * This method is broken, I've commented it out for now (Ville)
 	 */
