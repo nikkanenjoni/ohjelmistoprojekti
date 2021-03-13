@@ -18,6 +18,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	Event findByEventID(long eventID) throws EventNotFoundException;
 
 	// delete-toiminnallisuus
-	void deleteById(long eventID);
+	void deleteById(long eventID) throws EventNotFoundException;
 
 }

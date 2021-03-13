@@ -33,7 +33,7 @@ import eu.codecache.linko.exception.EventNotFoundException;
  */
 @RestController
 public class EventController {
-
+	
 	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that
 	// we can retrieve
 	// and save data to database.
@@ -55,7 +55,7 @@ public class EventController {
 	}
 
 	@PutMapping("/api/events/{id}")
-	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) {
+	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) throws Exception {
 		// first let's see if we have an event with the id
 		try {
 			Event dbEvent = repository.findByEventID(eventID);
@@ -78,21 +78,28 @@ public class EventController {
 	// näytä yksi tapahtuma
 	// Single item
 	@GetMapping("/api/events/{id}")
-	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) {
-
-		try {
-			return repository.findByEventID(eventID);
-		} catch (EventNotFoundException e) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID)throws EventNotFoundException {
+		
+		if(eventID == null) {
+			throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");	
+		}else{
+			return repository.findByEventID(eventID);	
+		//} catch (EventNotFoundException e) {
+		//	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
 
 	// Delete a event:
-	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
-																					// delete by localhost/8080/idnumber
-	public String deleteEvent(@PathVariable("id") Long eventID, Model model) { // saves it to the variable eventID
+	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can																			// delete by localhost/8080/idnumber
+	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException { // saves it to the variable eventID
+		
+		if(eventID == null) {
+		throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+	}else {
 		repository.deleteById(eventID);
 		return "Event deleted";
 	}
 
 }
+}
+	
