@@ -87,6 +87,7 @@ public class TicketController {
 	@GetMapping("/api/tickets/{id}")
 //	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
 	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) {
+		// We need to handle error and remove all the crap in comments :)
 		try {
 			Event event = eRepository.findByEventID(eventID);
 			return tRepository.findByEvent(event);
