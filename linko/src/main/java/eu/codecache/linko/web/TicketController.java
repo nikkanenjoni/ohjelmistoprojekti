@@ -36,6 +36,8 @@ import eu.codecache.linko.exception.EventNotFoundException;
 public class TicketController {
 
 	@Autowired
+	public EventRepository eRepository;
+	@Autowired
 	public OrderRepository oRepository;
 	@Autowired
 	public TicketRepository tRepository;
@@ -83,18 +85,25 @@ public class TicketController {
 
 	// Single item
 	@GetMapping("/api/tickets/{id}")
-	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
+//	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
+	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) {
+		try {
+			Event event = eRepository.findByEventID(eventID);
+			return tRepository.findByEvent(event);
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
 		/*
 		 * For now, let's keep this simple & stupid -> we don't handle case where ticket
 		 * with the ID isn't found (let's fix that later, but for now, an issue on
 		 * Github is enough)
 		 */
-		return tRepository.findByTicketID(ticketID);
+//		return tRepository.findByTicketID(ticketID);
 	}
-	
+
 	// Delete ticket
 	@RequestMapping(value = "/api/tickets/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
-																					// delete by localhost/8080/idnumber
+																				// delete by localhost/8080/idnumber
 	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) { // saves it to the variable eventID
 		tRepository.deleteById(ticketID);
 		return "Ticket deleted";
@@ -126,15 +135,16 @@ public class TicketController {
 		tyRepository.save(ticketType);
 		return ticketType;
 	}
-	
-	
+
 	// Delete a ticketType
-	
-	@RequestMapping(value = "/api/tickettypes/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
+
+	@RequestMapping(value = "/api/tickettypes/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you
+																					// can
 	// delete by localhost/8080/idnumber
-public String deleteTicketType(@PathVariable("id") Long ticketTypeID, Model model) { // saves it to the variable eventID
-tyRepository.deleteById(ticketTypeID);
-return "TicketType deleted";
-}
+	public String deleteTicketType(@PathVariable("id") Long ticketTypeID, Model model) { // saves it to the variable
+																							// eventID
+		tyRepository.deleteById(ticketTypeID);
+		return "TicketType deleted";
+	}
 
 }

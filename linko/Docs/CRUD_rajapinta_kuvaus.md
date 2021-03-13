@@ -601,7 +601,7 @@ Each endpoint is used to view tickets or to add/update/delete them.
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
 | `GET` | [/api/tickets](#GET-ticket) | -- | Lists ALL tickets in database |
-| `GET` | [/api/tickets/:id](#GET-ticket-id) | -- | Displays information of ticket with given `:id` |
+| `GET` | [/api/tickets/:id](#GET-ticket-id) | -- | Displays information of tickets for an event | 
 | `POST` | [/api/tickets](#POST-ticket) | -- | Adds new ticket to database |
 | `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | -- | Deleted the ticket with given `:id` |
 
@@ -685,7 +685,7 @@ Lists all tickets
 
 ## GET ticket id
 
-Views information of a spesific ticket. 
+List tickets by eventID. 
 
 **URL** : `/api/tickets/:id`
 
@@ -700,9 +700,10 @@ Views information of a spesific ticket.
 
 > **Code** : `200 OK`
 > 
-> **Content** : An example of possible content for a successful request of an ticket. 
+> **Content** : An example of possible content for a successful request of events tickets. 
 > 
 > ```JSON
+> [
 >   {
 >    "ticketID": 9,
 >    "ticketType": {
@@ -719,7 +720,25 @@ Views information of a spesific ticket.
 >    },
 >    "price": 20.0,
 >    "description": ""
->   }
+>   },
+>   {
+>    "ticketID": 10,
+>    "ticketType": {
+>        "ticketTypeID": 5,
+>        "ticketType": "Aikuinen"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 25.0,
+>    "description": ""
+>   },
+> ]
 > ```
 
 #### Error

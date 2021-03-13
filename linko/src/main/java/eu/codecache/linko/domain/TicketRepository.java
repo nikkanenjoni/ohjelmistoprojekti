@@ -14,11 +14,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 	List<Ticket> findAll();
 
 
-	// get, yksi lippu
-	// this is not working as intented, if eventID is not found,
-	// it return empty event instead of throwing EventNotFoundException
-	// ... I wonder if this could be fixed somehow?
+	// get single ticket
 	Ticket findByTicketID(long ticketID);
+	
+	// Lists tickets by event
+	List<Ticket> findByEvent(Event event);
 
 	// delete-toiminnallisuus
 	void deleteById(long ticketID);
