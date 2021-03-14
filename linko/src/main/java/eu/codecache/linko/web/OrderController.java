@@ -45,6 +45,7 @@ public class OrderController {
 
 	// Now we can POST an empty POST-request and we will receive orderID as response
 	// thus we can start adding tickets to the order by id returned
+	// (Sofia): Tried to add error messages if posting fails, but the solution did not work..
 	@PostMapping(API_BASE)
 	public @ResponseBody Orders postOrder() {
 //	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
@@ -89,28 +90,29 @@ public class OrderController {
 	@RequestMapping(value = API_BASE + "/{id}/ticketorder/{id2}", method = RequestMethod.DELETE)
 	public @ResponseBody Orders deleteTicketFromOrder(@PathVariable("id") Long orderID,
 			@PathVariable("id2") Long ticketOrderID) 
-	
+			throws Exception
 	{
 		Orders order = orderRepository.findByOrderID(orderID);
 		if (order == null) {
 			// There is no order with the given id
-			// This needs better handling!
-			return null;
+			// This needs better handling! // (Sofia): added NOT_FOUND-messages
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 		TicketOrder ticketOrder = toRepo.findByTicketOrderID(ticketOrderID);
 		if (ticketOrder == null) {
 			// Now ticketOrder found, better handling needed again!
-			return null;
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 		if (ticketOrder.getOrder().getOrderID() != order.getOrderID()) {
 			// We did fetch order and ticketOrder from database, but they don't match
 			// this ticket DOES NOT belong to the given order!
-			return null;
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		} else {
 			// this ticket DOES belong to given order, let's remove it from the order
 			toRepo.delete(ticketOrder);
+
 		}
-		return orderRepository.findByOrderID(orderID);
+			return orderRepository.findByOrderID(orderID);
 	}
 
 	/*
