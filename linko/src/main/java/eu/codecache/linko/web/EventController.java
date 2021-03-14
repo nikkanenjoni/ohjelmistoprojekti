@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ import eu.codecache.linko.exception.EventNotFoundException;
  */
 @RestController
 public class EventController {
-	
+
 	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that
 	// we can retrieve
 	// and save data to database.
@@ -48,17 +49,24 @@ public class EventController {
 	}
 
 	@PostMapping("/api/events")
-	public @ResponseBody Event newEvent(@RequestBody Event event) {
+	public @ResponseBody Event newEvent(@RequestBody Event event)
+		throws Exception {
+		
+		if (event != null) {
 		repository.save(event);
-
 		return event;
+	}else {
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
 	}
 
+	@ExceptionHandler
 	@PutMapping("/api/events/{id}")
-	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) throws Exception {
+	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event)
+			throws Exception {
 		// first let's see if we have an event with the id
-		try {
-			Event dbEvent = repository.findByEventID(eventID);
+		Event dbEvent = repository.findByEventID(eventID);
+		if (dbEvent != null) {
 			// ok, we have found the event
 			// update it with the new information
 			dbEvent.setEvent(event.getEvent());
@@ -70,36 +78,40 @@ public class EventController {
 			repository.save(dbEvent);
 			// return the updated event
 			return dbEvent;
-		} catch (EventNotFoundException e) {
+		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
 
-	// näytä yksi tapahtuma
+	// näytä yksi tapahtuma (tulee tyhjä, jos ei toimi)
 	// Single item
+	@ExceptionHandler
 	@GetMapping("/api/events/{id}")
-	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID)throws EventNotFoundException {
-		
-		if(eventID == null) {
-			throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");	
-		}else{
-			return repository.findByEventID(eventID);	
-		//} catch (EventNotFoundException e) {
-		//	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) 
+			throws Exception {
+
+		if (eventID != null) {
+			return repository.findByEventID(eventID);
+			
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+			// } catch (EventNotFoundException e) {
+			// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
 
 	// Delete a event:
-	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can																			// delete by localhost/8080/idnumber
-	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException { // saves it to the variable eventID
-		
-		if(eventID == null) {
-		throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-	}else {
-		repository.deleteById(eventID);
-		return "Event deleted";
-	}
+	@ExceptionHandler
+	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can //
+																				// delete by localhost/8080/idnumber
+	public String deleteEvent(@PathVariable("id") Long eventID, Model model) 
+			throws Exception { 
+		if (eventID != null) {
+			repository.deleteById(eventID);
+			return "Event deleted";
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+		}
 
+	}
 }
-}
-	

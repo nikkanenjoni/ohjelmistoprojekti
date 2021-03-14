@@ -489,10 +489,20 @@ Allows adding tickets to an order.
 Following JSON-body is required.
 
 > ```JSON
+> [
 > {
->     "ticketID":0,
->     "ticketPrice":00.00
+>     "ticketID":9,
+>     "ticketPrice":10.00
+> },
+> {
+>     "ticketID":10,
+>     "ticketPrice":20.00
+> },
+> {
+>     "ticketID":10,
+>     "ticketPrice":30
 > }
+> ]
 > ```
 
 <details>
@@ -508,9 +518,73 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
->     "orderID":16,
->     "datetime":"2021-02-28T13:27:44.",
->     "tickets":null
+>     "orderID": 17,
+>     "datetime": "2021-03-13T19:57:49.622888",
+>     "tickets": [
+>         {
+>             "ticketOrderID": 18,
+>             "ticket": {
+>                 "ticketID": 9,
+>                 "ticketType": {
+>                     "ticketTypeID": 4,
+>                     "ticketType": "Opiskelija"
+>                 },
+>                 "event": {
+>                     "eventID": 5,
+>                     "event": "Hippafesti",
+>                     "eventPlace": "Hippakenttä",
+>                     "capacity": 1000,
+>                     "description": "Kuvaus tapahtumasta tähän.",
+>                     "datetime": "2021-03-13T19:57:02.036458"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             },
+>             "price": 10.0
+>         },
+>         {
+>             "ticketOrderID": 19,
+>             "ticket": {
+>                 "ticketID": 10,
+>                 "ticketType": {
+>                     "ticketTypeID": 3,
+>                     "ticketType": "Normaali"
+>                 },
+>                 "event": {
+>                     "eventID": 5,
+>                     "event": "Hippafesti",
+>                     "eventPlace": "Hippakenttä",
+>                     "capacity": 1000,
+>                     "description": "Kuvaus tapahtumasta tähän.",
+>                     "datetime": "2021-03-13T19:57:02.036458"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             },
+>             "price": 20.0
+>         },
+>         {
+>             "ticketOrderID": 20,
+>             "ticket": {
+>                 "ticketID": 10,
+>                 "ticketType": {
+>                     "ticketTypeID": 3,
+>                     "ticketType": "Normaali"
+>                 },
+>                 "event": {
+>                     "eventID": 5,
+>                     "event": "Hippafesti",
+>                     "eventPlace": "Hippakenttä",
+>                     "capacity": 1000,
+>                     "description": "Kuvaus tapahtumasta tähän.",
+>                     "datetime": "2021-03-13T19:57:02.036458"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             },
+>             "price": 30.0
+>         }
+>     ]
 > }
 > ```
  
@@ -601,7 +675,7 @@ Each endpoint is used to view tickets or to add/update/delete them.
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
 | `GET` | [/api/tickets](#GET-ticket) | -- | Lists ALL tickets in database |
-| `GET` | [/api/tickets/:id](#GET-ticket-id) | -- | Displays information of ticket with given `:id` |
+| `GET` | [/api/tickets/:id](#GET-ticket-id) | -- | Displays information of tickets for an event | 
 | `POST` | [/api/tickets](#POST-ticket) | -- | Adds new ticket to database |
 | `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | -- | Deleted the ticket with given `:id` |
 
@@ -685,7 +759,7 @@ Lists all tickets
 
 ## GET ticket id
 
-Views information of a spesific ticket. 
+List tickets by eventID. 
 
 **URL** : `/api/tickets/:id`
 
@@ -700,9 +774,10 @@ Views information of a spesific ticket.
 
 > **Code** : `200 OK`
 > 
-> **Content** : An example of possible content for a successful request of an ticket. 
+> **Content** : An example of possible content for a successful request of events tickets. 
 > 
 > ```JSON
+> [
 >   {
 >    "ticketID": 9,
 >    "ticketType": {
@@ -719,7 +794,25 @@ Views information of a spesific ticket.
 >    },
 >    "price": 20.0,
 >    "description": ""
->   }
+>   },
+>   {
+>    "ticketID": 10,
+>    "ticketType": {
+>        "ticketTypeID": 5,
+>        "ticketType": "Aikuinen"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 25.0,
+>    "description": ""
+>   },
+> ]
 > ```
 
 #### Error
@@ -753,19 +846,19 @@ Allow creation of new ticket to database.
  
 Following JSON-body is required.
 
-```JSON
-    {
-        "ticketType": {
-            "ticketTypeID": 0
-        },
-        "event": {
-            "eventID": 0
-        },
-        "price": 00.00,
-        "description": ""
-    }
-
-```
+>```JSON
+>    {
+>        "ticketType": {
+>            "ticketTypeID": 0
+>        },
+>        "event": {
+>            "eventID": 0
+>        },
+>        "price": 00.00,
+>        "description": ""
+>    }
+>
+>```
 
 <details>
 

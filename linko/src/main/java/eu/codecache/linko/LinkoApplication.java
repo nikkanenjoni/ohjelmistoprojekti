@@ -59,6 +59,8 @@ public class LinkoApplication {
 					""));
 			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(6), 20.00,
 					""));
+			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(6), 30.00,
+					""));
 			// let's add orders:
 			oRepo.save(new Orders(LocalDateTime.now()));
 			oRepo.save(new Orders(LocalDateTime.now()));
