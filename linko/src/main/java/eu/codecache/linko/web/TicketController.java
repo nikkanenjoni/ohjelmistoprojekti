@@ -96,7 +96,7 @@ public class TicketController {
 	// Single item
 	@GetMapping("/api/tickets/{id}")
 //	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
-	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) throws TicketNotFoundException {
+	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) throws Exception {
 		// We need to handle error and remove all the crap in comments :)
 		Event event = eRepository.findByEventID(eventID);
 		if (event != null) {

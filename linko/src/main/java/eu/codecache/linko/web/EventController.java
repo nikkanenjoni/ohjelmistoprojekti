@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,12 +49,18 @@ public class EventController {
 	}
 
 	@PostMapping("/api/events")
-	public @ResponseBody Event newEvent(@RequestBody Event event) {
+	public @ResponseBody Event newEvent(@RequestBody Event event)
+		throws Exception {
+		
+		if (event != null) {
 		repository.save(event);
-
 		return event;
+	}else {
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+		}
 	}
 
+	@ExceptionHandler
 	@PutMapping("/api/events/{id}")
 	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event)
 			throws Exception {
@@ -76,34 +83,34 @@ public class EventController {
 		}
 	}
 
-	// näytä yksi tapahtuma
+	// näytä yksi tapahtuma (tulee tyhjä, jos ei toimi)
 	// Single item
+	@ExceptionHandler
 	@GetMapping("/api/events/{id}")
-	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) throws EventNotFoundException {
+	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) 
+			throws Exception {
 
-		if (eventID == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-		} else {
+		if (eventID != null) {
 			return repository.findByEventID(eventID);
+			
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 			// } catch (EventNotFoundException e) {
 			// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
 
 	// Delete a event:
+	@ExceptionHandler
 	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can //
 																				// delete by localhost/8080/idnumber
-	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException { // saves it
-																												// to
-																												// the
-																												// variable
-																												// eventID
-
-		if (eventID == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-		} else {
+	public String deleteEvent(@PathVariable("id") Long eventID, Model model) 
+			throws Exception { 
+		if (eventID != null) {
 			repository.deleteById(eventID);
 			return "Event deleted";
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 
 	}

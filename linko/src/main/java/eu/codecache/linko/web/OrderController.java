@@ -88,7 +88,9 @@ public class OrderController {
 	// Delete ticket from order
 	@RequestMapping(value = API_BASE + "/{id}/ticketorder/{id2}", method = RequestMethod.DELETE)
 	public @ResponseBody Orders deleteTicketFromOrder(@PathVariable("id") Long orderID,
-			@PathVariable("id2") Long ticketOrderID) {
+			@PathVariable("id2") Long ticketOrderID) 
+	
+	{
 		Orders order = orderRepository.findByOrderID(orderID);
 		if (order == null) {
 			// There is no order with the given id
