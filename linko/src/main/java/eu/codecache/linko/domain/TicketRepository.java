@@ -4,9 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import eu.codecache.linko.exception.EventNotFoundException;
-import eu.codecache.linko.exception.TicketNotFoundException;
-
 // let's implement this once we get this to work on events. 
 // import eu.codecache.linko.exception.TicketNotFoundException;
 

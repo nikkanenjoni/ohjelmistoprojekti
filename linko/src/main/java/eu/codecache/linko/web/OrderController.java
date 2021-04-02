@@ -1,10 +1,8 @@
 package eu.codecache.linko.web;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import eu.codecache.linko.domain.Orders;
 import eu.codecache.linko.domain.Ticket;
@@ -45,7 +42,6 @@ public class OrderController {
 
 	// Now we can POST an empty POST-request and we will receive orderID as response
 	// thus we can start adding tickets to the order by id returned
-	// (Sofia): Tried to add error messages if posting fails, but the solution did not work..
 	@PostMapping(API_BASE)
 	public @ResponseBody Orders postOrder() {
 //	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
@@ -54,30 +50,20 @@ public class OrderController {
 		return order;
 	}
 
-	/*
-	 * This method allows us to save tickets to an order
-	 */
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
-			@RequestBody List<TicketOrderDTO> ticketOrderDTOs) {
+			@RequestBody TicketOrderDTO ticketOrderDTO) {
 		/*
-		 * Throw 404 if event isn't found
+		 * We should make sure we have a valid order here!
 		 */
 		Orders order = orderRepository.findByOrderID(orderID);
-		if (order == null) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
 		/*
-		 * go trough tickets in the order and save all valid tickets
+		 * ... and same goes for the ticket
 		 */
-		for (TicketOrderDTO ticketOrderDTO : ticketOrderDTOs) {
-			Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
-			if (ticket != null) {
-				double price = ticketOrderDTO.getTicketPrice();
-				TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
-				toRepo.save(ticketOrder);
-			}
-		}
+		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
+		double price = ticketOrderDTO.getTicketPrice();
+		TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
+		toRepo.save(ticketOrder);
 		return order;
 	}
 
@@ -89,30 +75,27 @@ public class OrderController {
 	// Delete ticket from order
 	@RequestMapping(value = API_BASE + "/{id}/ticketorder/{id2}", method = RequestMethod.DELETE)
 	public @ResponseBody Orders deleteTicketFromOrder(@PathVariable("id") Long orderID,
-			@PathVariable("id2") Long ticketOrderID) 
-			throws Exception
-	{
+			@PathVariable("id2") Long ticketOrderID) {
 		Orders order = orderRepository.findByOrderID(orderID);
 		if (order == null) {
 			// There is no order with the given id
-			// This needs better handling! // (Sofia): added NOT_FOUND-messages
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			// This needs better handling!
+			return null;
 		}
 		TicketOrder ticketOrder = toRepo.findByTicketOrderID(ticketOrderID);
 		if (ticketOrder == null) {
 			// Now ticketOrder found, better handling needed again!
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			return null;
 		}
 		if (ticketOrder.getOrder().getOrderID() != order.getOrderID()) {
 			// We did fetch order and ticketOrder from database, but they don't match
 			// this ticket DOES NOT belong to the given order!
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			return null;
 		} else {
 			// this ticket DOES belong to given order, let's remove it from the order
 			toRepo.delete(ticketOrder);
-
 		}
-			return orderRepository.findByOrderID(orderID);
+		return orderRepository.findByOrderID(orderID);
 	}
 
 	/*
