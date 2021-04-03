@@ -1,5 +1,6 @@
 package eu.codecache.linko.web;
 
+import java.security.Principal;
 import java.util.List;
 //import java.util.Optional;
 
@@ -27,6 +28,8 @@ import org.springframework.web.server.ResponseStatusException;
 import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventRepository;
+import eu.codecache.linko.domain.UserAuthorizationRepository;
+import eu.codecache.linko.domain.UserEntityRepository;
 import eu.codecache.linko.exception.EventNotFoundException;
 
 /*
@@ -34,32 +37,43 @@ import eu.codecache.linko.exception.EventNotFoundException;
  */
 @RestController
 public class EventController {
-	
+
 	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that
 	// we can retrieve
 	// and save data to database.
 	@Autowired
-	public EventRepository repository;
-	public CityRepository cityrepository;
+	private EventRepository repository;
+	@Autowired
+	private CityRepository cityrepository;
+	@Autowired
+	private UserEntityRepository ueRepo;
+	@Autowired
+	private UserAuthorizationRepository uaRepo;
 
 	// displays ALL events in the database
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/api/events")
-	public @ResponseBody List<Event> all() {
+	public @ResponseBody List<Event> all(Principal principal) {
 		return repository.findAll();
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/api/events")
-	public @ResponseBody Event newEvent(@RequestBody Event event) {
-		repository.save(event);
-
-		return event;
+	public @ResponseBody Event newEvent(@RequestBody Event event, Principal principal) throws Exception {
+		// Let's only allow admins to add events
+		if (ueRepo.findByUsername(principal.getName()).getUserAuth().getAuthorization().equals("ADMIN")) {
+			repository.save(event);
+			return event;
+		} else {
+			// if not an admin, let's throw exception
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/api/events/{id}")
-	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) throws Exception {
+	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event)
+			throws Exception {
 		// first let's see if we have an event with the id
 		try {
 			Event dbEvent = repository.findByEventID(eventID);
@@ -82,28 +96,32 @@ public class EventController {
 	// näytä yksi tapahtuma
 	// Single item
 	@GetMapping("/api/events/{id}")
-	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID)throws EventNotFoundException {
-		
-		if(eventID == null) {
-			throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");	
-		}else{
-			return repository.findByEventID(eventID);	
-		//} catch (EventNotFoundException e) {
-		//	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) throws EventNotFoundException {
+
+		if (eventID == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+		} else {
+			return repository.findByEventID(eventID);
+			// } catch (EventNotFoundException e) {
+			// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
 
 	// Delete a event:
-	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can																			// delete by localhost/8080/idnumber
-	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException { // saves it to the variable eventID
-		
-		if(eventID == null) {
-		throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-	}else {
-		repository.deleteById(eventID);
-		return "Event deleted";
-	}
+	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can //
+																				// delete by localhost/8080/idnumber
+	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException { // saves it
+																												// to
+																												// the
+																												// variable
+																												// eventID
 
+		if (eventID == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+		} else {
+			repository.deleteById(eventID);
+			return "Event deleted";
+		}
+
+	}
 }
-}
-	
