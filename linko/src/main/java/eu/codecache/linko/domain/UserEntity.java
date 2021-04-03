@@ -31,6 +31,12 @@ public class UserEntity {
 
 	}
 
+	public UserEntity(String username, UserAuthorization auth, String passwordHash) {
+		this.username = username;
+		this.userAuth = auth;
+		this.passwordHash = passwordHash;
+	}
+
 	public long getUserID() {
 		return userID;
 	}

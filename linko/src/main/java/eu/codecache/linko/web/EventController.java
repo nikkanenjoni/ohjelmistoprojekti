@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -42,11 +43,13 @@ public class EventController {
 	public CityRepository cityrepository;
 
 	// displays ALL events in the database
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/api/events")
 	public @ResponseBody List<Event> all() {
 		return repository.findAll();
 	}
 
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/api/events")
 	public @ResponseBody Event newEvent(@RequestBody Event event) {
 		repository.save(event);
@@ -54,6 +57,7 @@ public class EventController {
 		return event;
 	}
 
+	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/api/events/{id}")
 	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event) throws Exception {
 		// first let's see if we have an event with the id

@@ -20,9 +20,14 @@ public class UserAuthorization {
 	// User authorization, user or admin
 //	@Column(name = "authorization", nullable = false)
 	private String authorization;
-	
+
 	public UserAuthorization() {
-		
+
+	}
+
+	public UserAuthorization(String auth) {
+		super();
+		this.authorization = auth;
 	}
 
 	public long getAuthID() {
