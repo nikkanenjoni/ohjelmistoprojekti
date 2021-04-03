@@ -78,8 +78,12 @@ public class LinkoApplication {
 			// let's add some users
 			UserAuthorization adminAuth = uaRepo.save(new UserAuthorization("ADMIN"));
 			UserAuthorization userAuth = uaRepo.save(new UserAuthorization("USER"));
-			ueRepo.save(new UserEntity("user", userAuth, "password"));
-			ueRepo.save(new UserEntity("admin", adminAuth, "password"));
+			UserEntity user1 = new UserEntity("user", userAuth, "");
+			user1.setPassword("password", "password");
+			ueRepo.save(user1);
+			UserEntity admin1 = new UserEntity("admin", adminAuth, "");
+			admin1.setPassword("password", "password");
+			ueRepo.save(admin1);
 		};
 	}
 
