@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 //import java.util.Optional;
 
+import javax.validation.Valid;
+
 //import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +61,9 @@ public class EventController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/api/events")
-	public @ResponseBody Event newEvent(@RequestBody Event event, Principal principal) throws Exception {
+	public @ResponseBody Event newEvent(@Valid @RequestBody Event event, Principal principal) throws Exception {
 		// Let's only allow admins to add events
-		if (ueRepo.findByUsername(principal.getName()).getUserAuth().getAuthorization().equals("ADMIN")) {
+		if (isAdmin(principal)) {
 			repository.save(event);
 			return event;
 		} else {
@@ -72,7 +74,7 @@ public class EventController {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/api/events/{id}")
-	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @RequestBody Event event)
+	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @Valid @RequestBody Event event)
 			throws Exception {
 		// first let's see if we have an event with the id
 		try {
@@ -95,9 +97,9 @@ public class EventController {
 
 	// näytä yksi tapahtuma
 	// Single item
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/api/events/{id}")
 	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) throws EventNotFoundException {
-
 		if (eventID == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		} else {
@@ -108,14 +110,9 @@ public class EventController {
 	}
 
 	// Delete a event:
-	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can //
-																				// delete by localhost/8080/idnumber
-	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException { // saves it
-																												// to
-																												// the
-																												// variable
-																												// eventID
-
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE)
+	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException {
 		if (eventID == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		} else {
@@ -123,5 +120,10 @@ public class EventController {
 			return "Event deleted";
 		}
 
+	}
+
+	// This is a private method for checking to see, if user is actually an admin
+	private boolean isAdmin(Principal p) {
+		return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
 	}
 }
