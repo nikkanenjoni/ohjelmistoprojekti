@@ -33,7 +33,7 @@ Lists all events
 
 **Method** : `GET`
 
-**Auth required** : *not available*
+**Auth required** : *USER*
 
 <details>
 
@@ -93,7 +93,7 @@ Views information of a spesific event.
 
 **Method** : GET 
 
-**Auth required** : *not available*
+**Auth required** : *USER*
 
 <details>
 
@@ -143,7 +143,7 @@ Allow creation of new events to database.
 
 **Method** : `POST`
  
-**Auth required** : *not available*
+**Auth required** : *ADMIN*
  
 **Data constrains**
  
@@ -210,7 +210,7 @@ This endpoint allows updating of a specific event.
 
 **Method** : `PUT`
 
-**Auth required** : *not available* 
+**Auth required** : *ADMIN*
 
 **Data constrains**
  
@@ -269,7 +269,7 @@ This endpoint allows deleting of a specific event from database.
 
 **Method** : `DELETE`
  
-**Auth required** : *not available*
+**Auth required** : *ADMIN*
  
 <details>
 
