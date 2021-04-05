@@ -40,31 +40,30 @@ import eu.codecache.linko.exception.EventNotFoundException;
 @RestController
 public class EventController {
 
-	// viittaus EventRepositoryyn/CityRepositoryyn. Autowire the repository so that
-	// we can retrieve
-	// and save data to database.
 	@Autowired
-	private EventRepository repository;
+	private EventRepository eRepo;
 	@Autowired
-	private CityRepository cityrepository;
+	private CityRepository cRepo;
 	@Autowired
 	private UserEntityRepository ueRepo;
 	@Autowired
 	private UserAuthorizationRepository uaRepo;
 
+	private final String API_BASE = "/api/events";
+
 	// displays ALL events in the database
 	@ResponseStatus(HttpStatus.OK)
-	@GetMapping("/api/events")
-	public @ResponseBody List<Event> all(Principal principal) {
-		return repository.findAll();
+	@GetMapping(API_BASE)
+	public @ResponseBody List<Event> all() {
+		return eRepo.findAll();
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
-	@PostMapping("/api/events")
+	@PostMapping(API_BASE)
 	public @ResponseBody Event newEvent(@Valid @RequestBody Event event, Principal principal) throws Exception {
 		// Let's only allow admins to add events
 		if (isAdmin(principal)) {
-			repository.save(event);
+			eRepo.save(event);
 			return event;
 		} else {
 			// if not an admin, let's throw exception
@@ -73,12 +72,17 @@ public class EventController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PutMapping("/api/events/{id}")
-	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @Valid @RequestBody Event event)
-			throws Exception {
-		// first let's see if we have an event with the id
-		try {
-			Event dbEvent = repository.findByEventID(eventID);
+	@PutMapping(API_BASE + "/{id}")
+	public @ResponseBody Event updateEvent(@PathVariable("id") Long eventID, @Valid @RequestBody Event event,
+			Principal principal) throws Exception {
+		// This is admin only method
+		if (!isAdmin(principal)) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
+		// ok, user is admin
+		// let's see if we have an event with the id
+		Event dbEvent = eRepo.findByEventID(eventID);
+		if (dbEvent != null) {
 			// ok, we have found the event
 			// update it with the new information
 			dbEvent.setEvent(event.getEvent());
@@ -87,39 +91,49 @@ public class EventController {
 			dbEvent.setDatetime(event.getDatetime());
 			// now we should be able to (over)write to database without accidentally
 			// creating a new event
-			repository.save(dbEvent);
+			try {
+				eRepo.save(dbEvent);
+			} catch (Exception e) {
+				// For some reason we failed to write to DB, I guess this is a good enough
+				// response in this case
+				throw new ResponseStatusException(HttpStatus.INSUFFICIENT_STORAGE);
+			}
 			// return the updated event
 			return dbEvent;
-		} catch (EventNotFoundException e) {
+		} else {
+			// No event found with the id, so we can't update it
+			// Let's throw NOT_FOUND
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		}
 	}
 
-	// näytä yksi tapahtuma
 	// Single item
 	@ResponseStatus(HttpStatus.OK)
-	@GetMapping("/api/events/{id}")
-	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) throws EventNotFoundException {
-		if (eventID == null) {
+	@GetMapping(API_BASE + "/{id}")
+	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) throws Exception {
+		Event event = eRepo.findByEventID(eventID);
+		if (event == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		} else {
-			return repository.findByEventID(eventID);
-			// } catch (EventNotFoundException e) {
-			// throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
+			return event;
 		}
 	}
 
-	// Delete a event:
-	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "/api/events/{id}", method = RequestMethod.DELETE)
-	public String deleteEvent(@PathVariable("id") Long eventID, Model model) throws EventNotFoundException {
-		if (eventID == null) {
+	// Delete an event
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@RequestMapping(value = API_BASE + "/{id}", method = RequestMethod.DELETE)
+	public String deleteEvent(@PathVariable("id") Long eventID, Model model, Principal principal) throws Exception {
+		// This is admin only stuff, so let's check that first
+		if (!isAdmin(principal)) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
+		Event event = eRepo.findByEventID(eventID);
+		if (event == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		} else {
-			repository.deleteById(eventID);
+			eRepo.deleteById(eventID);
 			return "Event deleted";
 		}
-
 	}
 
 	// This is a private method for checking to see, if user is actually an admin
