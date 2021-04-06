@@ -15,7 +15,7 @@ import eu.codecache.linko.services.UserDetailsServiceImpl;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	UserDetailsServiceImpl detailsService;
+	private UserDetailsServiceImpl detailsService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
