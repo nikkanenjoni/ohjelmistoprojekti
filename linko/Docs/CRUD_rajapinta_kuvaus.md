@@ -17,11 +17,11 @@ Each endpoint is used to view events or to add/update/delete them.
 
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
-| `GET` | [/api/events](#GET-events) | -- | Lists ALL events in database |
-| `GET` | [/api/events/:id](#GET-event-id) | -- | Displays information of event with given `:id` |
-| `POST` | [/api/events](#POST-event) | -- | Adds new event to database |
-| `PUT` | [/api/events/:id](#PUT-event-id) | -- | Updates the event with given `:id` |
-| `DELETE` | [/api/events/:id](#DELETE-event-id) | -- | Deleted the event with given `:id` |
+| `GET` | [/api/events](#GET-events) | User | Lists ALL events in database |
+| `GET` | [/api/events/:id](#GET-event-id) | User | Displays information of event with given `:id` |
+| `POST` | [/api/events](#POST-event) | Admin | Adds new event to database |
+| `PUT` | [/api/events/:id](#PUT-event-id) | Admin | Updates the event with given `:id` |
+| `DELETE` | [/api/events/:id](#DELETE-event-id) | Admin | Deleted the event with given `:id` |
 
 
 
