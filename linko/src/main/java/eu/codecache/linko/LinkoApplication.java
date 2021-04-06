@@ -25,7 +25,6 @@ import eu.codecache.linko.domain.UserAuthorizationRepository;
 import eu.codecache.linko.domain.UserEntity;
 import eu.codecache.linko.domain.UserEntityRepository;
 
-// @SpringBootApplication(scanBasePackages = { "eu.codecache" })
 @SpringBootApplication
 public class LinkoApplication {
 
