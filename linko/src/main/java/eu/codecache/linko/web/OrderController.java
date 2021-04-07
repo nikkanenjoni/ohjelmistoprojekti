@@ -1,8 +1,10 @@
 package eu.codecache.linko.web;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import eu.codecache.linko.domain.Orders;
@@ -19,6 +22,8 @@ import eu.codecache.linko.domain.TicketOrder;
 import eu.codecache.linko.domain.TicketOrderDTO;
 import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.TicketRepository;
+import eu.codecache.linko.domain.UserAuthorizationRepository;
+import eu.codecache.linko.domain.UserEntityRepository;
 import eu.codecache.linko.domain.OrderRepository;
 
 @RestController
@@ -26,15 +31,22 @@ public class OrderController {
 
 	@Autowired
 	private OrderRepository orderRepository;
-
 	// We need these to add new tickets to an order
 	@Autowired
 	private TicketOrderRepository toRepo;
 	@Autowired
 	private TicketRepository tRepo;
+	
+	@Autowired
+	private UserEntityRepository ueRepo;
+	
+	@Autowired
+	private UserAuthorizationRepository uaRepo;
 
 	private final String API_BASE = "/api/orders";
 
+	
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders getOrder(@PathVariable("id") Long orderID) {
 		return orderRepository.findByOrderID(orderID);
@@ -42,6 +54,7 @@ public class OrderController {
 
 	// Now we can POST an empty POST-request and we will receive orderID as response
 	// thus we can start adding tickets to the order by id returned
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE)
 	public @ResponseBody Orders postOrder() {
 //	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
@@ -98,30 +111,9 @@ public class OrderController {
 		return orderRepository.findByOrderID(orderID);
 	}
 
-	/*
-	 * SOFIAN SOTKUA TÄSTÄ ETEENPÄIN TICKET ORDER GET JA DELETE
-	 * 
-	 * // Get ticketOrder, first orders
-	 * 
-	 * @GetMapping(API_BASE + "/{id}") public @ResponseBody Orders
-	 * getOrder(@PathVariable("id") Long orderID) { return
-	 * orderRepository.findByOrderID(orderID); } // Get ticketOrder, then
-	 * ticketorders, where id2=ticketOrderID
-	 * 
-	 * @GetMapping(API_BASE + "/{id}?{id2}") public @ResponseBody TicketOrder
-	 * getTicketOrder(@PathVariable("id2") Long ticketOrderID, Model model) { return
-	 * toRepo.findByTicketOrderID(ticketOrderID); }
-	 * 
-	 * // Delete ticketOrder (delete one ticket from ticketorder):
-	 * 
-	 * @RequestMapping(value = API_BASE + "/{id2}?{id}", method = RequestMethod.GET)
-	 * // {id} is the path variable. you can public String
-	 * deleteTicketOrder(@PathVariable("id") Long
-	 * ticketOrderID, @PathVariable("id2") Long orderID) {
-	 * toRepo.deleteById(ticketOrderID); // alla testailua //Order
-	 * orderID=Order.getOrderID(@PathVariable("id2") Long orderID, Model model) {
-	 * 
-	 * return "Ticket removed from order"; }
-	 */
+	// This is a private method for checking to see, if user is actually an admin
+		private boolean isAdmin(Principal p) {
+			return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
+		}
 
 }
