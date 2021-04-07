@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import eu.codecache.linko.domain.Orders;
 import eu.codecache.linko.domain.Ticket;
@@ -56,28 +57,46 @@ public class OrderController {
 	// thus we can start adding tickets to the order by id returned
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE)
-	public @ResponseBody Orders postOrder() {
+	public @ResponseBody Orders postOrder() throws Exception {
 //	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
+		try {
 		Orders order = new Orders(LocalDateTime.now());
 		orderRepository.save(order);
 		return order;
+		} catch (Exception e) {
+			
+			// response in this case (should it be changed?)
+			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
-			@RequestBody TicketOrderDTO ticketOrderDTO) {
+			@RequestBody TicketOrderDTO ticketOrderDTO) throws Exception {
 		/*
 		 * We should make sure we have a valid order here!
+		 * We do not need Admin authorization here, everybody must be able to make orders and sell tickets
 		 */
+		
 		Orders order = orderRepository.findByOrderID(orderID);
-		/*
-		 * ... and same goes for the ticket
-		 */
 		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
 		double price = ticketOrderDTO.getTicketPrice();
-		TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
-		toRepo.save(ticketOrder);
-		return order;
+
+		if(orderID != null) {
+			/*
+			 * ... and same goes for the ticket
+			 */
+			TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
+			toRepo.save(ticketOrder);
+			return order;			
+
+
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
+			
+		}
+
 	}
 
 	// Delete will only delete tickets from order,
@@ -86,24 +105,26 @@ public class OrderController {
 	// let's not implement that for now
 
 	// Delete ticket from order
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = API_BASE + "/{id}/ticketorder/{id2}", method = RequestMethod.DELETE)
 	public @ResponseBody Orders deleteTicketFromOrder(@PathVariable("id") Long orderID,
-			@PathVariable("id2") Long ticketOrderID) {
+			@PathVariable("id2") Long ticketOrderID) throws Exception {
 		Orders order = orderRepository.findByOrderID(orderID);
 		if (order == null) {
 			// There is no order with the given id
 			// This needs better handling!
-			return null;
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
+			
 		}
 		TicketOrder ticketOrder = toRepo.findByTicketOrderID(ticketOrderID);
 		if (ticketOrder == null) {
-			// Now ticketOrder found, better handling needed again!
-			return null;
+			
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
 		}
 		if (ticketOrder.getOrder().getOrderID() != order.getOrderID()) {
 			// We did fetch order and ticketOrder from database, but they don't match
 			// this ticket DOES NOT belong to the given order!
-			return null;
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
 		} else {
 			// this ticket DOES belong to given order, let's remove it from the order
 			toRepo.delete(ticketOrder);
