@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+    postgres:
+        image: postgres
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: guru
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: ticketguru
+        volumes:
+            - ./DB/postgres-data:/var/lib/postgresql/data
+
+    ticketguru:
+        build: .
+        restart: unless-stopped
+        ports:
+          - 80:8080
+        depends_on:
+          - postgres

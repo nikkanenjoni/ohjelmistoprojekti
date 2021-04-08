@@ -7,6 +7,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -54,7 +55,7 @@ public class EventControllerTest {
 	private final String ADMIN_NAME = "admin";
 	private final String DEFAULT_PASSWORD = "password";
 	private final String[] DEFAULT_EVENTS = { "First event!", "Name of event 2" };
-	private long CORRECT_EVENT_ID = 5;
+	private long CORRECT_EVENT_ID = 0;
 	private final int INCORRECT_EVENT_ID = 1000;
 
 	@Autowired
@@ -117,13 +118,30 @@ public class EventControllerTest {
 	 */
 	@Test
 	public void postEvent() throws Exception {
-		Event newEvent = new Event("Matin rokkibändi!", new City("Turhala"), "Paikka", 100, "", LocalDateTime.now());
+		Event newEvent = new Event("Some new event", new City("Mock2"), "Place", 100, "", LocalDateTime.now());
 		HttpEntity<Event> request = new HttpEntity<>(newEvent);
-//		ResponseEntity<String> incorrectUser = restTemplate.withBasicAuth("user", "password")
-//				.postForEntity("/api/events", request, String.class);
-//		assertEquals(HttpStatus.UNAUTHORIZED, incorrectUser.getStatusCode());
 		ResponseEntity<String> correctUser = restTemplate.withBasicAuth(ADMIN_NAME, DEFAULT_PASSWORD)
 				.postForEntity("/api/events", request, String.class);
+		// Correct response code
 		assertEquals(HttpStatus.CREATED, correctUser.getStatusCode());
+		// Correct response body
+		assertTrue(correctUser.getBody().contains("Some new event"));
+	}
+
+	/*
+	 * Test delete from database
+	 */
+	@Test
+	public void deleteEvent() throws Exception {
+		try {
+			Event ev = eRepo.save(new Event("foo", cRepo.findAll().get(0), "foo", 100, "", LocalDateTime.now()));
+			long id = ev.getEventID();
+			restTemplate.withBasicAuth(ADMIN_NAME, DEFAULT_PASSWORD).delete("/api/events/" + id);
+			// we should be able to find with the id!
+			Event ev2 = eRepo.findByEventID(id);
+			assertEquals(ev2, null);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
 	}
 }
