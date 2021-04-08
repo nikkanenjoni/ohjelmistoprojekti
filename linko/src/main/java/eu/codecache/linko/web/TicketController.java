@@ -1,6 +1,9 @@
 package eu.codecache.linko.web;
 
+import java.security.Principal;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.OrderRepository;
@@ -16,6 +20,8 @@ import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.TicketRepository;
 import eu.codecache.linko.domain.TicketType;
 import eu.codecache.linko.domain.TicketTypeRepository;
+import eu.codecache.linko.domain.UserAuthorizationRepository;
+import eu.codecache.linko.domain.UserEntityRepository;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,26 +42,34 @@ import eu.codecache.linko.exception.EventNotFoundException;
 public class TicketController {
 
 	@Autowired
-	public EventRepository eRepository;
+	private EventRepository eRepository;
 	@Autowired
-	public OrderRepository oRepository;
+	private OrderRepository oRepository;
 	@Autowired
-	public TicketRepository tRepository;
+	private TicketRepository tRepository;
 	@Autowired
-	public TicketTypeRepository tyRepository;
+	private TicketTypeRepository tyRepository;
 	@Autowired
-	public TicketOrderRepository ticketOrderRepo;
+	private TicketOrderRepository ticketOrderRepo;
+	@Autowired
+	private UserEntityRepository ueRepo;
+	@Autowired
+	private UserAuthorizationRepository uaRepo;
+	
+	private final String API_BASE = "/api/tickets";
 
 	// displays ALL tickets in the database
-	@GetMapping("/api/tickets")
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping(API_BASE)
 	public @ResponseBody List<Ticket> all() {
 		return tRepository.findAll();
 	}
 
 	// Post new ticket by giving it 1) type, 2) event and 3) price
 	// This needs to be documented !!!
-	@PostMapping("/api/tickets")
-	public @ResponseBody Ticket newTicket(@RequestBody Ticket ticket) {
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping(API_BASE)
+	public @ResponseBody Ticket newTicket(@Valid @RequestBody Ticket ticket, Principal principal) {
 		long newID = tRepository.save(ticket).getTicketID();
 		tRepository.flush();
 		// I just can't understand why this returns all null while GetMapping with
@@ -66,25 +80,42 @@ public class TicketController {
 	/*
 	 * this one needs quite some fixing, but we have bigger priorities at the moment
 	 */
-	@PutMapping("/api/tickets/{id}")
-	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @RequestBody Ticket ticket) {
-		// first let's see if we have an event with the id
+	@ResponseStatus(HttpStatus.OK)
+	@PutMapping(API_BASE + "/{id}")
+	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @Valid @RequestBody Ticket ticket, 
+			Principal principal) throws Exception {
+		// This is admin only method
+		if (!isAdmin(principal)) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
+		// first let's see if we have an ticket with the id
 		Ticket dbTicket = tRepository.findByTicketID(ticketID);
-		// ok, we have found the event
+		if (dbTicket != null) {
+		// ok, we have found the ticket
 		// update it with the new information
 		dbTicket.setTicketType(ticket.getTicketType());
 		dbTicket.setEvent(ticket.getEvent());
 		dbTicket.setPrice(ticket.getPrice());
 		dbTicket.setDescription(ticket.getDescription());
 		// now we should be able to (over)write to database without accidentally
-		// creating a new event
-		tRepository.save(dbTicket);
-		// return the updated event
+		// creating a new ticket
+		try {
+			tRepository.save(dbTicket);
+		} catch (Exception e) {
+			// response in this case
+			throw new ResponseStatusException(HttpStatus.INSUFFICIENT_STORAGE);
+		}
+		// return the updated ticket
 		return dbTicket;
+	} else {
+		// No ticket found with the id, so we can't update it
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
 	}
+}
 
 	// Single item
-	@GetMapping("/api/tickets/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping(API_BASE + "/{id}")
 //	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
 	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) {
 		// We need to handle error and remove all the crap in comments :)
@@ -103,11 +134,20 @@ public class TicketController {
 	}
 
 	// Delete ticket
-	@RequestMapping(value = "/api/tickets/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@RequestMapping(value = API_BASE + "/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
 																				// delete by localhost/8080/idnumber
-	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) { // saves it to the variable eventID
-		tRepository.deleteById(ticketID);
-		return "Ticket deleted";
+	public String deleteTicket(@PathVariable("id") Long ticketID, Model model, Principal principal) throws Exception { // saves it to the variable eventID
+		if (!isAdmin(principal)) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
+		Ticket ticket = tRepository.findByTicketID(ticketID);
+		if (ticket == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
+		} else {
+			tRepository.deleteById(ticketID);
+			return "Ticket deleted";
+		}
 	}
 
 	/*
@@ -148,4 +188,9 @@ public class TicketController {
 		return "TicketType deleted";
 	}
 
+
+// This is a private method for checking to see, if user is actually an admin
+private boolean isAdmin(Principal p) {
+	return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
+	}
 }
