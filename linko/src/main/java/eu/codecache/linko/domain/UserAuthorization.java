@@ -18,7 +18,7 @@ public class UserAuthorization {
 	private long authID;
 
 	// User authorization, user or admin
-//	@Column(name = "authorization", nullable = false)
+	@Column(name = "AUTH_VALUE")
 	private String authorization;
 
 	public UserAuthorization() {

@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDateTime;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
@@ -33,7 +35,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import eu.codecache.linko.domain.City;
+import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.Event;
+import eu.codecache.linko.domain.EventRepository;
 
 /*
  * Tests was done with the help of following tutorial:
@@ -49,12 +53,32 @@ public class EventControllerTest {
 	private final String USERNAME = "user";
 	private final String ADMIN_NAME = "admin";
 	private final String DEFAULT_PASSWORD = "password";
-	private final String[] DEFAULT_EVENTS = { "Hippafest", "Musadiggarit" };
-	private final int CORRECT_EVENT_ID = 5;
+	private final String[] DEFAULT_EVENTS = { "First event!", "Name of event 2" };
+	private long CORRECT_EVENT_ID = 5;
 	private final int INCORRECT_EVENT_ID = 1000;
 
 	@Autowired
 	private TestRestTemplate restTemplate;
+
+	@Autowired
+	private EventRepository eRepo;
+
+	@Autowired
+	private CityRepository cRepo;
+
+	@BeforeEach
+	public void setDataToDB() {
+		try {
+			City mockCity = new City("Mock");
+			cRepo.save(mockCity);
+			Event e1 = eRepo
+					.save(new Event(DEFAULT_EVENTS[0], mockCity, "place1", 1000, "some desc", LocalDateTime.now()));
+			eRepo.save(new Event(DEFAULT_EVENTS[1], mockCity, "place2", 100, "", LocalDateTime.now()));
+			CORRECT_EVENT_ID = e1.getEventID();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
 
 	/*
 	 * Let's test getting all events from events api
@@ -70,9 +94,9 @@ public class EventControllerTest {
 		assertEquals(HttpStatus.UNAUTHORIZED, incorrectUser.getStatusCode());
 
 		// After that we will also check the contents of the successfull fetch
+//		System.err.println(correctUserAndPass.getBody());
 		assertTrue(correctUserAndPass.getBody().contains(DEFAULT_EVENTS[0]));
 		assertTrue(correctUserAndPass.getBody().contains(DEFAULT_EVENTS[1]));
-		System.err.println(correctUserAndPass.getBody());
 	}
 
 	/*
