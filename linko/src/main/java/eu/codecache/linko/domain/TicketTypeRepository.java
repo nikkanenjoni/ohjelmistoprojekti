@@ -16,5 +16,6 @@ public interface TicketTypeRepository extends JpaRepository<TicketType, Long> {
 	
 	// delete a ticketType
 	void deleteById(long ticketTypeID);
+	
 
 }
