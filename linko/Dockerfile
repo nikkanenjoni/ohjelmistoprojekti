@@ -21,4 +21,4 @@ USER app
 EXPOSE 8080
 
 ENTRYPOINT ["java"]
-CMD ["-jar", "/usr/app/rmd-0.0.1-SNAPSHOT.jar"]
+CMD ["-jar", "/usr/app/linko-0.0.1-SNAPSHOT.jar"]
