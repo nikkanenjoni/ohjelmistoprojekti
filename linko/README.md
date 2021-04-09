@@ -47,25 +47,94 @@ Järjestelmän määrittelyyn tullaan palaamaan vielä tarkemmin myöhemmin. Tä
 
 ## Tietokanta
 
-Järjestelmään säilöttävä ja siinä käsiteltävät tiedot ja niiden väliset suhteet
-kuvataan käsitekaaviolla. Käsitemalliin sisältyy myös taulujen välisten viiteyhteyksien ja avainten
-määritykset. Tietokanta kuvataan käyttäen jotain kuvausmenetelmää, joko ER-kaaviota ja UML-luokkakaaviota.
+Ohjelmistoa varten on suunniteltu relaatiotietokanta.
+Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_relaatiokaavio.pdf](Docs/TicketGuru_relaatiokaavio.pdf)
 
-Lisäksi kukin järjestelmän tietoelementti ja sen attribuutit kuvataan
-tietohakemistossa. Tietohakemisto tarkoittaa yksinkertaisesti vain jokaisen elementin (taulun) ja niiden
-attribuuttien (kentät/sarakkeet) listausta ja lyhyttä kuvausta esim. tähän tyyliin:
+Alla vielä tietohakemisto eri luokkien attribuuteista.
 
-> ### _Tilit_
-> _Tilit-taulu sisältää käyttäjätilit. Käyttäjällä voi olla monta tiliä. Tili kuuluu aina vain yhdelle käyttäjälle._
->
-> Kenttä | Tyyppi | Kuvaus
-> ------ | ------ | ------
-> id | int PK | Tilin id
-> nimimerkki | varchar(30) |  Tilin nimimerkki
-> avatar | int FK | Tilin avatar, viittaus [avatar](#Avatar)-tauluun
-> kayttaja | int FK | Viittaus käyttäjään [käyttäjä](#Kayttaja)-taulussa
+### Event
+
+*Tähän tauluun tallennetaan kaikki tapahtumat*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| eventID     | int PK | Tapahtuman Id |
+| city| FK| Kunnan nimi|
+| event| string| Tapahtuman nimi|
+| eventPlace| string| Tapahtumapaikan nimi|
+| capacity| int| maksimilippumäärä|
+| description| string| vapaavalintainen kuvaus|
+| datetime| LocalDateTime| päivämäärä ja kellonaika|
+
+### City
+
+*Tähän tauluun tallennetaan kaikki kunnat. Tällä hetkellä tarkin sijaintimääritys, tarkennetaan tarvittaessa (esim. postinumerotasolle).*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| cityID     | int PK | Kunnan Id |
+| city | string | Kunnan nimi |
+
+
+### Order
+
+*Tähän tauluun tallennetaan kaikki tapahtuneet kaupat*
+
+| Kenttä | Tyyppi | Kuvaus | 
+| :----  | :---- | :-----  |
+| orderID     | int PK | Ostotapahtuman Id |
+| timestamp | timestamp | Ostotapahtuman päivä & aika |
+
+### TicketOrder
+
+*Tämä taulu purkaa 'monen suhde moneen' -relaatiot lippu- ja ostotaulujen välistä. Tässä taulussa pidetään tieto ostetuista lipuista.*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lippumyynnin ID |
+| orderID | int FK | Viittaus [ostotapahtumaan](#Order), jossa tämä lippu on ostettu |
+| ticketID | int FK | Viittaus [lippuun](#Ticket), jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
+| price | double | Tallettaa tiedon, mihin hintaan juuri tämä kyseinen lippu on myyty |
+
+### Ticket
+
+*Tähän tauluun tallennetaan kaikki liput ja niiden tiedot, jotka ovat tiettyyn tapahtumaan saatavilla.*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lippu ID |
+| ticketTypeID | int FK | Viittaus [lipputyyppiin](#TicketType), joka kertoo minkä tyyppinen lippu on kyseessä |
+| price | double | Lipulle määritettävä hinta | 
+| eventID | int FK | Viittaus [tapahtumaan](#Event), johon tämä lippu on ostettu |
+| description | string | Kuvaus lipusta.  |
+
+### TicketType
+
+*Tässä taulussa listataan kaikki lipputyypit, jotka ovat tapahtumiin saatavilla*
+
+| Kenttä | Tyyppi | Kuvaus |
+| :---- | :---- | :----- |
+| id   | int PK | Lipputyyppi ID |
+| ticketType | string | Lippityypin nimi, jolla se on yksilöitävissä. Esimerkiksi opiskelija|
+
 
 ## Tekninen kuvaus
+
+### REST-API Dokumentaatio
+
+
+HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssille tehtävän operaation. Kuvaukset ohjelmiston pyyntötyypeistä löytyy seuraavasta linkistä:
+
+[Tarkempi kuvaus](Docs/CRUD_rajapinta_kuvaus.md) Sisältöesimerkit, endpointit, paluukoodit, virheviestit
+
+
+
+
+
+
+
+## Alla valmistekstiä.
+####
 
 Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
 ratkaisut, esim.
