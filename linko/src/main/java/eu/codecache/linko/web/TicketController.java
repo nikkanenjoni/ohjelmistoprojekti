@@ -49,13 +49,13 @@ public class TicketController {
 	private TicketRepository tRepository;
 	@Autowired
 	private TicketTypeRepository tyRepository;
-	@Autowired
-	private TicketOrderRepository ticketOrderRepo;
+//	@Autowired
+//	private TicketOrderRepository ticketOrderRepo;
 	@Autowired
 	private UserEntityRepository ueRepo;
-	@Autowired
-	private UserAuthorizationRepository uaRepo;
-	
+//	@Autowired
+//	private UserAuthorizationRepository uaRepo;
+
 	private final String API_BASE = "/api/tickets";
 
 	// displays ALL tickets in the database
@@ -69,7 +69,10 @@ public class TicketController {
 	// This needs to be documented !!!
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE)
-	public @ResponseBody Ticket newTicket(@Valid @RequestBody Ticket ticket, Principal principal) {
+	public @ResponseBody Ticket newTicket(@Valid @RequestBody Ticket ticket, Principal principal) throws Exception {
+		if (!isAdmin(principal)) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
 		long newID = tRepository.save(ticket).getTicketID();
 		tRepository.flush();
 		// I just can't understand why this returns all null while GetMapping with
@@ -82,7 +85,7 @@ public class TicketController {
 	 */
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(API_BASE + "/{id}")
-	public @ResponseBody Ticket updateTicket(@PathVariable("id") Long ticketID, @Valid @RequestBody Ticket ticket, 
+	public @ResponseBody Ticket updateTicket(@PathVariable("id") long ticketID, @Valid @RequestBody Ticket ticket,
 			Principal principal) throws Exception {
 		// This is admin only method
 		if (!isAdmin(principal)) {
@@ -91,53 +94,44 @@ public class TicketController {
 		// first let's see if we have an ticket with the id
 		Ticket dbTicket = tRepository.findByTicketID(ticketID);
 		if (dbTicket != null) {
-		// ok, we have found the ticket
-		// update it with the new information
-		dbTicket.setTicketType(ticket.getTicketType());
-		dbTicket.setEvent(ticket.getEvent());
-		dbTicket.setPrice(ticket.getPrice());
-		dbTicket.setDescription(ticket.getDescription());
-		// now we should be able to (over)write to database without accidentally
-		// creating a new ticket
-		try {
-			tRepository.save(dbTicket);
-		} catch (Exception e) {
-			// response in this case
-			throw new ResponseStatusException(HttpStatus.INSUFFICIENT_STORAGE);
+			// ok, we have found the ticket
+			// update it with the new information
+			dbTicket.setTicketType(ticket.getTicketType());
+			dbTicket.setEvent(ticket.getEvent());
+			dbTicket.setPrice(ticket.getPrice());
+			dbTicket.setDescription(ticket.getDescription());
+			// now we should be able to (over)write to database without accidentally
+			// creating a new ticket
+			try {
+				tRepository.save(dbTicket);
+			} catch (Exception e) {
+				// response in this case
+				throw new ResponseStatusException(HttpStatus.INSUFFICIENT_STORAGE);
+			}
+			// return the updated ticket
+			return dbTicket;
+		} else {
+			// No ticket found with the id, so we can't update it
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
 		}
-		// return the updated ticket
-		return dbTicket;
-	} else {
-		// No ticket found with the id, so we can't update it
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found");
 	}
-}
 
-	// Single item
+	// List tickets available for a single event
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(API_BASE + "/{id}")
-//	public @ResponseBody Ticket findTicket(@PathVariable("id") Long ticketID) {
-	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") Long eventID) {
-		// We need to handle error and remove all the crap in comments :)
-		try {
-			Event event = eRepository.findByEventID(eventID);
+	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") long eventID) {
+		Event event = eRepository.findByEventID(eventID);
+		if (event != null) {
 			return tRepository.findByEvent(event);
-		} catch (Exception e) {
+		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		/*
-		 * For now, let's keep this simple & stupid -> we don't handle case where ticket
-		 * with the ID isn't found (let's fix that later, but for now, an issue on
-		 * Github is enough)
-		 */
-//		return tRepository.findByTicketID(ticketID);
 	}
 
 	// Delete ticket
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@RequestMapping(value = API_BASE + "/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you can
-																				// delete by localhost/8080/idnumber
-	public String deleteTicket(@PathVariable("id") Long ticketID, Model model, Principal principal) throws Exception { // saves it to the variable eventID
+	@RequestMapping(value = API_BASE + "/{id}", method = RequestMethod.DELETE)
+	public String deleteTicket(@PathVariable("id") Long ticketID, Model model, Principal principal) throws Exception {
 		if (!isAdmin(principal)) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
 		}
@@ -150,47 +144,44 @@ public class TicketController {
 		}
 	}
 
-	/*
-	 * This method is broken, I've commented it out for now (Ville)
-	 */
-	// Delete-functionality:
-//	@RequestMapping(value = "/api/tickets/delete/{id}", method = RequestMethod.GET)
-//	public String deleteTicket(@PathVariable("id") Long ticketID, Model model) {
-//		tRepository.deleteById(ticketID);
-//		return "Ticket deleted";
-//	}
-
 	/* TICKETTYPE */
 
 	// Get all tickettypes:
 	// displays ALL tickets in the database
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/api/tickettypes")
 	public @ResponseBody List<TicketType> All() {
 		return tyRepository.findAll();
-
 	}
 
 	// Save a new ticketType
 	@PostMapping("/api/tickettypes")
-	public @ResponseBody TicketType newTicketType(@RequestBody TicketType ticketType) {
-		tyRepository.save(ticketType);
-		return ticketType;
+	@ResponseStatus(HttpStatus.CREATED)
+	public @ResponseBody TicketType newTicketType(@Valid @RequestBody TicketType ticketType, Principal principal)
+			throws Exception {
+		if (isAdmin(principal)) {
+			tyRepository.save(ticketType);
+			return ticketType;
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
 	// Delete a ticketType
-
-	@RequestMapping(value = "/api/tickettypes/{id}", method = RequestMethod.DELETE) // {id} is the path variable. you
-																					// can
-	// delete by localhost/8080/idnumber
-	public String deleteTicketType(@PathVariable("id") Long ticketTypeID, Model model) { // saves it to the variable
-																							// eventID
-		tyRepository.deleteById(ticketTypeID);
-		return "TicketType deleted";
+	@RequestMapping(value = "/api/tickettypes/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public String deleteTicketType(@PathVariable("id") Long ticketTypeID, Model model, Principal principal)
+			throws Exception {
+		if (isAdmin(principal)) {
+			tyRepository.deleteById(ticketTypeID);
+			return "TicketType deleted";
+		} else {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+		}
 	}
 
-
-// This is a private method for checking to see, if user is actually an admin
-private boolean isAdmin(Principal p) {
-	return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
+	// This is a private method for checking to see, if user is actually an admin
+	private boolean isAdmin(Principal p) {
+		return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
 	}
 }
