@@ -131,7 +131,7 @@ HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssil
 
 ### Autentisointi
 
-Projektissa käyttäjien tunnistamiseksi käytetään Spring Bootin Basic Authorization-suojausta. Ohjelmaa ei pysty käyttämään, ellei käyttäjällä ole käytössä tunnuksia. Ohjelmistossa on tällä hetkellä kahden tasoisia käyttäjiä: Ylläpitäjiä (admin) ja peruskäyttäjiä(user). Käyttäjätasoja tarkennetaan tarvittaessa.
+Projektissa käyttäjien tunnistamiseksi käytetään Spring Bootin Basic Authorization-suojausta. Ohjelmaa ei pysty käyttämään, ellei käyttäjällä ole käytössä tarvittavia, määriteltyjä käyttöoikeuksia. Ohjelmistossa on tällä hetkellä kahden tasoisia käyttäjiä: Ylläpitäjiä (admin) ja peruskäyttäjiä (user). Käyttäjätasoja tarkennetaan tarvittaessa.
 
 Käyttäjien tiedot ja käyttöoikeudet tallennetaan tietokantaan ja ohjelma tarkistaa oikeudet pyyntöjä toteuttaessa. Käyttäjien salasanoista talletetaan tiiviste (hash), joka kryptografisin menetelmin voidaan tarkistaa, mutta josta itse salasanaa ei saada selville.
 
