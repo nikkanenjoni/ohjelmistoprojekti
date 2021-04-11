@@ -136,6 +136,8 @@ Projektissa käyttäjien tunnistamiseksi käytetään Spring Bootin Basic Author
 Käyttäjien tiedot ja käyttöoikeudet tallennetaan tietokantaan ja ohjelma tarkistaa oikeudet pyyntöjä toteuttaessa. Käyttäjien salasanoista talletetaan tiiviste (hash), joka kryptografisin menetelmin voidaan tarkistaa, mutta josta itse salasanaa ei saada selville.
 
 Kuvaus käyttäjätietokannasta, taulut User_Entity ja User_Authorization:
+
+
 ![Import](Docs/Kuvat/UsersDiagram.png "Import")
 
 
