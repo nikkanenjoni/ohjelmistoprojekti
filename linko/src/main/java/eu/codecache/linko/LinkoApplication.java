@@ -33,47 +33,9 @@ public class LinkoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner h2Filler(CityRepository cRepo, EventRepository eRepo, TicketRepository tRepo,
-			TicketTypeRepository ttRepo, TicketOrderRepository toRepo, OrderRepository oRepo,
-			UserEntityRepository ueRepo, UserAuthorizationRepository uaRepo) {
+	public CommandLineRunner h2Filler(UserEntityRepository ueRepo, UserAuthorizationRepository uaRepo) {
 		return (args) -> {
 			System.out.println("Running CommandLineRunner");
-			/*
-			 * Let's fill H2-database with some testdata to test the server & API
-			 * 
-			 * To make queries directly to database (and to confirm there is data), visit:
-			 * localhost:8080/h2
-			 */
-//			cRepo.save(new City("Ilmala"));
-//			cRepo.save(new City("Rovaniemi"));
-//			ttRepo.save(new TicketType("Normaali"));
-//			ttRepo.save(new TicketType("Opiskelija"));
-//			eRepo.save(new Event("Hippafesti", cRepo.findCityByCity("Rovaniemi").get(0), "Hippakenttä", 1000,
-//					"Kuvaus tapahtumasta tähän.", LocalDateTime.now()));
-//			eRepo.save(new Event("Musadiggarit", cRepo.findCityByCity("Ilmala").get(0), "Mutakenttä jäähallin takana",
-//					6, "", LocalDateTime.now()));
-//			eRepo.save(new Event("Antin rokkibändi", cRepo.findCityByCity("Rovaniemi").get(0), "Kellariklubi", 150,
-//					"Hieno bändi!", LocalDateTime.now()));
-//			eRepo.save(new Event("Matin rokkibändi", cRepo.findCityByCity("Rovaniemi").get(0), "Pieniklubi", 100,
-//					"Hieno bändi!", LocalDateTime.now()));
-//			// let's add some tickets:
-//			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(5), 20.00,
-//					""));
-//			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(5), 20.00,
-//					""));
-//			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Opiskelija").get(0), eRepo.findByEventID(6), 20.00,
-//					""));
-//			tRepo.save(new Ticket(ttRepo.findTicketTypeByTicketType("Normaali").get(0), eRepo.findByEventID(6), 30.00,
-//					""));
-			// let's add orders:
-//			oRepo.save(new Orders(LocalDateTime.now()));
-//			oRepo.save(new Orders(LocalDateTime.now()));
-			// now let's get one of the orders and add ticket to it
-//			List<Orders> orders = oRepo.findAll();
-//			List<Ticket> tickets = tRepo.findAll();
-//			toRepo.save(new TicketOrder(orders.get(0), tickets.get(0), tickets.get(0).getPrice()));
-//			toRepo.save(new TicketOrder(orders.get(0), tickets.get(1), tickets.get(1).getPrice()));
-
 			// let's add some users
 			UserAuthorization adminAuth = uaRepo.findByAuthorization("ADMIN");
 			if (adminAuth == null) {

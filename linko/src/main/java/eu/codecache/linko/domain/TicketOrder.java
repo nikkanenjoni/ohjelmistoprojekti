@@ -1,5 +1,8 @@
 package eu.codecache.linko.domain;
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,15 +39,35 @@ public class TicketOrder {
 	@DecimalMax("1000.0")
 	private double price;
 
+	@NotNull
+	private char character;
+	@NotNull
+	private String code;
+
+	private boolean used;
+	private LocalDateTime usedDate;
+
 	public TicketOrder() {
 		// empty default constructor
+		super();
 	}
 
 	public TicketOrder(Orders order, Ticket ticket, double price) {
-		super();
+		this();
 		this.order = order;
 		this.ticket = ticket;
 		this.price = price;
+		this.used = false;
+	}
+
+	public void setCharacter() {
+		if (code == null || code.length() < 2) {
+			Random rand = new Random();
+			String characters = "abcdefghijklmnopqrstuvwxyz";
+			char c = characters.charAt(rand.nextInt(characters.length()));
+			this.character = c;
+			this.code = "" + ticketOrderID + c + order.getOrderID() + c + ticket.getTicketID();
+		}
 	}
 
 	public long getTicketOrderID() {
@@ -77,6 +100,38 @@ public class TicketOrder {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public boolean isUsed() {
+		return used;
+	}
+
+	public void setUsed(boolean used) {
+		this.used = used;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public LocalDateTime getUsedDate() {
+		return usedDate;
+	}
+
+	public void setUsedDate(LocalDateTime usedDate) {
+		this.usedDate = usedDate;
+	}
+
+	public char getCharacter() {
+		return character;
+	}
+
+	public void setCharacter(char character) {
+		this.character = character;
 	}
 
 }

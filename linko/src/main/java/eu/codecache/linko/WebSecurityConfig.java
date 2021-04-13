@@ -1,12 +1,18 @@
 package eu.codecache.linko;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import eu.codecache.linko.services.UserDetailsServiceImpl;
 
@@ -27,5 +33,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(detailsService).passwordEncoder(new BCryptPasswordEncoder());
+	}
+
+	/*
+	 * Handle CORS
+	 * 
+	 * more or less copy & paste :
+	 * https://howtodoinjava.com/spring5/webmvc/spring-mvc-cors-configuration/
+	 */
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration conf = new CorsConfiguration();
+		conf.setAllowedOrigins(Arrays.asList("*"));
+		conf.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", conf);
+		return source;
 	}
 }
