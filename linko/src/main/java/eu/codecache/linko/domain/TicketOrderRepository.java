@@ -14,5 +14,8 @@ public interface TicketOrderRepository extends JpaRepository<TicketOrder, Long> 
 	
 	// delete ticket, ticketorder:
 	void deleteById(long ticketOrderID);
+	
+	// find ticket by code
+	TicketOrder findByCode(String code);
 
 }

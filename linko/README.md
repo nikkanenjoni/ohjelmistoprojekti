@@ -50,6 +50,8 @@ Järjestelmän määrittelyyn tullaan palaamaan vielä tarkemmin myöhemmin. Tä
 Ohjelmistoa varten on suunniteltu relaatiotietokanta.
 Tietokannan relaatiokaavio löytyy täältä: [TicketGuru_relaatiokaavio.pdf](Docs/TicketGuru_relaatiokaavio.pdf)
 
+Lisäksi käyttäjien autorisointia varten on olemassa toinen taulurakenne, joka kuvataan 
+
 Alla vielä tietohakemisto eri luokkien attribuuteista.
 
 ### Event
@@ -127,8 +129,16 @@ HTTP-protokollalla toteutetussa REST API:ssa pyyntötyyppi määrittä resurssil
 
 [Tarkempi kuvaus](Docs/CRUD_rajapinta_kuvaus.md) Sisältöesimerkit, endpointit, paluukoodit, virheviestit
 
+### Autentisointi
+
+Projektissa käyttäjien tunnistamiseksi käytetään Spring Bootin Basic Authorization-suojausta. Ohjelmaa ei pysty käyttämään, ellei käyttäjällä ole käytössä tarvittavia, määriteltyjä käyttöoikeuksia. Ohjelmistossa on tällä hetkellä kahden tasoisia käyttäjiä: Ylläpitäjiä (admin) ja peruskäyttäjiä (user). Käyttäjätasoja tarkennetaan tarvittaessa.
+
+Käyttäjien tiedot ja käyttöoikeudet tallennetaan tietokantaan ja ohjelma tarkistaa oikeudet pyyntöjä toteuttaessa. Käyttäjien salasanoista talletetaan tiiviste (hash), joka kryptografisin menetelmin voidaan tarkistaa, mutta josta itse salasanaa ei saada selville.
+
+Kuvaus käyttäjätietokannasta, taulut User_Entity ja User_Authorization:
 
 
+![Import](Docs/Kuvat/UsersDiagram.png "Import")
 
 
 

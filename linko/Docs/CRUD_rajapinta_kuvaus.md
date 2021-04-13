@@ -9,6 +9,7 @@ All endpoints are open at the moment. Authentication is added later.
 - [Tickets endpoint](#Tickets-endpoint)
 - [TicketTypes endpoint](#TicketTypes-endpoint)
 - [Orders endpoint](#Orders-endpoint)
+- [SoldTickets endpoint](#SoldTickets-endpoint)
 
 
 ## Events endpoint
@@ -862,3 +863,117 @@ This endpoint allows deleting of a specific ticket from database.
 
 
 ## TicketTypes-endpoint
+
+
+## SoldTickets-endpoint
+
+Each endpoint is used to view ticket or mark it used. 
+
+| Method | Endpoint | Access | Description|
+|----|----|----|----|
+| `GET` | [/api/soldtickets?code=:code](#GET-soldticket) | USER | Displays ticket information.  |
+| `PATCH` | [/api/soldtickets/:id](#PATCH-soldticket) | USER | Marks ticket with `:id` as used.  |
+
+
+
+## GET soldticket
+
+Displays ticket
+
+**URL** : `/api/soldtickets/`
+
+**Method** : `GET`
+
+**Auth required** : *USER*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content for a successful request of a ticket. 
+> 
+> ```JSON
+> [
+>   {
+>    "ticketID": 9,
+>    "eventName": "Name of event",
+>    "code": "105x932x104",
+>    "used": false,
+>    "usedDate": null, 
+>    "ticketType": "student"
+>   }
+> ```
+
+#### Error
+
+> **Condition** : Requested `id` is not found from database. 
+> 
+> **Code** : `404 NOT FOUND`
+
+
+</details>
+
+## PATCH soldticket
+
+Mark ticket used. 
+
+**URL** : `/api/soldtickets/:id`
+
+**Method** : `PATCH`
+ 
+**Auth required** : *USER*
+ 
+**Data constrains**
+ 
+Following JSON-body is required.
+
+```JSON
+    {
+        "code": "105x932x104"
+    }
+
+```
+
+<details>
+
+
+#### Success
+
+> **Condition** : If all information given was valid. 
+> 
+> **Code** : `200 OK`
+> 
+> **Content example**
+> 
+> ```JSON
+> [
+>   {
+>    "ticketID": 9,
+>    "eventName": "Name of event",
+>    "code": "105x932x104",
+>    "used": true,
+>    "usedDate": "2021-02-28T13:27:44.796903", 
+>    "ticketType": "student"
+>   }
+> ```
+ 
+#### Error
+ 
+> **Condition** : code didn't match the code in ticket
+> 
+> **Code** : `400 BAD REQUEST`
+ 
+
+</details>
+
+
+
+## DEV API
+
+Last but not least:
+
+GET `/api/dev?reset=ok` as ADMIN to reset database with default data. :)
+
