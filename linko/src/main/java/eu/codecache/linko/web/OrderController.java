@@ -2,6 +2,7 @@ package eu.codecache.linko.web;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,16 +38,21 @@ public class OrderController {
 	private TicketOrderRepository toRepo;
 	@Autowired
 	private TicketRepository tRepo;
-	
+
 	@Autowired
 	private UserEntityRepository ueRepo;
-	
+
 	@Autowired
 	private UserAuthorizationRepository uaRepo;
 
 	private final String API_BASE = "/api/orders";
 
-	
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping(API_BASE)
+	public @ResponseBody List<Orders> getOrders() {
+		return orderRepository.findAll();
+	}
+
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders getOrder(@PathVariable("id") Long orderID) {
@@ -60,11 +66,11 @@ public class OrderController {
 	public @ResponseBody Orders postOrder() throws Exception {
 //	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
 		try {
-		Orders order = new Orders(LocalDateTime.now());
-		orderRepository.save(order);
-		return order;
+			Orders order = new Orders(LocalDateTime.now());
+			orderRepository.save(order);
+			return order;
 		} catch (Exception e) {
-			
+
 			// response in this case (should it be changed?)
 			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -75,26 +81,25 @@ public class OrderController {
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
 			@RequestBody TicketOrderDTO ticketOrderDTO) throws Exception {
 		/*
-		 * We should make sure we have a valid order here!
-		 * We do not need Admin authorization here, everybody must be able to make orders and sell tickets
+		 * We should make sure we have a valid order here! We do not need Admin
+		 * authorization here, everybody must be able to make orders and sell tickets
 		 */
-		
+
 		Orders order = orderRepository.findByOrderID(orderID);
 		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
 		double price = ticketOrderDTO.getTicketPrice();
 
-		if(orderID != null) {
+		if (orderID != null) {
 			/*
 			 * ... and same goes for the ticket
 			 */
 			TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
 			toRepo.save(ticketOrder);
-			return order;			
-
+			return order;
 
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
-			
+
 		}
 
 	}
@@ -114,11 +119,11 @@ public class OrderController {
 			// There is no order with the given id
 			// This needs better handling!
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
-			
+
 		}
 		TicketOrder ticketOrder = toRepo.findByTicketOrderID(ticketOrderID);
 		if (ticketOrder == null) {
-			
+
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
 		}
 		if (ticketOrder.getOrder().getOrderID() != order.getOrderID()) {
@@ -133,8 +138,8 @@ public class OrderController {
 	}
 
 	// This is a private method for checking to see, if user is actually an admin
-		private boolean isAdmin(Principal p) {
-			return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
-		}
+	private boolean isAdmin(Principal p) {
+		return ueRepo.findByUsername(p.getName()).getUserAuth().getAuthorization().equals("ADMIN");
+	}
 
 }
