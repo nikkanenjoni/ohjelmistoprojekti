@@ -39,12 +39,13 @@ public class TicketOrder {
 	@DecimalMax("1000.0")
 	private double price;
 
-	@NotNull
+	@JsonIgnore
 	private char character;
-	@NotNull
 	private String code;
 
+	@JsonIgnore
 	private boolean used;
+	@JsonIgnore
 	private LocalDateTime usedDate;
 
 	public TicketOrder() {
@@ -58,10 +59,12 @@ public class TicketOrder {
 		this.ticket = ticket;
 		this.price = price;
 		this.used = false;
+		this.character = '-';
+		this.code = "default";
 	}
 
 	public void setCharacter() {
-		if (code == null || code.length() < 2) {
+		if (code.equals("default") || this.character=='-') {
 			Random rand = new Random();
 			String characters = "abcdefghijklmnopqrstuvwxyz";
 			char c = characters.charAt(rand.nextInt(characters.length()));
