@@ -92,6 +92,10 @@ public class TicketOrderControllerTest {
 			Orders order = oRepo.save(new Orders(LocalDateTime.now()));
 			TicketOrder to1 = toRepo.save(new TicketOrder(order, ticket, 9.00));
 			TicketOrder to2 = toRepo.save(new TicketOrder(order, ticket, 10.00));
+			to1.setCharacter();
+			to2.setCharacter();
+			toRepo.save(to1);
+			toRepo.save(to2);
 			this.CODE1 = to1.getCode();
 			this.CODE2 = to2.getCode();
 		} catch (Exception e) {
