@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -79,7 +81,7 @@ public class OrderController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
-			@RequestBody TicketOrderDTO ticketOrderDTO) throws Exception {
+			@Valid @RequestBody TicketOrderDTO ticketOrderDTO) throws Exception {
 		/*
 		 * We should make sure we have a valid order here! We do not need Admin
 		 * authorization here, everybody must be able to make orders and sell tickets
@@ -89,11 +91,13 @@ public class OrderController {
 		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
 		double price = ticketOrderDTO.getTicketPrice();
 
-		if (orderID != null) {
+		if (order != null) {
 			/*
 			 * ... and same goes for the ticket
 			 */
 			TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
+			toRepo.save(ticketOrder);
+			ticketOrder.generateCode();
 			toRepo.save(ticketOrder);
 			return order;
 
