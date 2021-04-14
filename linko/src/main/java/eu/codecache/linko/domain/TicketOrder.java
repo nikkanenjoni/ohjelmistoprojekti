@@ -62,6 +62,11 @@ public class TicketOrder {
 		this.character = '-';
 		this.code = "default";
 	}
+	
+	public void generateCode() {
+		// this is just to name the method better
+		this.setCharacter();
+	}
 
 	public void setCharacter() {
 		if (code.equals("default") || this.character=='-') {
