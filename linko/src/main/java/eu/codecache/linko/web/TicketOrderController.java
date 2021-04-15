@@ -23,7 +23,7 @@ import eu.codecache.linko.domain.TicketOrder;
 import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
 
-// @CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 public class TicketOrderController {
 

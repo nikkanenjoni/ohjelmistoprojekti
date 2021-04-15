@@ -27,7 +27,7 @@ import eu.codecache.linko.domain.TicketType;
 import eu.codecache.linko.domain.TicketTypeRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
 
-// @CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 public class DevController {
 
