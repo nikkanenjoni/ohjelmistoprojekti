@@ -41,13 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 * more or less copy & paste :
 	 * https://howtodoinjava.com/spring5/webmvc/spring-mvc-cors-configuration/
 	 */
+
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration conf = new CorsConfiguration();
-		conf.setAllowedOrigins(Arrays.asList("*"));
-		conf.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH"));
+		conf.setAllowedOriginPatterns(Arrays.asList("*"));
+		conf.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", conf);
 		return source;
 	}
+
 }

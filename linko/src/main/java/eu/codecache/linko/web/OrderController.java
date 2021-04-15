@@ -31,7 +31,7 @@ import eu.codecache.linko.domain.UserAuthorizationRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
 import eu.codecache.linko.domain.OrderRepository;
 
-@CrossOrigin(origins="*", allowedHeaders="*")
+// @CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 public class OrderController {
 
