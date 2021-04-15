@@ -39,7 +39,7 @@ import eu.codecache.linko.domain.EventRepository;
 
 import eu.codecache.linko.exception.EventNotFoundException;
 
-// @CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins="*", allowedHeaders="*")
 @RestController
 public class TicketController {
 
