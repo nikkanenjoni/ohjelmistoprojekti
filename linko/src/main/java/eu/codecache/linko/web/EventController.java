@@ -38,7 +38,7 @@ import eu.codecache.linko.exception.EventNotFoundException;
 /*
  * Changed from @Controller -> @RestController (Ville)
  */
-// @CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class EventController {
 
