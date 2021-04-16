@@ -14,12 +14,17 @@ export default function App(props) {
         }
     }
     return (
-        <div>
+        <div> 
             <h2>Welcome to TicketGuru!</h2><br></br>
+            <h4>Hae lippu</h4>
+            <form>
+                <label>
+                 Lippu ID: 
+                <input type="text" name="name" />
+                </label>
+            </form>
             <h4>Tarkista lippu</h4>
-            <button onClick={checkTicket}>TARKISTA</button><br></br>
-
-
+            <button onClick={checkTicket}>TARKISTA</button><br></br>  
         </div>
     )
 }
