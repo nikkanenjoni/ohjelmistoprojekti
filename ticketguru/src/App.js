@@ -1,27 +1,25 @@
-import logo from './logo.svg';
+
 import './App.css';
-import TestComponent from './components/TestComponent';
+// import TestComponent from './components/TestComponent';
+import { DatabaseAccessApi } from "./classes/DatabaseAccessApi.js";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <TestComponent />
-      </header>
-    </div>
-  );
+export default function App(props) {
+
+    const checkTicket = async () => {
+        try {
+            const data = await DatabaseAccessApi.getOrders();
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    return (
+        <div>
+            <h2>Welcome to TicketGuru!</h2><br></br>
+            <h4>Tarkista lippu</h4>
+            <button onClick={checkTicket}>TARKISTA</button><br></br>
+
+
+        </div>
+    )
 }
-
-export default App;
