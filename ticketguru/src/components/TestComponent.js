@@ -5,7 +5,7 @@ export default function TestComponent(props) {
 
     const test = async () => {
         try {
-            const data = await DatabaseAccessApi.getOrders();
+            const data = await DatabaseAccessApi.markTicketUsed(36, "36p33p30");
             console.log(data);
         } catch (error) {
             console.log(error);
