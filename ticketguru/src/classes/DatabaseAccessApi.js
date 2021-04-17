@@ -1,6 +1,17 @@
 import { Log } from "./Log.js";
 import base64 from "base-64";
 
+/*
+ *  Usage:
+ *    DatabaseAccessApi.setUser(username, password) to set credentials for api-calls
+ *    DatabaseAccessApi.setUrlBase(base) to set api url (default: https://ticketguru.codecache.eu/api)
+ *                                       DO NOT SET TRAILING / here!
+ * 
+ *    DatabaseAccessApi.getEvents() lists all events in JSON-format
+ *    DatabaseAccessApi.getTicketByCode(code) returns ticket with given code in JSON-format
+ *    DatabaseAccessApi.markTicketUsed(id, code) marks ticket with matching id & code as used and returns it in JSON-format
+ */
+
 export class DatabaseAccessApi {
 
     static #urlBase = "https://ticketguru.codecache.eu/api";
@@ -35,7 +46,7 @@ export class DatabaseAccessApi {
         try {
             const url = this.#urlBase + "/soldtickets?code=" + code;
             const response = await InternalMethods.getData(url);
-            return response;
+            return Parser.parseTicketInstance(response);
         } catch (error) {
             return null;
         }
@@ -44,11 +55,28 @@ export class DatabaseAccessApi {
     static async markTicketUsed(id, code) {
         try {
             const url = this.#urlBase + "/soldtickets/" + id;
-            const response = await InternalMethods.patchData(url, "{ \"code\": \"" + code + "\" }");
-            return response;
+            const data = {
+                "code": code
+            };
+            const response = await InternalMethods.patchData(url, data);
+            return Parser.parseTicketInstance(response);
         } catch (error) {
             return null;
         }
+    }
+}
+
+class Parser {
+    static parseTicketInstance(data) {
+        const ticket = {
+            "ticketID": data.ticketID,
+            "eventName": data.eventName,
+            "code": data.code,
+            "used": data.used,
+            "usedDate": data.usedDate,
+            "ticketType": data.ticketType
+        };
+        return ticket;
     }
 }
 
@@ -65,13 +93,6 @@ class InternalMethods {
 
     static getUserBase64() {
         return base64.encode(this.#username + ":" + this.#password);
-    }
-
-    static createHeaders() {
-        var headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Authorization', 'Basic ' + this.getUserBase64());
-        return headers;
     }
 
     /*

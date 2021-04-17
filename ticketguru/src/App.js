@@ -24,7 +24,7 @@ export default function App(props) {
                 </label>
             </form>
             <h4>Tarkista lippu</h4>
-            <button onClick={checkTicket}>TARKISTA</button><br></br>  
+            <button onClick={checkTicket}>TARKISTA</button><br></br> 
         </div>
     )
 }
