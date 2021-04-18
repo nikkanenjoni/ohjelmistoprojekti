@@ -1,5 +1,6 @@
 package eu.codecache.linko;
 
+import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.BufferedImageHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
 
 import eu.codecache.linko.domain.City;
 import eu.codecache.linko.domain.CityRepository;
@@ -30,6 +33,13 @@ public class LinkoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LinkoApplication.class, args);
+	}
+	
+	// copy & paste
+	// https://www.baeldung.com/java-generating-barcodes-qr-codes
+	@Bean
+	public HttpMessageConverter<BufferedImage> createImageHttpMessageConverter() {
+		return new BufferedImageHttpMessageConverter();
 	}
 
 	@Bean

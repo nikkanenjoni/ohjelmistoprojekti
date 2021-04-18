@@ -1,5 +1,6 @@
 package eu.codecache.linko.web;
 
+import java.awt.image.BufferedImage;
 import java.security.Principal;
 import java.time.LocalDateTime;
 
@@ -7,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,11 +21,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 import eu.codecache.linko.domain.TicketOrder;
 import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
 
-@CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class TicketOrderController {
 
@@ -168,6 +175,28 @@ public class TicketOrderController {
 		String ticketType = ticketOrder.getTicket().getTicketType().getTicketType();
 		return new ClientTicket(ticketOrderID, eventName, ticketOrder.getCode(), true, ticketOrder.getUsedDate(),
 				ticketType);
+	}
+
+	/*
+	 * This method is for returning QR-code
+	 */
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping(API_BASE + "/{id}")
+	public @ResponseBody BufferedImage getQRCode(@PathVariable("id") long ticketOrderID) throws Exception {
+		TicketOrder ticketOrder = toRepo.findByTicketOrderID(ticketOrderID);
+		if (ticketOrder == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		return this.generateQRCodeImage(ticketOrder.getCode());
+	}
+
+	// Copy & paste
+	// https://www.baeldung.com/java-generating-barcodes-qr-codes
+	private BufferedImage generateQRCodeImage(String code) throws Exception {
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();
+		BitMatrix bitMatrix = qrCodeWriter.encode(code, BarcodeFormat.QR_CODE, 200, 200);
+
+		return MatrixToImageWriter.toBufferedImage(bitMatrix);
 	}
 
 	private boolean isAdmin(Principal p) {
