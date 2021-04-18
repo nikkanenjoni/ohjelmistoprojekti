@@ -16,19 +16,45 @@ export default function App(props) {
         ticketType: ""
     });
 
+    const [used, isUsed] = React.useState(false);
+
+
     const updateCode = (event) => {
         setCode(event.target.value);
     }
+
 
     const checkTicket = async () => {
         try {
             const data = await DatabaseAccessApi.getTicketByCode(code);
             setDisplayTicket(true);
             setTicket(data);
+
         } catch (error) {
             console.log(error);
         }
     }
+
+  // merkitään lippu käytetyksi samalla kun haetaan
+    const setUsed = async () => {
+      try {
+          const data = await DatabaseAccessApi.markTicketUsed(data.orderID, data.code);
+          console.log(data);
+          isUsed(!used)
+      } catch (error) {
+          console.log(error);
+      }
+  }
+
+   /* const ticketState = () => {
+      const [isUsed, setUsed] = React.useState(false);
+    
+      const used = React.useCallback(
+        () => setUsed(!isUsed),
+        [isUsed, setUsed],
+      );
+    }*/
+
     return (
         <div> 
             <div>
@@ -42,6 +68,7 @@ export default function App(props) {
             </form>
             <h4>Tarkista lippu</h4>
             <button onClick={checkTicket}>TARKISTA</button><br></br> 
+            <button onClick={setUsed}>MERKITSE KÄYTETYKSI</button><br></br> 
             </div>
             {displayTicket && <div>
                 Tapahtuma: {ticket.eventName}<br />
