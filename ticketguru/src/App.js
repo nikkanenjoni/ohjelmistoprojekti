@@ -33,14 +33,20 @@ export default function App(props) {
             setTicket(data);
             // merkitään käytetyksi
 
-            setMessage('Lippu OK ja käytetty');
+            setMessage('Lippu löytyy, tarkistus OK');
+            
         
 
         } catch (error) {
             console.log(error);
             setMessage('Lippua ei löydy');
         }
+
+        if(ticket.length===0){
+          setMessage('Koodia ei annettu');
     }
+        
+  }
     
   // mark ticket used
 
@@ -51,7 +57,13 @@ export default function App(props) {
 
     } catch (error) {
         console.log(error);
+        setMessage("Haku epäonnistui");
+        
     }
+
+    if(ticket.used === true){
+      setMessage("Lippu on jo käytetty");
+  }
 }
     
  // TESTING
@@ -64,28 +76,47 @@ export default function App(props) {
       );
     }*/
 
+    // styles
+    const divStyle = {
+      margin: '40px',
+      border: '5px solid grey'
+    };
+    const pStyle = {
+      fontSize: '20px',
+      textAlign: 'center',
+      border: 5
+    };
+    const buttonStyle = {
+        color: 'white',
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'lightGrey',
+        cursor: 'pointer',
+    };
+    
+    
+
     return (
-        <div> 
-            <div>
-            <h2>Welcome to TicketGuru!</h2><br></br>
-            <h4>Hae lippu</h4>
+
+            <div style={divStyle}>
+            <p style={pStyle}>Welcome to TicketGuru!</p>
+            <h4>Hae ja Tarkista lippu</h4>
             <form>
                 <label>
                  Lippukoodi: 
                 <input type="text" onChange={updateCode} name="code" />
                 </label>
             </form>
-            <h4>Tarkista lippu</h4>
-            <button onClick={{checkTicket}} >TARKISTA</button><br></br> 
-            <button onClick={markTicketUsed} >KÄYTÄ</button><br></br> 
-            </div>
+            <p><button style={buttonStyle} onClick={ () =>{ checkTicket(); markTicketUsed()} } >TARKISTA</button><br></br> 
+            </p>
             {displayTicket && <div>
                 Tapahtuma: {ticket.eventName}<br />
                 Lipun koodi: {ticket.code}<br />
                 Käytetty: {ticket.used ? "kyllä" : "ei"}<br />
                 Lipun tyyppi: {ticket.ticketType}<br />
             </div>}<br></br>
-
+              <p>{message}</p>
         </div>
     )
+    
 }
