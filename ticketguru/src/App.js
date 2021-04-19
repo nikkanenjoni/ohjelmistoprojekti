@@ -65,6 +65,11 @@ export default function App(props) {
       setMessage("Lippu on jo käytetty");
   }
 }
+ // funktio painikkeen painallukselle (ajaa kummatkin yllä)
+function pressButton(){
+  checkTicket();
+  markTicketUsed();
+}
     
  // TESTING
    /* const ticketState = () => {
@@ -107,7 +112,7 @@ export default function App(props) {
                 <input type="text" onChange={updateCode} name="code" />
                 </label>
             </form>
-            <p><button style={buttonStyle} onClick={ () =>{ checkTicket(); markTicketUsed()} } >TARKISTA</button><br></br> 
+            <p><button style={buttonStyle} onClick={pressButton} >TARKISTA</button><br></br> 
             </p>
             {displayTicket && <div>
                 Tapahtuma: {ticket.eventName}<br />
