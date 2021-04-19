@@ -8,6 +8,9 @@ import base64 from "base-64";
  *                                       DO NOT SET TRAILING / here!
  * 
  *    DatabaseAccessApi.getEvents() lists all events in JSON-format
+ *    DatabaseAccessApi.getEventTicketsByEventId(id) lists all tickets available to event with id
+ *    DatabaseAccessApi.createOrder() return new orderID for a new order
+ *    DatabaseAccessApi.addTicketsToOrderById(orderId, ticketId, price) adds ticket with ticketId to an order with orderId
  *    DatabaseAccessApi.getTicketByCode(code) returns ticket with given code in JSON-format
  *    DatabaseAccessApi.markTicketUsed(id, code) marks ticket with matching id & code as used and returns it in JSON-format
  */
@@ -33,6 +36,46 @@ export class DatabaseAccessApi {
         }
     }
 
+    static async getEventTicketsByEventId(id) {
+        try {
+            const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + id);
+            if (response.status === "200") {
+                return response;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            return null;
+        }
+    }
+
+    static async createOrder() {
+        try {
+            const response = await InternalMethods.postData(this.#urlBase + "/orders", null);
+            if (response.status === "201") {
+                return response;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            return null;
+        }
+    }
+
+    static async addTicketsToOrderById(orderId, ticketId, ticketPrice) {
+        const data = {
+            "ticketID": ticketId,
+            "ticketPrice": ticketPrice
+        };
+        try {
+            const response = await InternalMethods.postData(this.#urlBase + "/orders/" + orderId, data);
+            const responseJson = { "status": response.status };
+            return response;
+        } catch (error) {
+            return null;
+        }
+    }
+
     static async getOrders() {
         try {
             const response = await InternalMethods.getData(this.#urlBase + "/orders");
@@ -46,7 +89,11 @@ export class DatabaseAccessApi {
         try {
             const url = this.#urlBase + "/soldtickets?code=" + code;
             const response = await InternalMethods.getData(url);
-            return Parser.parseTicketInstance(response);
+            if (response.status === "200") {
+                return Parser.parseTicketInstance(response);
+            } else {
+                return null;
+            }
         } catch (error) {
             return null;
         }
@@ -59,7 +106,13 @@ export class DatabaseAccessApi {
                 "code": code
             };
             const response = await InternalMethods.patchData(url, data);
-            return Parser.parseTicketInstance(response);
+            if (response.status === "200") {
+                return Parser.parseTicketInstance(response);
+            } else if (response.status === "409") {
+                return { "code": 409 };
+            } else {
+                return null;
+            }
         } catch (error) {
             return null;
         }
@@ -116,7 +169,7 @@ class InternalMethods {
         }
     }
 
-    static async postDate(url, data) {
+    static async postData(url, data) {
         try {
             const response = await fetch(url, {
                 method: 'POST',
