@@ -163,6 +163,10 @@ public class TicketOrderController {
 		if (ticketOrder == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
+		// Make sure ticket is not already used
+		if(ticketOrder.isUsed()) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT);
+		}
 		// Make sure the code in body is the code for the ticket
 		if (!ticketOrder.getCode().equals(patchBody.getCode())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
