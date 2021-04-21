@@ -43,3 +43,9 @@ def test_bying_tickets():
     response = rest_query.rest_query("/orders/"+str(order_id), "post", ticket)
     assert response.status_code == requests.codes.created
 
+    # Make sure the order now contains that ticket
+    response = rest_query.rest_query("/orders/"+str(order_id), "get")
+    assert response.status_code == requests.codes.ok
+    response_json = response.json()
+    assert len(response_json["tickets"]) == 1
+    assert response_json["tickets"][0]["price"] == ticket_price*0.9
