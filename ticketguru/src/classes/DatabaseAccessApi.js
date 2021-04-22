@@ -39,7 +39,7 @@ export class DatabaseAccessApi {
 // Hae eventit ID:n mukaan
     static async getEventsByEventId(id) {
         try {
-            const response = await InternalMethods.getData(this.#urlBase + "/events" + id);
+            const response = await InternalMethods.getData(this.#urlBase + "/events/" + id);
             if (response.status === "200") {
                 return response;
             } else {

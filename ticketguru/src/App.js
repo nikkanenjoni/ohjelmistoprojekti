@@ -1,12 +1,12 @@
 import React from "react";
 import './App.css';
-// import TestComponent from './components/TestComponent';
+import SellTicket from './components/SellTicket';
 import { DatabaseAccessApi } from "./classes/DatabaseAccessApi.js";
 
 export default function App(props) {
 
     const [displayTicket, setDisplayTicket] = React.useState(false);
-    const [displayEvent, setDisplayEvent] = React.useState(false);
+    
     const [code, setCode] = React.useState('');
     const [ticket, setTicket] = React.useState({
         ticketID: 0,
@@ -67,37 +67,11 @@ export default function App(props) {
   }
 }
 
-//Etsitään event
-const checkEvent = async () => {
-  try {
-      const data = await DatabaseAccessApi.getEventsByEventId(code);
-      setDisplayEvent(true);
-
-      setMessage('Event löytyy, myy lippuja');
-      
-  
-
-  } catch (error) {
-      console.log(error);
-      setMessage('Tapahtumaa ei löydy');
-  }
-
-  if(ticket.length===0){
-    setMessage('Tapahtumaa ei annettu');
-}
-  
-}
-
  // funktio painikkeen painallukselle (ajaa kummatkin yllä)
 function pressButton(){
   checkTicket();
   markTicketUsed();
 }
-
- // Lipun hakemiseen tarkoitettu funktio
- function haeLippu(){
-  checkEvent();
- }
 
     
  // TESTING
@@ -150,20 +124,8 @@ function pressButton(){
                 Käytetty: {ticket.used ? "kyllä" : "ei"}<br />
                 Lipun tyyppi: {ticket.ticketType}<br />
             </div>}<br></br>
-
+            <SellTicket/>
               <p>{message}</p>
-              <h4>Myy lippuja</h4>
-              <form>
-                <label>
-                  Tapahtuman ID:<br></br>
-                  <input type="text" name="tapahtuma" />
-                </label>
-              </form>
-              <p><button style={buttonStyle} onClick={haeLippu} >Hae</button><br></br>
-              </p>
-              {displayEvent && <div>
-                Tapahtuma: <br />
-            </div>}<br></br>
         </div>
     )
     
