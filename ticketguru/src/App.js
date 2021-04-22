@@ -6,6 +6,7 @@ import { DatabaseAccessApi } from "./classes/DatabaseAccessApi.js";
 export default function App(props) {
 
     const [displayTicket, setDisplayTicket] = React.useState(false);
+    const [displayEvent, setDisplayEvent] = React.useState(false);
     const [code, setCode] = React.useState('');
     const [ticket, setTicket] = React.useState({
         ticketID: 0,
@@ -13,7 +14,7 @@ export default function App(props) {
         code: "",
         used: false,
         usedDate: "",
-        ticketType: ""
+        ticketType: "" 
     });
 
     //const [usedTicket, markUsed] = React.useState(false);
@@ -65,11 +66,39 @@ export default function App(props) {
       setMessage("Lippu on jo käytetty");
   }
 }
+
+//Etsitään event
+const checkEvent = async () => {
+  try {
+      const data = await DatabaseAccessApi.getEventsByEventId(code);
+      setDisplayEvent(true);
+
+      setMessage('Event löytyy, myy lippuja');
+      
+  
+
+  } catch (error) {
+      console.log(error);
+      setMessage('Tapahtumaa ei löydy');
+  }
+
+  if(ticket.length===0){
+    setMessage('Tapahtumaa ei annettu');
+}
+  
+}
+
  // funktio painikkeen painallukselle (ajaa kummatkin yllä)
 function pressButton(){
   checkTicket();
   markTicketUsed();
 }
+
+ // Lipun hakemiseen tarkoitettu funktio
+ function haeLippu(){
+  checkEvent();
+ }
+
     
  // TESTING
    /* const ticketState = () => {
@@ -84,7 +113,8 @@ function pressButton(){
     // styles
     const divStyle = {
       margin: '40px',
-      border: '5px solid grey'
+      border: '5px solid grey',
+      padding: 5
     };
     const pStyle = {
       fontSize: '20px',
@@ -93,9 +123,9 @@ function pressButton(){
     };
     const buttonStyle = {
         color: 'white',
-        marginTop: 20,
+        marginTop: 5,
         padding: 10,
-        backgroundColor: 'lightGrey',
+        backgroundColor: 'Grey',
         cursor: 'pointer',
     };
     
@@ -108,7 +138,7 @@ function pressButton(){
             <h4>Hae ja Tarkista lippu</h4>
             <form>
                 <label>
-                 Lippukoodi: 
+                 Lippukoodi:<br></br>
                 <input type="text" onChange={updateCode} name="code" />
                 </label>
             </form>
@@ -120,7 +150,20 @@ function pressButton(){
                 Käytetty: {ticket.used ? "kyllä" : "ei"}<br />
                 Lipun tyyppi: {ticket.ticketType}<br />
             </div>}<br></br>
+
               <p>{message}</p>
+              <h4>Myy lippuja</h4>
+              <form>
+                <label>
+                  Tapahtuman ID:<br></br>
+                  <input type="text" name="tapahtuma" />
+                </label>
+              </form>
+              <p><button style={buttonStyle} onClick={haeLippu} >Hae</button><br></br>
+              </p>
+              {displayEvent && <div>
+                Tapahtuma: <br />
+            </div>}<br></br>
         </div>
     )
     
