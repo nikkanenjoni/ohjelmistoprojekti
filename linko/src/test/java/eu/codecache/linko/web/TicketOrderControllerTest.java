@@ -134,5 +134,20 @@ public class TicketOrderControllerTest {
 //			System.err.println(e.getMessage());
 //		}
 //	}
+	
+	/*
+	 * Test getting a QR code
+	 */
+	@Test
+	public void getQRCodeTest() throws Exception {
+		TicketOrder to1 = toRepo.findByCode(CODE1);
+		TicketOrder to2 = toRepo.findByCode(CODE2);
+		ResponseEntity<String> correctCode = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
+				.getForEntity("/api/soldtickets/" + to1.getTicketOrderID(), String.class);
+		ResponseEntity<String> incorrectCode = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
+				.getForEntity("/api/soldtickets/" + (to1.getTicketOrderID()+to2.getTicketOrderID()), String.class);
+		assertEquals(HttpStatus.OK, correctCode.getStatusCode());
+		assertEquals(HttpStatus.NOT_FOUND, incorrectCode.getStatusCode());
+	}
 
 }

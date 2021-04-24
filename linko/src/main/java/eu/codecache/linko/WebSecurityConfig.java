@@ -25,10 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/h2/**").permitAll().anyRequest().authenticated().and().httpBasic();
+		http.authorizeRequests().antMatchers("/").permitAll().anyRequest().authenticated().and().httpBasic();
 		http.csrf().disable();
 		http.cors();
-//		http.headers().frameOptions().disable();
 	}
 
 	@Override
@@ -36,22 +35,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(detailsService).passwordEncoder(new BCryptPasswordEncoder());
 	}
 
-	/*
-	 * Handle CORS
-	 * 
-	 * more or less copy & paste :
-	 * https://howtodoinjava.com/spring5/webmvc/spring-mvc-cors-configuration/
-	 */
-
-/*
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration conf = new CorsConfiguration();
-		conf.setAllowedOriginPatterns(Arrays.asList("*"));
-		conf.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS"));
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", conf);
-		return source;
-	}
-*/
 }

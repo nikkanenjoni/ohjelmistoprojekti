@@ -133,15 +133,11 @@ public class EventControllerTest {
 	 */
 	@Test
 	public void deleteEvent() throws Exception {
-		try {
-			Event ev = eRepo.save(new Event("foo", cRepo.findAll().get(0), "foo", 100, "", LocalDateTime.now()));
-			long id = ev.getEventID();
-			restTemplate.withBasicAuth(ADMIN_NAME, DEFAULT_PASSWORD).delete("/api/events/" + id);
-			// we should be able to find with the id!
-			Event ev2 = eRepo.findByEventID(id);
-			assertEquals(ev2, null);
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
+		Event ev = eRepo.save(new Event("foo", cRepo.findAll().get(0), "foo", 100, "", LocalDateTime.now()));
+		long id = ev.getEventID();
+		restTemplate.withBasicAuth(ADMIN_NAME, DEFAULT_PASSWORD).delete("/api/events/" + id);
+		// we should be able to find with the id!
+		Event ev2 = eRepo.findByEventID(id);
+		assertEquals(ev2, null);
 	}
 }
