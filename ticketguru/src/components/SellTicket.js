@@ -13,7 +13,6 @@ export default function SellTicket(props) {
             capacity: 0,
             description: "",
             dateTime: "",
-
         });
 
         const [ticket, setTicket] = React.useState({
