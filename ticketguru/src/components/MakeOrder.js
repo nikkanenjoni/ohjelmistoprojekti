@@ -1,6 +1,7 @@
 import React from 'react';
 import { DatabaseAccessApi } from "../classes/DatabaseAccessApi.js";
-import SellTicket from "./SellTicket.js"
+
+
 
 function MakeOrder(props) {
     return(
@@ -10,9 +11,11 @@ function MakeOrder(props) {
         <p key= {tapahtuma.eventID }>
        <h4>{ tapahtuma.event }</h4>
          { tapahtuma.dateTime } <br/>
-       </p>);
+       </p>
+       );
     })
     }
+    <br></br>
     </div>);
 }
 export default MakeOrder;
