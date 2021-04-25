@@ -5,16 +5,26 @@ export default function SellTicket(props) {
 
         // tapahtumamuuttuja tässä komponentissa 
         const [event, setEvent] = React.useState({
+            ticketID: 0,
+            ticketType: "",
             eventID: 0,
             event: "",
             eventPlace: "",
             capacity: 0,
             description: "",
-            dateTime: "" 
+            dateTime: "",
+            price: 0.0, 
         });
+
+        const [id, setId] = React.useState('');
+
+        const updateId = (event) => {
+          setId(event.target.value);
+      }
 
         // tapahtumamuuttuja, joka näyttää tapahtuman
         const [displayEvent, setDisplayEvent] = React.useState(false);
+
            // errors
         const [message, setMessage] = React.useState('');
 
@@ -40,14 +50,14 @@ export default function SellTicket(props) {
 //Etsitään event
 const checkEvent = async () => {
     try {
-        const data = await DatabaseAccessApi.getEventsByEventId(event.eventID);
+        const data = await DatabaseAccessApi.getEventTicketsByEventId(id);
         setDisplayEvent(true);
-  
+        setEvent(data);
         setMessage('Event löytyy, myy lippuja');
         
     } catch (error) {
         console.log(error);
-        setMessage('Tapahtumaa ei löydy');
+        setMessage('Virhe');
     }
   
     if(event.length===0){
@@ -68,13 +78,13 @@ const checkEvent = async () => {
               <form>
                 <label>
                   Tapahtuman ID:<br></br>
-                  <input type="text" name="tapahtuma"/>
+                  <input type="text" onChange={updateId} name="id" />
                 </label>
               </form>
               <p><button style={buttonStyle} onClick={checkEvent} >Hae</button><br></br>
               </p>
               {displayEvent && <div>
-                Tapahtuma: <br />
+                Tapahtuma: {event.event}<br />
             </div>}<br></br>
         </div>
     )
