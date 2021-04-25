@@ -37,9 +37,9 @@ export class DatabaseAccessApi {
     }
 
 // Hae eventit ID:n mukaan
-    static async getEventsByEventId(id) {
+    static async getEventsByEventId(eventID) {
         try {
-            const response = await InternalMethods.getData(this.#urlBase + "/events/" + id);
+            const response = await InternalMethods.getData(this.#urlBase + "/events/" + eventID);
             if (response.status === "200") {
                 return response;
             } else {
@@ -50,9 +50,9 @@ export class DatabaseAccessApi {
         }
     }
 
-    static async getEventTicketsByEventId(id) {
+    static async getEventTicketsByEventId(eventID) {
         try {
-            const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + id);
+            const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + eventID);
             if (response.status === "200") {
                 return response;
             } else {

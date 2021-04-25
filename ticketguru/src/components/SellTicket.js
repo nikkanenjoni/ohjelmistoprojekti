@@ -1,20 +1,26 @@
 import React from "react";
 import { DatabaseAccessApi } from "../classes/DatabaseAccessApi.js";
+import MakeOrder from "./MakeOrder.js"
 
 export default function SellTicket(props) {
 
         // tapahtumamuuttuja tässä komponentissa 
-        const [event, setEvent] = React.useState({
-            ticketID: 0,
-            ticketType: "",
+        const [tapahtuma, setEvent] = React.useState({
+
             eventID: 0,
             event: "",
             eventPlace: "",
             capacity: 0,
             description: "",
             dateTime: "",
-            price: 0.0, 
+
         });
+
+        const [ticket, setTicket] = React.useState({
+            ticketID: 0,
+            ticketType: "",
+            price: 0.0, 
+      });
 
         const [id, setId] = React.useState('');
 
@@ -50,9 +56,11 @@ export default function SellTicket(props) {
 //Etsitään event
 const checkEvent = async () => {
     try {
-        const data = await DatabaseAccessApi.getEventTicketsByEventId(id);
-        setDisplayEvent(true);
+        const data = await DatabaseAccessApi.getEventsByEventId(id);
+        const ticketdata = await DatabaseAccessApi.getEventTicketsByEventId(id);
         setEvent(data);
+        setTicket(ticketdata);
+        setDisplayEvent(true);
         setMessage('Event löytyy, myy lippuja');
         
     } catch (error) {
@@ -60,11 +68,31 @@ const checkEvent = async () => {
         setMessage('Virhe');
     }
   
-    if(event.length===0){
+    if(tapahtuma.length===0){
         setMessage('Tapahtumaa ei annettu');
   }
     
   }
+
+  /*//Etsitään liput eventtiin
+const checkEvent = async () => {
+  try {
+      const data = await DatabaseAccessApi.getEventTicketsByEventId(id);
+      setDisplayEvent(true);
+      setEvent(data);
+      setMessage('Event löytyy, myy lippuja');
+      
+  } catch (error) {
+      console.log(error);
+      setMessage('Virhe');
+  }
+
+  if(event.length===0){
+      setMessage('Tapahtumaa ei annettu');
+}
+  
+}
+*/
 
            /* Lipun hakemiseen tarkoitettu funktio
  function haeLippu(){
@@ -84,7 +112,13 @@ const checkEvent = async () => {
               <p><button style={buttonStyle} onClick={checkEvent} >Hae</button><br></br>
               </p>
               {displayEvent && <div>
-                Tapahtuma: {event.event}<br />
+                Tapahtuma:  {tapahtuma.event}<br />
+                Aika:       {tapahtuma.dateTime}<br />
+                Lipputyyppi:{ticket.ticketType}<br />
+                Hinta:      {ticket.price}<br />
+               <p>{message}</p>
+               <MakeOrder tapahtumat={ tapahtuma } />
+               <MakeOrder ticket={ ticket } />
             </div>}<br></br>
         </div>
     )

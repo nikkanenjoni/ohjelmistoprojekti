@@ -1,6 +1,7 @@
 import React from "react";
 import './App.css';
 import SellTicket from './components/SellTicket';
+import MakeOrder from './components/MakeOrder';
 import { DatabaseAccessApi } from "./classes/DatabaseAccessApi.js";
 
 export default function App(props) {
@@ -125,6 +126,7 @@ function pressButton(){
                 Lipun tyyppi: {ticket.ticketType}<br />
             </div>}<br></br>
             <SellTicket/>
+
               <p>{message}</p>
         </div>
     )
