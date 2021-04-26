@@ -12,6 +12,14 @@ export default function TestComponent(props) {
         }
     }
 
+    const buttonStyle = {
+        color: 'white',
+        marginTop: 5,
+        padding: 10,
+        backgroundColor: 'Green',
+        cursor: 'pointer',
+    };
+
     const test2 = async () => {
 
         try{
@@ -24,8 +32,8 @@ export default function TestComponent(props) {
 
     return (
         <div>
-            <button onClick={test}>test</button><br></br>
-            <button onClick={test2}>test</button>
+            <button style={buttonStyle} onClick={test}>Valitse lippu</button><br></br>
+            <button style={buttonStyle} onClick={test2}>Osta lippu</button>
         </div>
     )
 }
