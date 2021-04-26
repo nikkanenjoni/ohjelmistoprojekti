@@ -4,9 +4,9 @@ public class TicketOrderDTO {
 
 	private long ticketID;
 	private double ticketPrice;
-	
+
 	public TicketOrderDTO() {
-		
+
 	}
 
 	public long getTicketID() {
@@ -24,5 +24,8 @@ public class TicketOrderDTO {
 	public void setTicketPrice(double ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
-	
+
+	public String toString() {
+		return "{\"ticketID\": " + ticketID + ", \"ticketPrice\": " + ticketPrice + "}";
+	}
 }

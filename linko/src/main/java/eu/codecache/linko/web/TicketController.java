@@ -118,18 +118,6 @@ public class TicketController {
 		}
 	}
 
-	// List tickets available for a single event
-	@ResponseStatus(HttpStatus.OK)
-	@GetMapping(API_BASE + "/{id}")
-	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") long eventID) {
-		Event event = eRepository.findByEventID(eventID);
-		if (event != null) {
-			return tRepository.findByEvent(event);
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-	}
-
 	// Delete ticket
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@RequestMapping(value = API_BASE + "/{id}", method = RequestMethod.DELETE)

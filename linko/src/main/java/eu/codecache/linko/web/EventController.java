@@ -1,6 +1,7 @@
 package eu.codecache.linko.web;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 //import java.util.Optional;
 
@@ -30,7 +31,10 @@ import org.springframework.web.server.ResponseStatusException;
 //import eu.codecache.linko.domain.City;
 import eu.codecache.linko.domain.CityRepository;
 import eu.codecache.linko.domain.Event;
+import eu.codecache.linko.domain.EventDTO;
 import eu.codecache.linko.domain.EventRepository;
+import eu.codecache.linko.domain.Ticket;
+import eu.codecache.linko.domain.TicketRepository;
 import eu.codecache.linko.domain.UserAuthorizationRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
 import eu.codecache.linko.exception.EventNotFoundException;
@@ -47,6 +51,8 @@ public class EventController {
 	@Autowired
 	private CityRepository cRepo;
 	@Autowired
+	private TicketRepository tRepo;
+	@Autowired
 	private UserEntityRepository ueRepo;
 	@Autowired
 	private UserAuthorizationRepository uaRepo;
@@ -56,8 +62,15 @@ public class EventController {
 	// displays ALL events in the database
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(API_BASE)
-	public @ResponseBody List<Event> all() {
-		return eRepo.findAll();
+	public @ResponseBody List<EventDTO> all() {
+		List<Event> events = eRepo.findAll();
+		List<EventDTO> eventDTOs = new ArrayList<>();
+		for(Event ev : events) {
+			List<Ticket> tickets = tRepo.findByEvent(ev);
+			eventDTOs.add(new EventDTO(ev, tickets));
+		}
+		return eventDTOs;
+//		return eRepo.findAll();
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
@@ -112,12 +125,29 @@ public class EventController {
 	// Single item
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(API_BASE + "/{id}")
-	public @ResponseBody Event findEvent(@PathVariable("id") Long eventID) throws Exception {
+	public @ResponseBody EventDTO findEvent(@PathVariable("id") Long eventID) throws Exception {
 		Event event = eRepo.findByEventID(eventID);
 		if (event == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		} else {
-			return event;
+			List<Ticket> tickets = tRepo.findByEvent(event);
+			return new EventDTO(event, tickets);
+		}
+	}
+
+	/*
+	 * This method will be absolete and should be removed once other methods are
+	 * proven to provide the same data this endpoint does.
+	 */
+	// List tickets available for a single event
+	@ResponseStatus(HttpStatus.OK)
+	@GetMapping(API_BASE + "/{id}/tickets")
+	public @ResponseBody List<Ticket> findByEvent(@PathVariable("id") long eventID) {
+		Event event = eRepo.findByEventID(eventID);
+		if (event != null) {
+			return tRepo.findByEvent(event);
+		} else {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
 	}
 

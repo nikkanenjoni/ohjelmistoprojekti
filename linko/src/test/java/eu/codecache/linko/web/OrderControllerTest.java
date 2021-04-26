@@ -13,7 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -100,16 +102,27 @@ public class OrderControllerTest {
 		// RequestBody: TicketOrderDTO
 		// returns: 201 on success, 404 with incorrect ID, 415 with incorrect body
 
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
 		// Incorrect body
 		ResponseEntity<String> incorrectBody = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
 				.postForEntity("/api/orders/" + ORDERID, null, String.class);
 		assertEquals(HttpStatus.UNSUPPORTED_MEDIA_TYPE, incorrectBody.getStatusCode());
 
-		// Succesfull posting
+		// Succesfull posting of multiple tickets
+		String jsonbody = "[{\"ticketID\": " + TICKETID + ", \"ticketPrice\": 10},{\"ticketID\": " + TICKETID
+				+ ", \"ticketPrice\": 10}]";
+		HttpEntity<String> multipleTickets = new HttpEntity<String>(jsonbody, headers);
+		ResponseEntity<String> multipleTicketsResponse = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
+				.postForEntity("/api/orders/" + ORDERID, multipleTickets, String.class);
+		assertEquals(HttpStatus.CREATED, multipleTicketsResponse.getStatusCode());
+
+		// Succesfull posting single ticket
 		TicketOrderDTO dto = new TicketOrderDTO();
 		dto.setTicketID(TICKETID);
 		dto.setTicketPrice(19.99);
-		HttpEntity<TicketOrderDTO> request = new HttpEntity<>(dto);
+		HttpEntity<String> request = new HttpEntity<>("[" + dto.toString() + "]", headers);
 		ResponseEntity<String> response = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
 				.postForEntity("/api/orders/" + ORDERID, request, String.class);
 		// Correct response code
@@ -117,12 +130,21 @@ public class OrderControllerTest {
 		// Correct response body
 		assertTrue(response.getBody().contains("19.99"));
 
-		// Incorrect id
+		// Incorrect (order)id
 		// We take body from previous run, to make otherwise successfull request. Just
 		// id is not found
 		ResponseEntity<String> incorrectID = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
 				.postForEntity("/api/orders/1000000", request, String.class);
 		assertEquals(HttpStatus.NOT_FOUND, incorrectID.getStatusCode());
+
+		// Incorrect ticket ID
+		TicketOrderDTO dto2 = new TicketOrderDTO();
+		dto2.setTicketID(-1);
+		dto2.setTicketPrice(10.00);
+		HttpEntity<String> incorrectRequest = new HttpEntity<>("[" + dto2.toString() + "]", headers);
+		ResponseEntity<String> incorrectTicketId = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
+				.postForEntity("/api/orders/" + ORDERID, incorrectRequest, String.class);
+		assertEquals(HttpStatus.BAD_REQUEST, incorrectTicketId.getStatusCode());
 	}
 
 	/*
