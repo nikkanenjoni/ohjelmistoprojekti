@@ -4,24 +4,34 @@ import MakeOrder from "./MakeOrder.js"
 
 export default function SellTicket(props) {
 
+        const [id, setId] = React.useState(0);
+
         // tapahtumamuuttuja tässä komponentissa 
         const [tapahtuma, setEvent] = React.useState({
 
-            eventID: 0,
+          ticketID: "",
+          //ticketType: "",
+          ticketType: "",
+          },
+           {
+            ticketTypeID:0, 
+            ticketType:"",
+          },
+          {
+            eventID: id,
             event: "",
             eventPlace: "",
             capacity: 0,
             description: "",
             dateTime: "",
-        });
-
-        const [ticket, setTicket] = React.useState({
-            ticketID: 0,
-            ticketType: "",
+        },
+        {
             price: 0.0, 
+            description: "",
       });
 
-        const [id, setId] = React.useState('');
+
+
 
         const updateId = (event) => {
           setId(event.target.value);
@@ -30,7 +40,7 @@ export default function SellTicket(props) {
         // tapahtumamuuttuja, joka näyttää tapahtuman
         const [displayEvent, setDisplayEvent] = React.useState(false);
 
-           // errors
+           // messages
         const [message, setMessage] = React.useState('');
 
         // styles (näitä luokkia voit käyttää ja muokata returnin sisällä)
@@ -55,10 +65,9 @@ export default function SellTicket(props) {
 //Etsitään event
 const checkEvent = async () => {
     try {
-        const data = await DatabaseAccessApi.getEventsByEventId(id);
-        const ticketdata = await DatabaseAccessApi.getEventTicketsByEventId(id);
+        const data = await DatabaseAccessApi.getEventTicketsByEventId(tapahtuma.eventID);
         setEvent(data);
-        setTicket(ticketdata);
+        //setTicket(data);
         setDisplayEvent(true);
         setMessage('Event löytyy, myy lippuja');
         
@@ -113,11 +122,10 @@ const checkEvent = async () => {
               {displayEvent && <div>
                 Tapahtuma:  {tapahtuma.event}<br />
                 Aika:       {tapahtuma.dateTime}<br />
-                Lipputyyppi:{ticket.ticketType}<br />
-                Hinta:      {ticket.price}<br />
+                Lipputyyppi:{tapahtuma.ticketType}<br />
+                Hinta:      {tapahtuma.price}<br />
                <p>{message}</p>
                <MakeOrder tapahtumat={ tapahtuma } />
-               <MakeOrder ticket={ ticket } />
             </div>}<br></br>
         </div>
     )
