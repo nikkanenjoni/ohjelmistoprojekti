@@ -46,7 +46,7 @@ export default function App(props) {
         }
 
         if(ticket.length===0){
-          setMessage('Koodia ei annettu');
+            setMessage('Koodia ei annettu');
     }
         
   }
@@ -127,7 +127,7 @@ function pressButton(){
                 Lipun tyyppi: {ticket.ticketType}<br />
             </div>}<br></br>
             <SellTicket/>
-            <TestComponent/>
+            <MakeOrder/>
 
               <p>{message}</p>
         </div>
