@@ -31,7 +31,7 @@ import eu.codecache.linko.domain.UserAuthorizationRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
 import eu.codecache.linko.domain.OrderRepository;
 
-@CrossOrigin(origins="*", allowedHeaders="*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class OrderController {
 
@@ -68,7 +68,6 @@ public class OrderController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE)
 	public @ResponseBody Orders postOrder() throws Exception {
-//	public @ResponseBody Orders postOrder(@RequestBody Orders orders) {
 		try {
 			Orders order = new Orders(LocalDateTime.now());
 			orderRepository.save(order);
@@ -76,36 +75,31 @@ public class OrderController {
 		} catch (Exception e) {
 
 			// response in this case (should it be changed?)
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+			// well, yes!
+			throw new ResponseStatusException(HttpStatus.INSUFFICIENT_STORAGE);
 		}
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
-			@Valid @RequestBody TicketOrderDTO ticketOrderDTO) throws Exception {
-		/*
-		 * We should make sure we have a valid order here! We do not need Admin
-		 * authorization here, everybody must be able to make orders and sell tickets
-		 */
-
+			@Valid @RequestBody List<TicketOrderDTO> ticketOrderDTO) throws Exception {
 		Orders order = orderRepository.findByOrderID(orderID);
-		Ticket ticket = tRepo.findByTicketID(ticketOrderDTO.getTicketID());
-		double price = ticketOrderDTO.getTicketPrice();
-
-		if (order != null) {
-			/*
-			 * ... and same goes for the ticket
-			 */
+		if (order == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
+		}
+		try {
+			for(TicketOrderDTO to : ticketOrderDTO) {
+			Ticket ticket = tRepo.findByTicketID(to.getTicketID());
+			double price = to.getTicketPrice();
 			TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
 			toRepo.save(ticketOrder);
 			ticketOrder.generateCode();
 			toRepo.save(ticketOrder);
+			}
 			return order;
-
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
-
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ticket is not valid.");
 		}
 
 	}
