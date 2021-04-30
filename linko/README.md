@@ -2,6 +2,21 @@
 
 Tiimi: Koskela Ville, Lindholm Sofia, Nikkanen Joni
 
+
+## Contents
+
+- [Johdanto](#Johdanto)
+- [Järjestelmän määrittely](#Järjestelmän-määrittely)
+    - [Listaus käyttäjätarinoista](#Listaus-käyttäjätarinoista)
+- [Käyttöliittymä](#Käyttöliittymä)
+- [Tietokanta](#Tietokanta)
+- [Tekninen kuvaus](#Tekninen-kuvaus) 
+    - [REST-API Dokumentaatio](#REST-API-Dokumentaatio)
+    - [Autentisointi](#Autentisointi)
+- [Testaus](#Testaus)
+- [Asennustiedot](#Asennustiedot)
+
+
 ## Johdanto
 
 Asiakasyritys on tilannut lipunmyyntijärjestelmän lippujen myymiseen myyntipisteissään. Toistaiseksi järjestelmää käyttävät vain yrityksen työntekijät, joiden tulee pystyä lisäämään järjestelmään tapahtumia, myydä niihin lippuja ja tulostaa liput asiakkaille. Asiakas varaa mahdollisuuden verkkokauppaan tulevaisuudessa. 
