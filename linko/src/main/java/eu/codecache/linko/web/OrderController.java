@@ -2,6 +2,7 @@ package eu.codecache.linko.web;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -80,6 +81,9 @@ public class OrderController {
 		}
 	}
 
+	/*
+	 * Add tickets to an order
+	 */
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(API_BASE + "/{id}")
 	public @ResponseBody Orders postTicketOrder(@PathVariable("id") Long orderID,
@@ -89,13 +93,29 @@ public class OrderController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
 		}
 		try {
-			for(TicketOrderDTO to : ticketOrderDTO) {
-			Ticket ticket = tRepo.findByTicketID(to.getTicketID());
-			double price = to.getTicketPrice();
-			TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
-			toRepo.save(ticketOrder);
-			ticketOrder.generateCode();
-			toRepo.save(ticketOrder);
+			List<TicketOrder> boughtTickets = new ArrayList<>();
+			for (TicketOrderDTO to : ticketOrderDTO) {
+				Ticket ticket = tRepo.findByTicketID(to.getTicketID());
+				// check to make sure event is not sold out
+				int capacity = ticket.getEvent().getCapacity();
+				int soldTickets = toRepo.soldTicketCount(ticket.getEvent().getEventID());
+				if (soldTickets >= capacity) {
+					// sold out!
+					// this case should be somehow be handled!
+					throw new ResponseStatusException(HttpStatus.CONFLICT, "Some tickets are sold out!");
+				}
+				double price = to.getTicketPrice();
+				TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
+				boughtTickets.add(ticketOrder);
+//				toRepo.save(ticketOrder);
+//				ticketOrder.generateCode();
+//				toRepo.save(ticketOrder);
+			}
+			// now add all tickets to order
+			for (TicketOrder to : boughtTickets) {
+				toRepo.save(to);
+				to.generateCode();
+				toRepo.save(to);
 			}
 			return order;
 		} catch (Exception e) {

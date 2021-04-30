@@ -56,6 +56,7 @@ Lists all events
 >             "city":"Rovaniemi"
 >         },
 >         "eventPlace":"Hippakenttä",
+>         "soldTickets":3,
 >         "capacity":1000,
 >         "description":"Kuvaus tapahtumasta tähän.",
 >         "datetime":"2021-02-28T13:27:44.796903",
@@ -88,6 +89,7 @@ Lists all events
 >             "city":"Ilmala"
 >         },
 >         "eventPlace":"Mutakenttä jäähallin takana",
+>         "soldTickets":0,
 >         "capacity":6,
 >         "description":"",
 >         "datetime":"2021-02-28T13:27:44.820266",
@@ -140,6 +142,7 @@ Views information of a spesific event.
 >         "city":"Rovaniemi"
 >     },
 >     "eventPlace":"Hippakenttä",
+>     "soldTickets":3,
 >     "capacity":1000,
 >     "description":"Kuvaus tapahtumasta tähän.",
 >     "datetime":"2021-02-28T13:27:44.796903",
@@ -553,7 +556,7 @@ Allow creation of new orders to database.
 
 **Method** : `POST`
  
-**Auth required** : *not available*
+**Auth required** : *User*
  
 **Data constrains**
  
@@ -647,6 +650,19 @@ Following JSON-body is required.
 > **Condition** : Some of the information given wasn't tested valid. 
 > 
 > **Code** : `400 BAD REQUEST`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+
+
+> **Condition** : One or more tickets was sold out.  
+> 
+> **Code** : `409 CONFLICT`
 > 
 > **Content example**
 > 
