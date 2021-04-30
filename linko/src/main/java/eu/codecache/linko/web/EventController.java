@@ -34,6 +34,7 @@ import eu.codecache.linko.domain.Event;
 import eu.codecache.linko.domain.EventDTO;
 import eu.codecache.linko.domain.EventRepository;
 import eu.codecache.linko.domain.Ticket;
+import eu.codecache.linko.domain.TicketOrderRepository;
 import eu.codecache.linko.domain.TicketRepository;
 import eu.codecache.linko.domain.UserAuthorizationRepository;
 import eu.codecache.linko.domain.UserEntityRepository;
@@ -53,6 +54,8 @@ public class EventController {
 	@Autowired
 	private TicketRepository tRepo;
 	@Autowired
+	private TicketOrderRepository toRepo;
+	@Autowired
 	private UserEntityRepository ueRepo;
 	@Autowired
 	private UserAuthorizationRepository uaRepo;
@@ -65,9 +68,10 @@ public class EventController {
 	public @ResponseBody List<EventDTO> all() {
 		List<Event> events = eRepo.findAll();
 		List<EventDTO> eventDTOs = new ArrayList<>();
-		for(Event ev : events) {
+		for (Event ev : events) {
 			List<Ticket> tickets = tRepo.findByEvent(ev);
-			eventDTOs.add(new EventDTO(ev, tickets));
+			int soldTickets = toRepo.soldTicketCount(ev.getEventID());
+			eventDTOs.add(new EventDTO(ev, soldTickets, tickets));
 		}
 		return eventDTOs;
 //		return eRepo.findAll();
@@ -131,7 +135,8 @@ public class EventController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
 		} else {
 			List<Ticket> tickets = tRepo.findByEvent(event);
-			return new EventDTO(event, tickets);
+			int soldTickets = toRepo.soldTicketCount(event.getEventID());
+			return new EventDTO(event, soldTickets, tickets);
 		}
 	}
 

@@ -11,6 +11,7 @@ public class EventDTO {
 	private long eventID;
 	private String event;
 	private String eventPlace;
+	private int soldTickets;
 	private int capacity;
 	private String description;
 	private LocalDateTime datetime;
@@ -20,22 +21,24 @@ public class EventDTO {
 
 	}
 
-	public EventDTO(Event event, List<Ticket> tickets) {
+	public EventDTO(Event event, int soldTickets, List<Ticket> tickets) {
 		this.eventID = event.getEventID();
 		this.event = event.getEvent();
 		this.eventPlace = event.getEventPlace();
+		this.soldTickets = soldTickets;
 		this.capacity = event.getCapacity();
 		this.description = event.getDescription();
 		this.datetime = event.getDatetime();
 		this.tickets = tickets;
 	}
 
-	public EventDTO(long eventID, String event, String eventPlace, int capacity, String description,
+	public EventDTO(long eventID, String event, String eventPlace, int soldTickets, int capacity, String description,
 			LocalDateTime datetime, List<Ticket> tickets) {
-		super();
+//		super();
 		this.eventID = eventID;
 		this.event = event;
 		this.eventPlace = eventPlace;
+		this.soldTickets = soldTickets;
 		this.capacity = capacity;
 		this.description = description;
 		this.datetime = datetime;
