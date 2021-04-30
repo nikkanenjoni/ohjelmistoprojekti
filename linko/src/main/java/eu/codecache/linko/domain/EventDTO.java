@@ -69,6 +69,14 @@ public class EventDTO {
 		this.eventPlace = eventPlace;
 	}
 
+	public void setSoldTickets(int soldTickets) {
+		this.soldTickets = soldTickets;
+	}
+
+	public int getSoldTickets() {
+		return soldTickets;
+	}
+
 	public int getCapacity() {
 		return capacity;
 	}
