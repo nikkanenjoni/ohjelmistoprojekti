@@ -10,7 +10,8 @@ import base64 from "base-64";
  *    DatabaseAccessApi.getEvents() lists all events in JSON-format
  *    DatabaseAccessApi.getEventTicketsByEventId(id) lists all tickets available to event with id
  *    DatabaseAccessApi.createOrder() return new orderID for a new order
- *    DatabaseAccessApi.addTicketsToOrderById(orderId, ticketId, price) adds ticket with ticketId to an order with orderId
+ *    DatabaseAccessApi.addTicketToOrder(orderId, ticketId, price) adds ticket with ticketId to an order with orderId
+ *    DatabaseAccessApi.addTicketsToOrder(orderId, ticketIds, prices) adds tickets with id's to order with orderId
  *    DatabaseAccessApi.getTicketByCode(code) returns ticket with given code in JSON-format
  *    DatabaseAccessApi.markTicketUsed(id, code) marks ticket with matching id & code as used and returns it in JSON-format
  */
@@ -64,11 +65,30 @@ export class DatabaseAccessApi {
         }
     }
 
-    static async addTicketsToOrderById(orderId, ticketId, ticketPrice) {
-        const data = {
+    static async addTicketToOrder(orderId, ticketId, ticketPrice) {
+        const data = [{
             "ticketID": ticketId,
             "ticketPrice": ticketPrice
-        };
+        }];
+        try {
+            const response = await InternalMethods.postData(this.#urlBase + "/orders/" + orderId, data);
+            return response;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    static async addTicketsToOrder(orderId, ticketIds, ticketPrices) {
+        var data = [];
+        // actually, let's check array lengths
+        if (ticketIds.length != ticketPrices.length) {
+            return null;
+        }
+        for (let i = 0; i < ticketIds.length; i++) {
+            // We assume we are given equal length arrays!
+            var to = { "ticketID": ticketIds[i], "ticketPrice": ticketPrices[i] };
+            data.push(to);
+        }
         try {
             const response = await InternalMethods.postData(this.#urlBase + "/orders/" + orderId, data);
             return response;
