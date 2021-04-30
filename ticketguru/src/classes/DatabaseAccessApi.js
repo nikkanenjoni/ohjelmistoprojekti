@@ -36,28 +36,20 @@ export class DatabaseAccessApi {
         }
     }
 
-// Hae eventit ID:n mukaan
-    static async getEventsByEventId(id) {
+    // Hae eventit ID:n mukaan
+    static async getEventsByEventId(eventID) {
         try {
-            const response = await InternalMethods.getData(this.#urlBase + "/events/" + id);
-            if (response.status === "200") {
-                return response;
-            } else {
-                return null;
-            }
+            const response = await InternalMethods.getData(this.#urlBase + "/events/" + eventID);
+            return response;
         } catch (error) {
             return null;
         }
     }
 
-    static async getEventTicketsByEventId(id) {
+    static async getEventTicketsByEventId(eventID) {
         try {
-            const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + id);
-            if (response.status === "200") {
-                return response;
-            } else {
-                return null;
-            }
+            const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + eventID);
+            return response;
         } catch (error) {
             return null;
         }
@@ -66,11 +58,7 @@ export class DatabaseAccessApi {
     static async createOrder() {
         try {
             const response = await InternalMethods.postData(this.#urlBase + "/orders", null);
-            if (response.status === "201") {
-                return response;
-            } else {
-                return null;
-            }
+            return response;
         } catch (error) {
             return null;
         }
@@ -83,7 +71,6 @@ export class DatabaseAccessApi {
         };
         try {
             const response = await InternalMethods.postData(this.#urlBase + "/orders/" + orderId, data);
-            const responseJson = { "status": response.status };
             return response;
         } catch (error) {
             return null;
@@ -103,11 +90,7 @@ export class DatabaseAccessApi {
         try {
             const url = this.#urlBase + "/soldtickets?code=" + code;
             const response = await InternalMethods.getData(url);
-            if (response.status === "200") {
-                return Parser.parseTicketInstance(response);
-            } else {
-                return null;
-            }
+            return Parser.parseTicketInstance(response);
         } catch (error) {
             return null;
         }
@@ -120,13 +103,7 @@ export class DatabaseAccessApi {
                 "code": code
             };
             const response = await InternalMethods.patchData(url, data);
-            if (response.status === "200") {
-                return Parser.parseTicketInstance(response);
-            } else if (response.status === "409") {
-                return { "code": 409 };
-            } else {
-                return null;
-            }
+            return Parser.parseTicketInstance(response);
         } catch (error) {
             return null;
         }

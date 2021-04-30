@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
@@ -25,6 +26,7 @@ public class Ticket {
 	@NotNull
 	private TicketType ticketType;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "eventID")
 	@NotNull

@@ -20,6 +20,7 @@ Each endpoint is used to view events or to add/update/delete them.
 |----|----|----|----|
 | `GET` | [/api/events](#GET-events) | User | Lists ALL events in database |
 | `GET` | [/api/events/:id](#GET-event-id) | User | Displays information of event with given `:id` |
+| `GET` | [/api/events/:id/tickets](#GET-event-id-tickets) | User | **Obsolete** Displays information of tickets for an event | 
 | `POST` | [/api/events](#POST-event) | Admin | Adds new event to database |
 | `PUT` | [/api/events/:id](#PUT-event-id) | Admin | Updates the event with given `:id` |
 | `DELETE` | [/api/events/:id](#DELETE-event-id) | Admin | Deleted the event with given `:id` |
@@ -48,28 +49,54 @@ Lists all events
 > ```JSON
 > [
 >     {
+>         "eventID": 9,
 >         "event":"Hippafesti",
 >         "city":
 >         {
 >             "city":"Rovaniemi"
 >         },
 >         "eventPlace":"Hippakenttä",
+>         "soldTickets":3,
 >         "capacity":1000,
 >         "description":"Kuvaus tapahtumasta tähän.",
->         "datetime":"2021-02-28T13:27:44.796903"
+>         "datetime":"2021-02-28T13:27:44.796903",
+>         "tickets": [
+>             {
+>                 "ticketID": 13,
+>                 "ticketType": {
+>                     "ticketTypeID": 8,
+>                     "ticketType": "Opiskelija"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             },
+>             {
+>                 "ticketID": 14,
+>                 "ticketType": {
+>                     "ticketTypeID": 7,
+>                     "ticketType": "Normaali"
+>                 },
+>                 "price": 20.0,
+>                 "description": ""
+>             }
+>         ]
 >     },
 >     {
+>         "eventID": 10,
 >         "event":"Musadiggarit",
 >         "city":
 >         {
 >             "city":"Ilmala"
 >         },
 >         "eventPlace":"Mutakenttä jäähallin takana",
+>         "soldTickets":0,
 >         "capacity":6,
 >         "description":"",
->         "datetime":"2021-02-28T13:27:44.820266"
+>         "datetime":"2021-02-28T13:27:44.820266",
+>         "tickets": []
 >     },
 >     {
+>         "eventID": 11,
 >         "event":"Antin rokkibändi",
 >         "city":
 >         {
@@ -78,7 +105,8 @@ Lists all events
 >         "eventPlace":"Kellariklubi",
 >         "capacity":150,
 >         "description":"Hieno bändi!",
->         "datetime":"2021-02-28T13:27:44.8259"
+>         "datetime":"2021-02-28T13:27:44.8259",
+>         "tickets": []
 >     }
 > ]
 > ```
@@ -107,15 +135,37 @@ Views information of a spesific event.
 > 
 > ```JSON
 > {
+>     "eventID": 9,
 >     "event":"Hippafesti",
 >     "city":
 >     {
 >         "city":"Rovaniemi"
 >     },
 >     "eventPlace":"Hippakenttä",
+>     "soldTickets":3,
 >     "capacity":1000,
 >     "description":"Kuvaus tapahtumasta tähän.",
->     "datetime":"2021-02-28T13:27:44.796903"
+>     "datetime":"2021-02-28T13:27:44.796903",
+>     "tickets": [
+>         {
+>             "ticketID": 13,
+>             "ticketType": {
+>                 "ticketTypeID": 8,
+>                 "ticketType": "Opiskelija"
+>             },
+>             "price": 20.0,
+>             "description": ""
+>         },
+>         {
+>             "ticketID": 14,
+>             "ticketType": {
+>                 "ticketTypeID": 7,
+>                 "ticketType": "Normaali"
+>             },
+>             "price": 20.0,
+>             "description": ""
+>         }
+>     ]
 > }
 > ```
 
@@ -135,6 +185,82 @@ Views information of a spesific event.
 
 
 </details>
+
+## GET event id tickets
+
+List tickets by eventID. 
+
+**URL** : `/api/events/:id/tickets`
+
+**Method** : GET 
+
+**Auth required** : *not available*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content for a successful request of events tickets. 
+> 
+> ```JSON
+> [
+>   {
+>    "ticketID": 9,
+>    "ticketType": {
+>        "ticketTypeID": 4,
+>        "ticketType": "Opiskelija"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 20.0,
+>    "description": ""
+>   },
+>   {
+>    "ticketID": 10,
+>    "ticketType": {
+>        "ticketTypeID": 5,
+>        "ticketType": "Aikuinen"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 25.0,
+>    "description": ""
+>   },
+> ]
+> ```
+
+#### Error
+
+> **Condition** : Requested `id` is not found from database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "event":"NOT FOUND"
+> }
+> ```
+
+
+</details>
+
 
 ## POST event
 
@@ -430,7 +556,7 @@ Allow creation of new orders to database.
 
 **Method** : `POST`
  
-**Auth required** : *not available*
+**Auth required** : *User*
  
 **Data constrains**
  
@@ -483,17 +609,21 @@ Allows adding tickets to an order.
 
 **Method** : `POST`
  
-**Auth required** : *not available*
+**Auth required** : *User*
  
 **Data constrains**
  
 Following JSON-body is required.
 
 > ```JSON
+> [{
+>     "ticketID":0,
+>     "ticketPrice":00.00
+> },
 > {
 >     "ticketID":0,
 >     "ticketPrice":00.00
-> }
+> }]
 > ```
 
 <details>
@@ -520,6 +650,19 @@ Following JSON-body is required.
 > **Condition** : Some of the information given wasn't tested valid. 
 > 
 > **Code** : `400 BAD REQUEST`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "datetime":"2021-02-28T13:27:44.
+> }
+> ```
+
+
+> **Condition** : One or more tickets was sold out.  
+> 
+> **Code** : `409 CONFLICT`
 > 
 > **Content example**
 > 
@@ -602,7 +745,6 @@ Each endpoint is used to view tickets or to add/update/delete them.
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
 | `GET` | [/api/tickets](#GET-ticket) | -- | Lists ALL tickets in database |
-| `GET` | [/api/tickets/:id](#GET-ticket-id) | -- | Displays information of tickets for an event | 
 | `POST` | [/api/tickets](#POST-ticket) | -- | Adds new ticket to database |
 | `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | -- | Deleted the ticket with given `:id` |
 
@@ -684,80 +826,6 @@ Lists all tickets
 </details>
 
 
-## GET ticket id
-
-List tickets by eventID. 
-
-**URL** : `/api/tickets/:id`
-
-**Method** : GET 
-
-**Auth required** : *not available*
-
-<details>
-
-
-#### Success
-
-> **Code** : `200 OK`
-> 
-> **Content** : An example of possible content for a successful request of events tickets. 
-> 
-> ```JSON
-> [
->   {
->    "ticketID": 9,
->    "ticketType": {
->        "ticketTypeID": 4,
->        "ticketType": "Opiskelija"
->    },
->    "event": {
->        "eventID": 5,
->        "event": "Hippafesti",
->        "eventPlace": "Hippakenttä",
->        "capacity": 1000,
->        "description": "Kuvaus tapahtumasta tähän.",
->        "datetime": "2021-03-08T17:09:43.957227"
->    },
->    "price": 20.0,
->    "description": ""
->   },
->   {
->    "ticketID": 10,
->    "ticketType": {
->        "ticketTypeID": 5,
->        "ticketType": "Aikuinen"
->    },
->    "event": {
->        "eventID": 5,
->        "event": "Hippafesti",
->        "eventPlace": "Hippakenttä",
->        "capacity": 1000,
->        "description": "Kuvaus tapahtumasta tähän.",
->        "datetime": "2021-03-08T17:09:43.957227"
->    },
->    "price": 25.0,
->    "description": ""
->   },
-> ]
-> ```
-
-#### Error
-
-> **Condition** : Requested `id` is not found from database. 
-> 
-> **Code** : `404 NOT FOUND`
-> 
-> **Content example**
-> 
-> ```JSON
-> {
->     "event":"NOT FOUND"
-> }
-> ```
-
-
-</details>
 
 ## POST ticket
 
