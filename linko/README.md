@@ -63,7 +63,7 @@ Järjestelmän määrittelyyn tullaan palaamaan vielä tarkemmin myöhemmin. Tä
 ## Tietokanta
 
 Ohjelmistoa varten on suunniteltu relaatiotietokanta.
-Tietokannan relaatiokaavio löytyy täältä: [Luokkakaavio_updated.png](Docs/TicketGuru_relaatiokaavio.pdf)
+Tietokannan relaatiokaavio löytyy täältä: [Luokkakaavio_updated.png](Docs/Luokkakaavio_updated.png)
 
 Lisäksi käyttäjien autorisointia varten on olemassa toinen taulurakenne, joka kuvataan 
 
