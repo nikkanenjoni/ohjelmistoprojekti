@@ -22,8 +22,8 @@ export default function TestComponent(props) {
 
     const test2 = async () => {
 
-        try{
-            const data2 = await DatabaseAccessApi.addTicketsToOrderById(737, 729, 20)
+        try {
+            const data2 = await DatabaseAccessApi.addTicketsToOrder(733, [730, 730], [200,999]);
             console.log(data2);
         } catch (error) {
             console.log(error);
