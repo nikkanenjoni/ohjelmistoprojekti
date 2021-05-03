@@ -10,7 +10,8 @@ import base64 from "base-64";
  *    DatabaseAccessApi.getEvents() lists all events in JSON-format
  *    DatabaseAccessApi.getEventTicketsByEventId(id) lists all tickets available to event with id
  *    DatabaseAccessApi.createOrder() return new orderID for a new order
- *    DatabaseAccessApi.addTicketsToOrderById(orderId, ticketId, price) adds ticket with ticketId to an order with orderId
+ *    DatabaseAccessApi.addTicketToOrder(orderId, ticketId, price) adds ticket with ticketId to an order with orderId
+ *    DatabaseAccessApi.addTicketsToOrder(orderId, ticketIds, prices) adds tickets with id's to order with orderId
  *    DatabaseAccessApi.getTicketByCode(code) returns ticket with given code in JSON-format
  *    DatabaseAccessApi.markTicketUsed(id, code) marks ticket with matching id & code as used and returns it in JSON-format
  */
@@ -36,15 +37,11 @@ export class DatabaseAccessApi {
         }
     }
 
-// Hae eventit ID:n mukaan
+    // Hae eventit ID:n mukaan
     static async getEventsByEventId(eventID) {
         try {
             const response = await InternalMethods.getData(this.#urlBase + "/events/" + eventID);
-            if (response.status === "200") {
-                return response;
-            } else {
-                return null;
-            }
+            return response;
         } catch (error) {
             return null;
         }
@@ -53,11 +50,7 @@ export class DatabaseAccessApi {
     static async getEventTicketsByEventId(eventID) {
         try {
             const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + eventID);
-            if (response.status === "200") {
-                return response;
-            } else {
-                return null;
-            }
+            return response;
         } catch (error) {
             return null;
         }
@@ -66,24 +59,38 @@ export class DatabaseAccessApi {
     static async createOrder() {
         try {
             const response = await InternalMethods.postData(this.#urlBase + "/orders", null);
-            if (response.status === "201") {
-                return response;
-            } else {
-                return null;
-            }
+            return response;
         } catch (error) {
             return null;
         }
     }
 
-    static async addTicketsToOrderById(orderId, ticketId, ticketPrice) {
-        const data = {
+    static async addTicketToOrder(orderId, ticketId, ticketPrice) {
+        const data = [{
             "ticketID": ticketId,
             "ticketPrice": ticketPrice
-        };
+        }];
         try {
             const response = await InternalMethods.postData(this.#urlBase + "/orders/" + orderId, data);
-            const responseJson = { "status": response.status };
+            return response;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    static async addTicketsToOrder(orderId, ticketIds, ticketPrices) {
+        var data = [];
+        // actually, let's check array lengths
+        if (ticketIds.length != ticketPrices.length) {
+            return null;
+        }
+        for (let i = 0; i < ticketIds.length; i++) {
+            // We assume we are given equal length arrays!
+            var to = { "ticketID": ticketIds[i], "ticketPrice": ticketPrices[i] };
+            data.push(to);
+        }
+        try {
+            const response = await InternalMethods.postData(this.#urlBase + "/orders/" + orderId, data);
             return response;
         } catch (error) {
             return null;
@@ -103,11 +110,7 @@ export class DatabaseAccessApi {
         try {
             const url = this.#urlBase + "/soldtickets?code=" + code;
             const response = await InternalMethods.getData(url);
-            if (response.status === "200") {
-                return Parser.parseTicketInstance(response);
-            } else {
-                return null;
-            }
+            return Parser.parseTicketInstance(response);
         } catch (error) {
             return null;
         }
@@ -120,13 +123,7 @@ export class DatabaseAccessApi {
                 "code": code
             };
             const response = await InternalMethods.patchData(url, data);
-            if (response.status === "200") {
-                return Parser.parseTicketInstance(response);
-            } else if (response.status === "409") {
-                return { "code": 409 };
-            } else {
-                return null;
-            }
+            return Parser.parseTicketInstance(response);
         } catch (error) {
             return null;
         }
