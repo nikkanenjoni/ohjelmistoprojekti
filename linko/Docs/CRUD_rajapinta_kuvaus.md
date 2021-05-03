@@ -166,7 +166,6 @@ Views information of a spesific event.
 >             "description": ""
 >         }
 >     ]
-<<<<<<< HEAD
 > }
 > ```
 
@@ -181,8 +180,6 @@ Views information of a spesific event.
 > ```JSON
 > {
 >     "event":"NOT FOUND"
-=======
->>>>>>> a76258bdcd8724006c2fd650e6468e6997242150
 > }
 > ```
 
@@ -264,8 +261,6 @@ List tickets by eventID.
 
 </details>
 
-<<<<<<< HEAD
-=======
 ## GET event id tickets
 
 List tickets by eventID. 
@@ -341,7 +336,6 @@ List tickets by eventID.
 
 </details>
 
->>>>>>> a76258bdcd8724006c2fd650e6468e6997242150
 
 ## POST event
 
@@ -1013,110 +1007,22 @@ This endpoint allows deleting of a specific ticket from database.
 
 ## TicketTypes-endpoint
 
-Each endpoint is used to view events or to add/update/delete them.
+Each endpoint is used to view tickettypes or to add/delete them.
 
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
-| `GET` | [/api/events](#GET-events) | User | Lists ALL events in database |
-| `GET` | [/api/events/:id](#GET-event-id) | User | Displays information of event with given `:id` |
-| `GET` | [/api/events/:id/tickets](#GET-event-id-tickets) | User | **Obsolete** Displays information of tickets for an event | 
-| `POST` | [/api/events](#POST-event) | Admin | Adds new event to database |
-| `PUT` | [/api/events/:id](#PUT-event-id) | Admin | Updates the event with given `:id` |
-| `DELETE` | [/api/events/:id](#DELETE-event-id) | Admin | Deleted the event with given `:id` |
+| `GET` | [/api/tickettypes](#GET-tickettypes) | User | Lists ALL events in database |
 
+Displays information of tickets for an event | 
+| `POST` | [/api/tickettypes](#POST-tickettypes) | Admin | Adds new event to database |
 
-
-## GET events
-
-Lists all events
-
-**URL** : `/api/events/`
-
-**Method** : `GET`
-
-**Auth required** : *USER*
-
-<details>
-
-
-#### Success
-
-> **Code** : `200 OK`
-> 
-> **Content** : An example of possible content including three events. 
-> 
-> ```JSON
-> [
->     {
->         "eventID": 9,
->         "event":"Hippafesti",
->         "city":
->         {
->             "city":"Rovaniemi"
->         },
->         "eventPlace":"Hippakenttä",
->         "soldTickets":3,
->         "capacity":1000,
->         "description":"Kuvaus tapahtumasta tähän.",
->         "datetime":"2021-02-28T13:27:44.796903",
->         "tickets": [
->             {
->                 "ticketID": 13,
->                 "ticketType": {
->                     "ticketTypeID": 8,
->                     "ticketType": "Opiskelija"
->                 },
->                 "price": 20.0,
->                 "description": ""
->             },
->             {
->                 "ticketID": 14,
->                 "ticketType": {
->                     "ticketTypeID": 7,
->                     "ticketType": "Normaali"
->                 },
->                 "price": 20.0,
->                 "description": ""
->             }
->         ]
->     },
->     {
->         "eventID": 10,
->         "event":"Musadiggarit",
->         "city":
->         {
->             "city":"Ilmala"
->         },
->         "eventPlace":"Mutakenttä jäähallin takana",
->         "soldTickets":0,
->         "capacity":6,
->         "description":"",
->         "datetime":"2021-02-28T13:27:44.820266",
->         "tickets": []
->     },
->     {
->         "eventID": 11,
->         "event":"Antin rokkibändi",
->         "city":
->         {
->             "city":"Rovaniemi"
->         },
->         "eventPlace":"Kellariklubi",
->         "capacity":150,
->         "description":"Hieno bändi!",
->         "datetime":"2021-02-28T13:27:44.8259",
->         "tickets": []
->     }
-> ]
-> ```
-
-</details>
+| `DELETE` | [/api/tickettypes/:id](#DELETE-tickettype-id) | Admin | Deleted the tickettype with given `:id` |
 
 
 
 ## GET tickettypes
 
-List tickettypes by ticketTypeID. 
+Lists all tickettypes
 
 **URL** : `/api/tickettypes`
 
