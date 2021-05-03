@@ -166,6 +166,7 @@ Views information of a spesific event.
 >             "description": ""
 >         }
 >     ]
+<<<<<<< HEAD
 > }
 > ```
 
@@ -180,6 +181,8 @@ Views information of a spesific event.
 > ```JSON
 > {
 >     "event":"NOT FOUND"
+=======
+>>>>>>> a76258bdcd8724006c2fd650e6468e6997242150
 > }
 > ```
 
@@ -261,6 +264,84 @@ List tickets by eventID.
 
 </details>
 
+<<<<<<< HEAD
+=======
+## GET event id tickets
+
+List tickets by eventID. 
+
+**URL** : `/api/events/:id/tickets`
+
+**Method** : GET 
+
+**Auth required** : *not available*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content for a successful request of events tickets. 
+> 
+> ```JSON
+> [
+>   {
+>    "ticketID": 9,
+>    "ticketType": {
+>        "ticketTypeID": 4,
+>        "ticketType": "Opiskelija"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 20.0,
+>    "description": ""
+>   },
+>   {
+>    "ticketID": 10,
+>    "ticketType": {
+>        "ticketTypeID": 5,
+>        "ticketType": "Aikuinen"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 25.0,
+>    "description": ""
+>   },
+> ]
+> ```
+
+#### Error
+
+> **Condition** : Requested `id` is not found from database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "event":"NOT FOUND"
+> }
+> ```
+
+
+</details>
+
+>>>>>>> a76258bdcd8724006c2fd650e6468e6997242150
 
 ## POST event
 
