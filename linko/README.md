@@ -20,7 +20,7 @@ Tiimi: Koskela Ville, Lindholm Sofia, Nikkanen Joni
 ## Johdanto
 
 Asiakasyritys on tilannut lipunmyyntijärjestelmän lippujen myymiseen myyntipisteissään. Toistaiseksi järjestelmää käyttävät vain yrityksen työntekijät, joiden tulee pystyä lisäämään järjestelmään tapahtumia, myydä niihin lippuja ja tulostaa liput asiakkaille. Asiakas varaa mahdollisuuden verkkokauppaan tulevaisuudessa. 
-Taustajärjestelmän toteuttamiseen käytetään Javaa ja Spring Frameworkkia. Frontend toteutetaan selainpohjaisena ja sen toteutetaan puhtaasti HTML5 / ES6 -pohjaisena. (**vai Angular?**) Tietokanta toteutetaan MariaDB:n avulla. 
+Taustajärjestelmän toteuttamiseen käytetään Javaa ja Spring Bootia. Frontend toteutetaan selainpohjaisena ja se toteutetaan Reactilla. Tietokantana käytetään Postgresql-tietokantaa. 
 
 Koska järjestelmää käyttävät työntekijät lipunmyyntipisteissä, ei käyttöliittymän tarvitse toimia muilla kuin tietokoneen suurella monitorilla. Mahdollinen myöhempi verkkokauppa mietitään sitten erikseen. 
 
@@ -112,6 +112,9 @@ Alla vielä tietohakemisto eri luokkien attribuuteista.
 | orderID | int FK | Viittaus [ostotapahtumaan](#Order), jossa tämä lippu on ostettu |
 | ticketID | int FK | Viittaus [lippuun](#Ticket), jotta tiedetään millainen lippu tässä ostotapahtumassa on ostettu | 
 | price | double | Tallettaa tiedon, mihin hintaan juuri tämä kyseinen lippu on myyty |
+| code | varchar | Koodi, jolla lippu tunnistetaan ovella tarkistettaessa |
+| used | boolean | Tieto siitä, onko lippu käytetty |
+| usedDate | timestamp | Päivämäärä ja kellonaika, jolloin lippu on käytetty |
 
 ### Ticket
 
@@ -156,38 +159,31 @@ Kuvaus käyttäjätietokannasta, taulut User_Entity ja User_Authorization:
 ![Import](Docs/Kuvat/UsersDiagram.png "Import")
 
 
-
-
-## Alla valmistekstiä.
-####
-
-Teknisessä kuvauksessa esitetään järjestelmän toteutuksen suunnittelussa tehdyt tekniset
-ratkaisut, esim.
-
--   Missä mikäkin järjestelmän komponentti ajetaan (tietokone, palvelinohjelma)
-    ja komponenttien väliset yhteydet (vaikkapa tähän tyyliin:
-    https://security.ufl.edu/it-workers/risk-assessment/creating-an-information-systemdata-flow-diagram/)
--   Palvelintoteutuksen yleiskuvaus: teknologiat, deployment-ratkaisut yms.
--   Keskeisten rajapintojen kuvaukset, esimerkit REST-rajapinta. Tarvittaessa voidaan rajapinnan käyttöä täsmentää
-    UML-sekvenssikaavioilla.
--   Toteutuksen yleisiä ratkaisuja, esim. turvallisuus.
-
-Tämän lisäksi
-
--   ohjelmakoodin tulee olla kommentoitua
--   luokkien, metodien ja muuttujien tulee olla kuvaavasti nimettyjä ja noudattaa
-    johdonmukaisia nimeämiskäytäntöjä
--   ohjelmiston pitää olla organisoitu komponentteihin niin, että turhalta toistolta
-    vältytään
-
 ## Testaus
 
-Tässä kohdin selvitetään, miten ohjelmiston oikea toiminta varmistetaan
-testaamalla projektin aikana: millaisia testauksia tehdään ja missä vaiheessa.
-Testauksen tarkemmat sisällöt ja testisuoritusten tulosten raportit kirjataan
-erillisiin dokumentteihin.
+Testausta on toteutettu kolmella tasolla:
+- Yksikkötestaus
+- Integraatiotestaus
+- End-to-end -testaus
 
-Tänne kirjataan myös lopuksi järjestelmän tunnetut ongelmat, joita ei ole korjattu.
+#### Yksikkötestaus
+
+Yksikkötestauksessa on käytetty JUnitia ja testiautomatiikkaa. Testejä on kirjoitettu controllereille, jolloin on testattu
+endpointtien oikeanlaista toimintaa. Lisäksi on tehty tehty testejä repository-rajapinnoille, jotta on voitu varmistaa niiden halutunkaltainen toiminta. Näiden lisäksi jokaiselle controllerille on määritelty smoke-testit. Valitettavasti yksikkötestien kattavuus ei ole 100 % ja osa controllereista on vailla yksikkötestejä. 
+
+Automaattisten testien tulokset ovat nähtävillä Github Actionsissa. 
+
+#### Integraatiotestaus
+
+Integraatiotestit on kirjoitettu Pythonilla ja niissä käytetään Pytestiä. Integraatiotesteissä on kirjoitettu kokonaisia tapahtumia API-kyselyiden sarjana, jolloin voidaan vahvistaa onnistunut lipunmyyntitapahtuma rajapintaa vasten tai onnistunut lipun tarkistaminen ovella. Integraatiotestien kattavuus ei kuitenkaan ole kovin hyvä. Integraatiotestit ajetaan manuaalisesti aina testipalvelimen päivityksen yhteydessä ja näin varmistetaan, että päivitysten myötä toimivuus ei ole heikentynyt. 
+
+#### End-to-end -testaus
+
+End-to-end -testauksessa on testattu manuaalisesti käyttöliittymää ja varmistettu, että käyttöliittymä toimii halutulla tavalla, jolloin voidaan olettaa myös käyttöliittymän takana olevan sovelluslogiikan (backend, tietokanta yms.) toimivan tarkoitetulla tavalla. 
+
+#### Tunnetut ongelmat
+
+Tällä hetkellä ei tunnettuja käyttöä haittaavia ongelmia. 
 
 ## Asennustiedot
 
@@ -226,14 +222,4 @@ docker-compose up -d
 Odota ohjelman kääntyminen. Kun ohjelma on käännetty, docker käynnistää sen automaattisesti. Ohjelma on käynnistynyt, kun palaat takaisin komentoriville ja voit kirjoittaa uusia komentoja. Tämän jälkeen odota tarvittaessa vielä n. 1-2 minuuttia, jotta järjestelmä yhdistää tietokantaan ja käynnistyy kokonaan. 
 
 Palvelimen tulisi vastata portissa 80 tai valitsemassasi portissa, mikäli vaihdoit toisen porttinumeron oletusportin tilalle. Docker käynnistää palvelimen jatkossa automaattisesti järjestelmän uudelleenkäynnistyksen yhteydessä tai palvelinsovelluksen kaatuessa. 
-
-## Käynnistys- ja käyttöohje
-
-Tyypillisesti tässä riittää kertoa ohjelman käynnistykseen tarvittava URL sekä
-mahdolliset kirjautumiseen tarvittavat tunnukset. Jos järjestelmän
-käynnistämiseen tai käyttöön liittyy joitain muita toimenpiteitä tai toimintajärjestykseen liittyviä asioita, nekin kerrotaan tässä yhteydessä.
-
-Usko tai älä, tulet tarvitsemaan tätä itsekin, kun tauon jälkeen palaat
-järjestelmän pariin !
-
 
