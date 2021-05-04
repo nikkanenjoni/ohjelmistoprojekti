@@ -500,12 +500,12 @@ Each endpoint is used to view orders or to add/update/delete them.
 
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
-| `GET` | [/api/orders](#GET-orders) | -- | Lists ALL orders in database |
-| `GET` | [/api/orders/:id](#GET-order-id) | -- | Displays information of order with given `:id` |
-| `POST` | [/api/orders](#POST-order) | -- | Adds new order to database |
-| `POST` | [/api/orders/:id](#POST-order-id) | -- | Add a ticket to the order with `:id` |
-| `PUT` | [/api/orders/:id](#PUT-order-id) | -- | Updates the order with given `:id` |
-| `DELETE` | [/api/orders/:id](#DELETE-order-id) | -- | Deleted the order with given `:id` |
+| `GET` | [/api/orders](#GET-orders) | User | Lists ALL orders in database |
+| `GET` | [/api/orders/:id](#GET-order-id) | User | Displays information of order with given `:id` |
+| `POST` | [/api/orders](#POST-order) | User | Adds new order to database |
+| `POST` | [/api/orders/:id](#POST-order-id) | User | Add a ticket to the order with `:id` |
+| `PUT` | [/api/orders/:id](#PUT-order-id) | User | Updates the order with given `:id` |
+| `DELETE` | [/api/orders/:id](#DELETE-order-id) | User | Deleted the order with given `:id` |
 
 
 
