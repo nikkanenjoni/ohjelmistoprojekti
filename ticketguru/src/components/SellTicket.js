@@ -15,7 +15,12 @@ export default function SellTicket(props) {
             capacity: 0,
             description: "",
             datetime: "",
-      });
+            ticketID: 0,
+            ticketTypeID: 0,
+            ticketType: "",
+            price: 0.0,
+            descriptionT: "",
+    });
 
 
         const updateId = (event) => {
@@ -113,9 +118,10 @@ const checkEvent = async () => {
                 Aika:       {tapahtuma.datetime}<br />
                 Paikka:{tapahtuma.eventPlace}<br />
                 Lippuja jäljellä:  {tapahtuma.capacity - tapahtuma.soldTickets}<br />
-               
-               <MakeOrder tapahtumat={ tapahtuma } />
+                LippuID:{tapahtuma.ticketID}<br />
+                Lipputyyppi:{tapahtuma.ticketType}<br />
             </div>}<br></br>
+            <MakeOrder tapahtumat={ tapahtuma } />
         </div>
     )
 }
