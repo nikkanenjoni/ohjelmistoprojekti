@@ -128,7 +128,6 @@ function pressButton(){
                 <p>{message}</p>
             </div>}<br></br><br></br><br></br>
             <SellTicket/>
-            <MakeOrder/>
 
               
         </div>
