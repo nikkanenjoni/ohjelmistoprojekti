@@ -5,8 +5,9 @@ import { DatabaseAccessApi } from "../classes/DatabaseAccessApi.js";
 
 function MakeOrder(props) {
 
-  const [ticketID, setTicketID] = React.useState('');
 
+
+  const [ticket, setTicket] = React.useState('');
   const [price, setPrice] = React.useState('');
 
   // errors
@@ -15,24 +16,18 @@ function MakeOrder(props) {
   // errors2
   const [message2, setMessage2] = React.useState('');
 
-  const [order, setOrder] = React.useState('');
 
   // show order
 
-
-    
-  const updateId = (event) => {
-    setTicketID(event.target.value);
-}
 
   const updatePrice = (event) => {
     setPrice(event.target.value);
 } 
 
-  const [ticket, setTicket] = React.useState({
-    orderId: order,
-    ticketId: ticketID,
-    ticketPrice: price,
+const [order, setOrder] = React.useState({
+    orderID: 0,
+    ticketID: 0,
+    ticketPrice: 0.0,
   });
 
 
@@ -61,10 +56,10 @@ const buttonStyle = {
 const addTicket = async () => {
 
     try{
-        const data = await DatabaseAccessApi.addTicketsToOrderById(ticket.orderId, ticket.ticketId, ticket.ticketPrice);
+        const data = await DatabaseAccessApi.addTicketsToOrderById(order.orderID, ticket, price);
         console.log(data);
         setTicket(data);
-        setMessage2('Lippu myyty hintaan ' + price + ' euroa');
+        //setMessage2('Lippu myyty hintaan ' + price + ' euroa');
         
     } catch (error) {
         console.log(error);
@@ -75,19 +70,19 @@ const addTicket = async () => {
     <div>
    
         <div>
-        <button style={buttonStyle} onClick={newOrder}>Luo tilaus</button><br></br>
-        <form><br></br>
-        {message1}
-                <label>
-                 Lisää LippuID:<br></br>
-                <input type="text" onChange={updateId} name="ticketID" />
-                </label><br></br>
-                <label>
+        <form>
+        <button style={buttonStyle} onClick={newOrder}>LUO TILAUS</button><br></br>
+        <button style={buttonStyle} onClick={addTicket}>Valitse lippu</button><br></br>
+        <button style={buttonStyle} onClick={addTicket}>Valitse lippu</button><br></br>
+        <label><br></br>
                  Lisää Hinta:<br></br>
                 <input type="text" onChange={updatePrice} name="price" />
                 </label><br></br>
+        <br></br>
+
+        {message1}
+
             </form>
-        <button style={buttonStyle} onClick={addTicket}>Osta lippu</button>
     </div>
     <br></br>
     {message2}

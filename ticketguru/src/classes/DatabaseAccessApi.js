@@ -81,7 +81,7 @@ export class DatabaseAccessApi {
     static async addTicketsToOrder(orderId, ticketIds, ticketPrices) {
         var data = [];
         // actually, let's check array lengths
-        if (ticketIds.length != ticketPrices.length) {
+        if (ticketIds.length !== ticketPrices.length) {
             return null;
         }
         for (let i = 0; i < ticketIds.length; i++) {
