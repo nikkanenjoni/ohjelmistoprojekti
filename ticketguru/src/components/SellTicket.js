@@ -4,33 +4,18 @@ import MakeOrder from "./MakeOrder.js"
 
 export default function SellTicket(props) {
 
-        const [id, setId] = React.useState(0);
+        const [id, setId] = React.useState("");
 
         // tapahtumamuuttuja tässä komponentissa 
         const [tapahtuma, setEvent] = React.useState({
-
-          ticketID: "",
-          //ticketType: "",
-          ticketType: "",
-          },
-           {
-            ticketTypeID:0, 
-            ticketType:"",
-          },
-          {
-            eventID: id,
+            eventID: 0,
             event: "",
             eventPlace: "",
+            soldTickets: 0,
             capacity: 0,
             description: "",
-            dateTime: "",
-        },
-        {
-            price: 0.0, 
-            description: "",
+            datetime: "",
       });
-
-
 
 
         const updateId = (event) => {
@@ -65,18 +50,20 @@ export default function SellTicket(props) {
 //Etsitään event
 const checkEvent = async () => {
     try {
-        const data = await DatabaseAccessApi.getEventTicketsByEventId(tapahtuma.eventID);
+        const data = await DatabaseAccessApi.getEventsByEventId(id);
         setEvent(data);
         //setTicket(data);
         setDisplayEvent(true);
-        setMessage('Event löytyy, myy lippuja');
+        setMessage('Lippuja löytyy, myy lippuja luomalla tyhjä tilaus');
         
     } catch (error) {
         console.log(error);
         setMessage('Virhe');
     }
   
-    if(tapahtuma.length===0){
+// jos tapahtumaa ei anneta, ei näytetä Eventiä, ja annetaan viesti
+    if(id.length===0){
+        setDisplayEvent(false);
         setMessage('Tapahtumaa ei annettu');
   }
     
@@ -110,7 +97,7 @@ const checkEvent = async () => {
     
     return (
         <div>
-              <h4>Myy lippuja</h4>
+              <h3>MYY LIPPUJA</h3>
               <form>
                 <label>
                   Tapahtuman ID:<br></br>
@@ -119,12 +106,14 @@ const checkEvent = async () => {
               </form>
               <p><button style={buttonStyle} onClick={checkEvent} >Hae</button><br></br>
               </p>
+              <p>{message}</p>
               {displayEvent && <div>
+                <h4>TAPAHTUMAN TIEDOT</h4>
                 Tapahtuma:  {tapahtuma.event}<br />
-                Aika:       {tapahtuma.dateTime}<br />
-                Lipputyyppi:{tapahtuma.ticketType}<br />
-                Hinta:      {tapahtuma.price}<br />
-               <p>{message}</p>
+                Aika:       {tapahtuma.datetime}<br />
+                Paikka:{tapahtuma.eventPlace}<br />
+                Lippuja jäljellä:  {tapahtuma.capacity - tapahtuma.soldTickets}<br />
+               
                <MakeOrder tapahtumat={ tapahtuma } />
             </div>}<br></br>
         </div>

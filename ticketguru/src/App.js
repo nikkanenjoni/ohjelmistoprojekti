@@ -45,8 +45,8 @@ export default function App(props) {
             setMessage('Lippua ei löydy');
         }
 
-        if(ticket.length===0){
-            setMessage('Koodia ei annettu');
+        if(code.length===0){
+            setMessage('Koodin luku epäonnistui');
     }
         
   }
@@ -64,7 +64,7 @@ export default function App(props) {
         
     }
 
-    if(ticket.used === true){
+    if(code === "used"){
       setMessage("Lippu on jo käytetty");
   }
 }
@@ -121,15 +121,16 @@ function pressButton(){
             <p><button style={buttonStyle} onClick={pressButton} >TARKISTA</button><br></br> 
             </p>
             {displayTicket && <div>
-                Tapahtuma: {ticket.eventName}<br />
-                Lipun koodi: {ticket.code}<br />
-                Käytetty: {ticket.used ? "kyllä" : "ei"}<br />
-                Lipun tyyppi: {ticket.ticketType}<br />
-            </div>}<br></br>
+                Tapahtuma:  {ticket.eventName}<br />
+                Lipun koodi:  {ticket.code}<br />
+                Käytetty:  {ticket.used ? "kyllä" : "ei"}<br />
+                Lipun tyyppi:  {ticket.ticketType}<br />
+                <p>{message}</p>
+            </div>}<br></br><br></br><br></br>
             <SellTicket/>
             <MakeOrder/>
 
-              <p>{message}</p>
+              
         </div>
     )
     
