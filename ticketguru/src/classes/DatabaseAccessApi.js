@@ -49,7 +49,7 @@ export class DatabaseAccessApi {
 
     static async getEventTicketsByEventId(eventID) {
         try {
-            const response = await InternalMethods.getData(this.#urlBase + "/tickets/" + eventID);
+            const response = await InternalMethods.getData(this.#urlBase + "/events/" + eventID + "/tickets");
             return response;
         } catch (error) {
             return null;

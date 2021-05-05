@@ -1,10 +1,11 @@
 import React from "react";
 import { DatabaseAccessApi } from "../classes/DatabaseAccessApi.js";
-import MakeOrder from "./MakeOrder.js"
+import MakeOrder from "./MakeOrder.js";
+import ListEvents from "./ListEvents";
 
 export default function SellTicket(props) {
 
-        const [id, setId] = React.useState("");
+        const [eventId, setId] = React.useState("");
 
         // tapahtumamuuttuja tässä komponentissa 
         const [tapahtuma, setEvent] = React.useState({
@@ -18,6 +19,7 @@ export default function SellTicket(props) {
             ticketID: 0,
             ticketTypeID: 0,
             ticketType: "",
+            tickets: [],
             price: 0.0,
             descriptionT: "",
     });
@@ -25,6 +27,10 @@ export default function SellTicket(props) {
 
         const updateId = (event) => {
           setId(event.target.value);
+      }
+
+      const insertEventId = (newId) => {
+        setId(newId);
       }
 
         // tapahtumamuuttuja, joka näyttää tapahtuman
@@ -55,7 +61,7 @@ export default function SellTicket(props) {
 //Etsitään event
 const checkEvent = async () => {
     try {
-        const data = await DatabaseAccessApi.getEventsByEventId(id);
+        const data = await DatabaseAccessApi.getEventsByEventId(eventId);
         setEvent(data);
         //setTicket(data);
         setDisplayEvent(true);
@@ -67,7 +73,7 @@ const checkEvent = async () => {
     }
   
 // jos tapahtumaa ei anneta, ei näytetä Eventiä, ja annetaan viesti
-    if(id.length===0){
+    if(eventId<=0){
         setDisplayEvent(false);
         setMessage('Tapahtumaa ei annettu');
   }
@@ -103,10 +109,11 @@ const checkEvent = async () => {
     return (
         <div>
               <h3>MYY LIPPUJA</h3>
+              <ListEvents updateId={insertEventId} />
               <form>
                 <label>
                   Tapahtuman ID:<br></br>
-                  <input type="text" onChange={updateId} name="id" />
+                  <input type="text" value={eventId} onChange={updateId} name="id" />
                 </label>
               </form>
               <p><button style={buttonStyle} onClick={checkEvent} >Hae</button><br></br>
