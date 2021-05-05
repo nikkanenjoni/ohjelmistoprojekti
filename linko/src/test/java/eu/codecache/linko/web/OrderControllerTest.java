@@ -46,6 +46,8 @@ public class OrderControllerTest {
 	private final String[] DEFAULT_EVENTS = { "First event!", "Name of event 2" };
 	private long TICKETID;
 	private long ORDERID;
+	private long SOLD_OUT_TICKET;
+	private long SOLD_OUT_ORDER;
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -94,6 +96,11 @@ public class OrderControllerTest {
 
 	/*
 	 * Test adding ticket to an order
+	 */
+
+	/*
+	 * This test has become a horror! It really needs to be cut down to multiple
+	 * tests...
 	 */
 	@Test
 	public void addTicketToOrderTest() throws Exception {
@@ -145,6 +152,15 @@ public class OrderControllerTest {
 		ResponseEntity<String> incorrectTicketId = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
 				.postForEntity("/api/orders/" + ORDERID, incorrectRequest, String.class);
 		assertEquals(HttpStatus.BAD_REQUEST, incorrectTicketId.getStatusCode());
+
+		// Finally try to sell tickets to an sold-out event.
+		TicketOrderDTO soldOutDto = new TicketOrderDTO();
+		soldOutDto.setTicketID(SOLD_OUT_TICKET);
+		soldOutDto.setTicketPrice(15.00);
+		HttpEntity<String> soldOutRequest = new HttpEntity<>("[" + soldOutDto.toString() + "]", headers);
+		ResponseEntity<String> soldOutOrder = restTemplate.withBasicAuth(USERNAME, DEFAULT_PASSWORD)
+				.postForEntity("/api/orders/" + SOLD_OUT_ORDER, soldOutRequest, String.class);
+		assertEquals(HttpStatus.CONFLICT, soldOutOrder.getStatusCode());
 	}
 
 	/*
@@ -166,17 +182,28 @@ public class OrderControllerTest {
 			Event e1 = eRepo
 					.save(new Event(DEFAULT_EVENTS[0], mockCity, "place1", 1000, "some desc", LocalDateTime.now()));
 			eRepo.save(new Event(DEFAULT_EVENTS[1], mockCity, "place2", 100, "", LocalDateTime.now()));
+			Event e3 = eRepo.save(new Event(DEFAULT_EVENTS[1], mockCity, "place3", 2, "", LocalDateTime.now()));
 			TicketType tt = ttRepo.save(new TicketType("Normal"));
 			Ticket ticket = tRepo.save(new Ticket(tt, e1, 10.00, ""));
+			Ticket ticket3 = tRepo.save(new Ticket(tt, e3, 20.00, ""));
 			TICKETID = ticket.getTicketID();
+			SOLD_OUT_TICKET = ticket3.getTicketID();
 			Orders order = oRepo.save(new Orders(LocalDateTime.now()));
+			Orders order3 = oRepo.save(new Orders(LocalDateTime.now()));
 			ORDERID = order.getOrderID();
+			SOLD_OUT_ORDER = order3.getOrderID();
 			TicketOrder to1 = toRepo.save(new TicketOrder(order, ticket, 9.00));
 			TicketOrder to2 = toRepo.save(new TicketOrder(order, ticket, 10.00));
+			TicketOrder to3 = toRepo.save(new TicketOrder(order3, ticket3, 19.00));
+			TicketOrder to4 = toRepo.save(new TicketOrder(order3, ticket3, 19.00));
 			to1.setCharacter();
 			to2.setCharacter();
+			to3.setCharacter();
+			to4.setCharacter();
 			toRepo.save(to1);
 			toRepo.save(to2);
+			toRepo.save(to3);
+			toRepo.save(to4);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
