@@ -4,10 +4,10 @@
 
 import rest_query
 import requests
-# import json
+import json
 
 
-def test_bying_tickets():
+def test_buying_tickets():
     # reset database before tests
     response = rest_query.rest_query("/dev?reset=ok", "get", None, True)
     assert response.status_code == requests.codes.ok
@@ -38,14 +38,16 @@ def test_bying_tickets():
     ticket_price = tickets_json[0]["price"]
     assert ticket_id > 0
 
-    # Create a ticket for order and give 10 % discount
-    ticket = {'ticketID': ticket_id, 'ticketPrice': ticket_price*0.9}
-    response = rest_query.rest_query("/orders/"+str(order_id), "post", ticket)
+    # Create tickets for order and give 10 % discount for first ticket and 20 % discount to second
+    tickets = [{"ticketID": ticket_id, "ticketPrice": ticket_price*0.9}, {"ticketID": ticket_id, "ticketPrice": ticket_price*0.8}]
+    response = rest_query.rest_query("/orders/"+str(order_id), "post", tickets)
     assert response.status_code == requests.codes.created
 
     # Make sure the order now contains that ticket
     response = rest_query.rest_query("/orders/"+str(order_id), "get")
     assert response.status_code == requests.codes.ok
     response_json = response.json()
-    assert len(response_json["tickets"]) == 1
-    assert response_json["tickets"][0]["price"] == ticket_price*0.9
+    assert len(response_json["tickets"]) == 2
+    assert response_json["tickets"][1]["price"] == ticket_price*0.9
+    assert response_json["tickets"][0]["price"] == ticket_price*0.8
+

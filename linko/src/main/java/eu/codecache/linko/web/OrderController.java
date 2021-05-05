@@ -92,8 +92,9 @@ public class OrderController {
 		if (order == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order not found");
 		}
+		List<TicketOrder> boughtTickets = new ArrayList<>();
+		boolean soldOut = false;
 		try {
-			List<TicketOrder> boughtTickets = new ArrayList<>();
 			for (TicketOrderDTO to : ticketOrderDTO) {
 				Ticket ticket = tRepo.findByTicketID(to.getTicketID());
 				// check to make sure event is not sold out
@@ -102,7 +103,7 @@ public class OrderController {
 				if (soldTickets >= capacity) {
 					// sold out!
 					// this case should be somehow be handled!
-					throw new ResponseStatusException(HttpStatus.CONFLICT, "Some tickets are sold out!");
+					soldOut = true;
 				}
 				double price = to.getTicketPrice();
 				TicketOrder ticketOrder = new TicketOrder(order, ticket, price);
@@ -112,16 +113,18 @@ public class OrderController {
 //				toRepo.save(ticketOrder);
 			}
 			// now add all tickets to order
-			for (TicketOrder to : boughtTickets) {
-				toRepo.save(to);
-				to.generateCode();
-				toRepo.save(to);
-			}
-			return order;
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ticket is not valid.");
 		}
-
+		if (soldOut) {
+			throw new ResponseStatusException(HttpStatus.CONFLICT, "Some tickets are sold out!");
+		}
+		for (TicketOrder to : boughtTickets) {
+			toRepo.save(to);
+			to.generateCode();
+			toRepo.save(to);
+		}
+		return order;
 	}
 
 	// Delete will only delete tickets from order,

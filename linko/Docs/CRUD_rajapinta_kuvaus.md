@@ -261,6 +261,81 @@ List tickets by eventID.
 
 </details>
 
+## GET event id tickets
+
+List tickets by eventID. 
+
+**URL** : `/api/events/:id/tickets`
+
+**Method** : GET 
+
+**Auth required** : *not available*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content for a successful request of events tickets. 
+> 
+> ```JSON
+> [
+>   {
+>    "ticketID": 9,
+>    "ticketType": {
+>        "ticketTypeID": 4,
+>        "ticketType": "Opiskelija"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 20.0,
+>    "description": ""
+>   },
+>   {
+>    "ticketID": 10,
+>    "ticketType": {
+>        "ticketTypeID": 5,
+>        "ticketType": "Aikuinen"
+>    },
+>    "event": {
+>        "eventID": 5,
+>        "event": "Hippafesti",
+>        "eventPlace": "Hippakenttä",
+>        "capacity": 1000,
+>        "description": "Kuvaus tapahtumasta tähän.",
+>        "datetime": "2021-03-08T17:09:43.957227"
+>    },
+>    "price": 25.0,
+>    "description": ""
+>   },
+> ]
+> ```
+
+#### Error
+
+> **Condition** : Requested `id` is not found from database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "event":"NOT FOUND"
+> }
+> ```
+
+
+</details>
+
 
 ## POST event
 
@@ -425,12 +500,12 @@ Each endpoint is used to view orders or to add/update/delete them.
 
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
-| `GET` | [/api/orders](#GET-orders) | -- | Lists ALL orders in database |
-| `GET` | [/api/orders/:id](#GET-order-id) | -- | Displays information of order with given `:id` |
-| `POST` | [/api/orders](#POST-order) | -- | Adds new order to database |
-| `POST` | [/api/orders/:id](#POST-order-id) | -- | Add a ticket to the order with `:id` |
-| `PUT` | [/api/orders/:id](#PUT-order-id) | -- | Updates the order with given `:id` |
-| `DELETE` | [/api/orders/:id](#DELETE-order-id) | -- | Deleted the order with given `:id` |
+| `GET` | [/api/orders](#GET-orders) | User | Lists ALL orders in database |
+| `GET` | [/api/orders/:id](#GET-order-id) | User | Displays information of order with given `:id` |
+| `POST` | [/api/orders](#POST-order) | User | Adds new order to database |
+| `POST` | [/api/orders/:id](#POST-order-id) | User | Add a ticket to the order with `:id` |
+| `PUT` | [/api/orders/:id](#PUT-order-id) | User | Updates the order with given `:id` |
+| `DELETE` | [/api/orders/:id](#DELETE-order-id) | User | Deleted the order with given `:id` |
 
 
 
@@ -932,6 +1007,177 @@ This endpoint allows deleting of a specific ticket from database.
 
 ## TicketTypes-endpoint
 
+Each endpoint is used to view tickettypes or to add/delete them.
+
+| Method | Endpoint | Access | Description|
+|----|----|----|----|
+| `GET` | [/api/tickettypes](#GET-tickettypes) | User | Lists ALL events in database |
+
+Displays information of tickets for an event | 
+| `POST` | [/api/tickettypes](#POST-tickettypes) | Admin | Adds new event to database |
+
+| `DELETE` | [/api/tickettypes/:id](#DELETE-tickettype-id) | Admin | Deleted the tickettype with given `:id` |
+
+
+
+## GET tickettypes
+
+Lists all tickettypes
+
+**URL** : `/api/tickettypes`
+
+**Method** : GET 
+
+**Auth required** : *USER*
+
+<details>
+
+
+#### Success
+
+> **Code** : `200 OK`
+> 
+> **Content** : An example of possible content for a successful request of tickettypes. 
+> 
+> ```JSON
+> {
+>     "ticketTypeID":"id",
+>     "ticketType": "tickettype",
+> }
+> ```
+
+#### Error
+
+> **Condition** : Requested `id` is not found from database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "tickettype":"NOT FOUND"
+> }
+> ```
+
+
+</details>
+
+
+## POST tickettype
+
+Allow creation of new events to database. 
+
+**URL** : `/api/tickettypes`
+
+**Method** : `POST`
+ 
+**Auth required** : *ADMIN*
+ 
+**Data constrains**
+ 
+Following JSON-body is required.
+
+```JSON
+> {
+>     "ticketTypeID":"id",
+>     "ticketType": "tickettype",
+> }
+```
+
+<details>
+
+
+#### Success
+
+> **Condition** : If all information given was valid. 
+> 
+> **Code** : `201 CREATED`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "ticketTypeID":"id",
+>     "ticketType": "tickettype",
+> }
+> ```
+ 
+#### Error
+ 
+> **Condition** : Some of the information given wasn't tested valid. 
+> 
+> **Code** : `400 BAD REQUEST`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "event":"This field has to be atleast 10 charactes long",
+>     "capacity": "This field cannot be null"
+> }
+> ```
+
+</details>
+
+
+<details>
+
+#### Success
+
+> **Condition** : Tickettype with the `id` exists in the database. 
+> 
+> **Code** : `200 OK`
+> 
+> **Content example**
+> 
+> ```JSON
+> {
+>     "ticketTypeID":"1259",
+>     "ticketType": "Normaali",
+> }
+> ```
+
+#### Error
+
+> **Condition** : Tickettype with the `id` didn't exist in the database. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content** : `{}`
+
+</details>
+
+## DELETE tickettype id
+
+This endpoint allows deleting of a specific tickettype from database. 
+
+**URL** : `/api/tickettypes/:id`
+
+**Method** : `DELETE`
+ 
+**Auth required** : *ADMIN*
+ 
+<details>
+
+
+#### Success
+
+> **Condition** : Tickettype with the `id` was found from database. 
+> 
+> **Code** : `204 NO CONTENT`
+> 
+> **Content** : `{}`
+
+#### Error
+
+> **Condition** : Tickettype with the `id` wasn't found. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content** : `{}`
+
+</details>
 
 ## SoldTickets-endpoint
 

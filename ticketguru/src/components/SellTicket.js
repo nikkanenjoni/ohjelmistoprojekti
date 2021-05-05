@@ -1,36 +1,42 @@
 import React from "react";
 import { DatabaseAccessApi } from "../classes/DatabaseAccessApi.js";
-import MakeOrder from "./MakeOrder.js"
+import MakeOrder from "./MakeOrder.js";
+import ListEvents from "./ListEvents";
 
 export default function SellTicket(props) {
 
+        const [eventId, setId] = React.useState("");
+
         // tapahtumamuuttuja tässä komponentissa 
         const [tapahtuma, setEvent] = React.useState({
-
             eventID: 0,
             event: "",
             eventPlace: "",
+            soldTickets: 0,
             capacity: 0,
             description: "",
-            dateTime: "",
-        });
-
-        const [ticket, setTicket] = React.useState({
+            datetime: "",
             ticketID: 0,
+            ticketTypeID: 0,
             ticketType: "",
-            price: 0.0, 
-      });
+            tickets: [],
+            price: 0.0,
+            descriptionT: "",
+    });
 
-        const [id, setId] = React.useState('');
 
         const updateId = (event) => {
           setId(event.target.value);
       }
 
+      const insertEventId = (newId) => {
+        setId(newId);
+      }
+
         // tapahtumamuuttuja, joka näyttää tapahtuman
         const [displayEvent, setDisplayEvent] = React.useState(false);
 
-           // errors
+           // messages
         const [message, setMessage] = React.useState('');
 
         // styles (näitä luokkia voit käyttää ja muokata returnin sisällä)
@@ -55,19 +61,20 @@ export default function SellTicket(props) {
 //Etsitään event
 const checkEvent = async () => {
     try {
-        const data = await DatabaseAccessApi.getEventsByEventId(id);
-        const ticketdata = await DatabaseAccessApi.getEventTicketsByEventId(id);
+        const data = await DatabaseAccessApi.getEventsByEventId(eventId);
         setEvent(data);
-        setTicket(ticketdata);
+        //setTicket(data);
         setDisplayEvent(true);
-        setMessage('Event löytyy, myy lippuja');
+        setMessage('Lippuja löytyy, myy lippuja luomalla tyhjä tilaus');
         
     } catch (error) {
         console.log(error);
         setMessage('Virhe');
     }
   
-    if(tapahtuma.length===0){
+// jos tapahtumaa ei anneta, ei näytetä Eventiä, ja annetaan viesti
+    if(eventId<=0){
+        setDisplayEvent(false);
         setMessage('Tapahtumaa ei annettu');
   }
     
@@ -101,24 +108,27 @@ const checkEvent = async () => {
     
     return (
         <div>
-              <h4>Myy lippuja</h4>
+              <h3>MYY LIPPUJA</h3>
+              <ListEvents updateId={insertEventId} />
               <form>
                 <label>
                   Tapahtuman ID:<br></br>
-                  <input type="text" onChange={updateId} name="id" />
+                  <input type="text" value={eventId} onChange={updateId} name="id" />
                 </label>
               </form>
               <p><button style={buttonStyle} onClick={checkEvent} >Hae</button><br></br>
               </p>
+              <p>{message}</p>
               {displayEvent && <div>
+                <h4>TAPAHTUMAN TIEDOT</h4>
                 Tapahtuma:  {tapahtuma.event}<br />
-                Aika:       {tapahtuma.dateTime}<br />
-                Lipputyyppi:{ticket.ticketType}<br />
-                Hinta:      {ticket.price}<br />
-               <p>{message}</p>
-               <MakeOrder tapahtumat={ tapahtuma } />
-               <MakeOrder ticket={ ticket } />
+                Aika:       {tapahtuma.datetime}<br />
+                Paikka:{tapahtuma.eventPlace}<br />
+                Lippuja jäljellä:  {tapahtuma.capacity - tapahtuma.soldTickets}<br />
+                LippuID:{tapahtuma.ticketID}<br />
+                Lipputyyppi:{tapahtuma.ticketType}<br />
             </div>}<br></br>
+            <MakeOrder tapahtumat={ tapahtuma } />
         </div>
     )
 }
