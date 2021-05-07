@@ -110,10 +110,11 @@ function MakeOrder(props) {
         console.log("Loppuunmyyty!");
       }
     } catch {
-      if (data != null) {
-        setOrderData(data);
-        setDisplayOrder(true);
-      }
+      return;
+    }
+    if (data != null) {
+      setOrderData(data);
+      setDisplayOrder(true);
     }
   }
 

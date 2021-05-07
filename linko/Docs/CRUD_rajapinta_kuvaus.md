@@ -35,7 +35,7 @@ Lists all events
 
 **Method** : `GET`
 
-**Auth required** : *USER*
+**Auth required** : *User*
 
 <details>
 
@@ -122,7 +122,7 @@ Views information of a spesific event.
 
 **Method** : GET 
 
-**Auth required** : *USER*
+**Auth required** : *User*
 
 <details>
 
@@ -345,7 +345,7 @@ Allow creation of new events to database.
 
 **Method** : `POST`
  
-**Auth required** : *ADMIN*
+**Auth required** : *Admin*
  
 **Data constrains**
  
@@ -412,7 +412,7 @@ This endpoint allows updating of a specific event.
 
 **Method** : `PUT`
 
-**Auth required** : *ADMIN*
+**Auth required** : *Admin*
 
 **Data constrains**
  
@@ -471,7 +471,7 @@ This endpoint allows deleting of a specific event from database.
 
 **Method** : `DELETE`
  
-**Auth required** : *ADMIN*
+**Auth required** : *Admin*
  
 <details>
 
@@ -517,7 +517,7 @@ Lists all orders
 
 **Method** : `GET`
 
-**Auth required** : *not available*
+**Auth required** : *User*
 
 <details>
 
@@ -546,7 +546,7 @@ Views information of a spesific order.
 
 **Method** : GET 
 
-**Auth required** : *not available*
+**Auth required** : *User*
 
 <details>
 
@@ -757,7 +757,7 @@ This endpoint allows updating of a specific order.
 
 **Method** : `PUT`
 
-**Auth required** : *not available* 
+**Auth required** : *User* 
 
 **Data constrains**
  
@@ -804,7 +804,7 @@ This endpoint allows deleting of a ticket from an order.
 
 **Method** : `DELETE`
  
-**Auth required** : *not available*
+**Auth required** : *User*
  
 <details>
 
@@ -819,9 +819,9 @@ Each endpoint is used to view tickets or to add/update/delete them.
 
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
-| `GET` | [/api/tickets](#GET-ticket) | -- | Lists ALL tickets in database |
-| `POST` | [/api/tickets](#POST-ticket) | -- | Adds new ticket to database |
-| `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | -- | Deleted the ticket with given `:id` |
+| `GET` | [/api/tickets](#GET-ticket) | User | Lists ALL tickets in database |
+| `POST` | [/api/tickets](#POST-ticket) | Admin | Adds new ticket to database |
+| `DELETE` | [/api/tickets/:id](#DELETE-ticket-id) | Admin | Deleted the ticket with given `:id` |
 
 
 
@@ -833,7 +833,7 @@ Lists all tickets
 
 **Method** : `GET`
 
-**Auth required** : *not available*
+**Auth required** : *User*
 
 <details>
 
@@ -910,7 +910,7 @@ Allow creation of new ticket to database.
 
 **Method** : `POST`
  
-**Auth required** : *not available*
+**Auth required** : *Admin*
  
 **Data constrains**
  
@@ -981,7 +981,7 @@ This endpoint allows deleting of a specific ticket from database.
 
 **Method** : `DELETE`
  
-**Auth required** : *not available*
+**Auth required** : *Admin*
  
 <details>
 
@@ -1012,13 +1012,8 @@ Each endpoint is used to view tickettypes or to add/delete them.
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
 | `GET` | [/api/tickettypes](#GET-tickettypes) | User | Lists ALL events in database |
-
-Displays information of tickets for an event | 
 | `POST` | [/api/tickettypes](#POST-tickettypes) | Admin | Adds new event to database |
-
 | `DELETE` | [/api/tickettypes/:id](#DELETE-tickettype-id) | Admin | Deleted the tickettype with given `:id` |
-
-
 
 ## GET tickettypes
 
@@ -1028,7 +1023,7 @@ Lists all tickettypes
 
 **Method** : GET 
 
-**Auth required** : *USER*
+**Auth required** : *User*
 
 <details>
 
@@ -1072,7 +1067,7 @@ Allow creation of new events to database.
 
 **Method** : `POST`
  
-**Auth required** : *ADMIN*
+**Auth required** : *Admin*
  
 **Data constrains**
  
@@ -1156,7 +1151,7 @@ This endpoint allows deleting of a specific tickettype from database.
 
 **Method** : `DELETE`
  
-**Auth required** : *ADMIN*
+**Auth required** : *Admin*
  
 <details>
 
@@ -1185,8 +1180,8 @@ Each endpoint is used to view ticket or mark it used.
 
 | Method | Endpoint | Access | Description|
 |----|----|----|----|
-| `GET` | [/api/soldtickets?code=:code](#GET-soldticket) | USER | Displays ticket information.  |
-| `PATCH` | [/api/soldtickets/:id](#PATCH-soldticket) | USER | Marks ticket with `:id` as used.  |
+| `GET` | [/api/soldtickets?code=:code](#GET-soldticket) | User | Displays ticket information.  |
+| `PATCH` | [/api/soldtickets/:id](#PATCH-soldticket) | User | Marks ticket with `:id` as used.  |
 
 
 
@@ -1198,7 +1193,7 @@ Displays ticket
 
 **Method** : `GET`
 
-**Auth required** : *USER*
+**Auth required** : *User*
 
 <details>
 
@@ -1238,7 +1233,7 @@ Mark ticket used.
 
 **Method** : `PATCH`
  
-**Auth required** : *USER*
+**Auth required** : *User*
  
 **Data constrains**
  
