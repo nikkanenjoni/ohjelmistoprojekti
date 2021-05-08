@@ -41,20 +41,52 @@ export default function SellTicket(props) {
 
         // styles (näitä luokkia voit käyttää ja muokata returnin sisällä)
         const divStyle = {
-            margin: '40px',
-            border: '5px solid grey',
-            padding: 5
+            margin: '0px',
+            padding: 0,
+            textAlign: 'center',
           };
-          const pStyle = {
+
+          const lippuStyle = {
+            margin: '0px',
+            padding: 0,
+            textAlign: 'center',
+          };
+          
+          const Header = {
+            fontSize: '30px',
+            textAlign: 'center',
+            color: 'white',
+            marginTop: 0,
+            border: 5
+          };
+
+          const Header2 = {
             fontSize: '20px',
             textAlign: 'center',
+            color: 'white',
+            marginTop: 30,
+            border: 5
+          };
+
+          const table = {
+            fontSize: '15px',
+            textAlign: 'center',
+            color: 'white',
+            margin: 'auto',
+            border: 5
+          };
+
+          const pStyle = {
+            fontSize: '15px',
+            textAlign: 'center',
+            color: 'white',
             border: 5
           };
           const buttonStyle = {
               color: 'white',
               marginTop: 5,
               padding: 10,
-              backgroundColor: 'Grey',
+              backgroundColor: 'green',
               cursor: 'pointer',
           };
 
@@ -107,28 +139,40 @@ const checkEvent = async () => {
 
     
     return (
+      <body style={divStyle}>
         <div>
-              <h3>MYY LIPPUJA</h3>
+              <p style={Header}>Valitse tapahtuma ja hae lipputyypit</p>
               <ListEvents updateId={insertEventId} />
-              <form>
+        </div>
+              <form style={Header2}>
                 <label>
                   Tapahtuman ID:<br></br>
                   <input type="text" value={eventId} onChange={updateId} name="id" />
                 </label>
               </form>
-              <p><button style={buttonStyle} onClick={checkEvent} >Hae</button><br></br>
+              <p><button style={buttonStyle} onClick={checkEvent} >TARKASTA LIPPUTYYPIT</button><br></br>
               </p>
-              <p>{message}</p>
-              {displayEvent && <div>
-                <h4>TAPAHTUMAN TIEDOT</h4>
-                Tapahtuma:  {tapahtuma.event}<br />
-                Aika:       {tapahtuma.datetime}<br />
-                Paikka:{tapahtuma.eventPlace}<br />
-                Lippuja jäljellä:  {tapahtuma.capacity - tapahtuma.soldTickets}<br />
-                LippuID:{tapahtuma.ticketID}<br />
-                Lipputyyppi:{tapahtuma.ticketType}<br />
+              <div>
+              <p style={pStyle}>{message}</p>
+              </div>
+              {displayEvent && <div style={pStyle}>
+                <table style={table}>
+                  <h4>TAPAHTUMAN TIEDOT</h4>
+                    <tr>
+                     <td><b>Tapahtuma:</b> {tapahtuma.event}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Aika:</b> {tapahtuma.datetime}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Paikka:</b> {tapahtuma.eventPlace}</td>
+                    </tr>
+                    <tr>
+                      <td><b>Lippuja jäljellä:</b> {tapahtuma.capacity - tapahtuma.soldTickets}</td>
+                    </tr>
+                </table>
             </div>}<br></br>
             <MakeOrder tapahtumat={ tapahtuma } />
-        </div>
+      </body>
     )
 }

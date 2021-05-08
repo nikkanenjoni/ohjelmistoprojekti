@@ -30,6 +30,12 @@ function MakeOrder(props) {
     ticketPrice: 0.0,
   });
 
+  const pStyle = {
+    color: 'white',
+    fontSize: '15px',
+    textAlign: 'center',
+    border: 5
+  };
 
   const buttonStyle = {
     color: 'white',
@@ -37,6 +43,14 @@ function MakeOrder(props) {
     padding: 10,
     backgroundColor: 'Green',
     cursor: 'pointer',
+  };
+
+  const Header = {
+    fontSize: '20px',
+    color: 'white',
+    textAlign: 'center',
+    border: '3px solid black',
+    border: 5
   };
 
   const newOrder = async () => {
@@ -121,9 +135,9 @@ function MakeOrder(props) {
   return (
     <div>
 
-      <div>
+      <div style={Header}>
         <p>{message1}</p>
-        <p>Valitse lippu: </p>
+        <p style={pStyle}>Valitse lippu: </p>
         {props.tapahtumat.tickets.map(ticket => (
           <div>
             <button style={buttonStyle} onClick={() => addTicketToOrder(ticket)}>{ticket.ticketType.ticketType}</button>
@@ -136,10 +150,10 @@ function MakeOrder(props) {
           </label><br></br>
 */}
         <br></br>
-        <p>Valitut liput: </p>
+        <p style={pStyle}>Ostoskori: </p>
         {tickets.map(ticket => (
           <div>
-            {ticket.ticketType.ticketType} || {ticket.price} eur
+            {ticket.ticketType.ticketType} - {ticket.price} eur
           </div>
         ))}
 
@@ -147,8 +161,8 @@ function MakeOrder(props) {
 
       </div>
       <br></br>
-      {displayOrder && <div>
-        <h4>TAPAHTUMAN TIEDOT</h4>
+      {displayOrder && <div style={pStyle}>
+        <p>Tilausvahvistus</p>
                 Tilausnnumero:  {orderData.orderID}<br />
         {orderData.tickets.map(ticket => (
           <div>
