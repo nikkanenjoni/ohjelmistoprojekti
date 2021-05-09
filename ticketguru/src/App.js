@@ -4,6 +4,7 @@ import SellTicket from './components/SellTicket';
 import MakeOrder from './components/MakeOrder';
 import TestComponent from "./components/TestComponent.js"
 import { DatabaseAccessApi } from "./classes/DatabaseAccessApi.js";
+import gradient from './gradient.jpeg'
 
 export default function App(props) {
 
@@ -87,50 +88,76 @@ function pressButton(){
     }*/
 
     // styles
-    const divStyle = {
-      margin: '40px',
-      border: '5px solid grey',
-      padding: 5
+    const bodyStyle = {
+      margin: '0px',
+      border: '3px solid black',
+      backgroundImage:`url(${gradient})`
     };
+
+    const divStyle = {
+      margin: '0px',
+      textAlign: 'center'
+    };
+
     const pStyle = {
-      fontSize: '20px',
+      fontSize: '30px',
       textAlign: 'center',
       border: 5
     };
-    const buttonStyle = {
-        color: 'white',
-        marginTop: 5,
-        padding: 10,
-        backgroundColor: 'Grey',
-        cursor: 'pointer',
+
+    const Header = {
+      fontSize: '50px',
+      color: 'white',
+      textAlign: 'center',
+      border: 5
     };
-    
-    
 
+    const Header2 = {
+      fontSize: '20px',
+      textAlign: 'center',
+      color: 'white',
+      border: 5
+    };
+
+    const Header3 = {
+      fontSize: '20px',
+      textAlign: 'center',
+      color: 'white',
+      border: 5
+    };
+
+    const buttonStyle = {
+      color: 'white',
+      marginTop: 5,
+      padding: 10,
+      backgroundColor: 'green',
+      cursor: 'pointer',
+  };
+    
     return (
-
+           <body style={bodyStyle}>
             <div style={divStyle}>
-            <p style={pStyle}>Welcome to TicketGuru!</p>
-            <h4>Hae ja Tarkista lippu</h4>
-            <form>
-                <label>
-                 Lippukoodi:<br></br>
-                <input type="text" onChange={updateCode} name="code" />
+              <p style={Header}>Welcome to TicketGuru!</p>
+              <form>
+                <label style={Header3}>
+                  Syötä lippukoodi:<br></br>
+                  <input type="text" onChange={updateCode} name="code" />
                 </label>
-            </form>
-            <p><button style={buttonStyle} onClick={pressButton} >TARKISTA</button><br></br> 
+              </form>
+            <p><button style={buttonStyle} onClick={pressButton} >TARKISTA LIPPUKOODI</button><br></br> 
             </p>
             {displayTicket && <div>
-                Tapahtuma:  {ticket.eventName}<br />
-                Lipun koodi:  {ticket.code}<br />
-                Käytetty:  {ticket.used ? "kyllä" : "ei"}<br />
-                Lipun tyyppi:  {ticket.ticketType}<br />
+                <b>Tapahtuma:</b>  {ticket.eventName}<br />
+                <b>Lipun koodi:</b>  {ticket.code}<br />
+                <b>Käytetty:</b>  {ticket.used ? "kyllä" : "ei"}<br />
+                <b>Lipun tyyppi:</b>  {ticket.ticketType}<br />
                 <p>{message}</p>
             </div>}<br></br><br></br><br></br>
             <SellTicket/>
 
               
-        </div>
+          </div>
+        </body>
     )
     
 }

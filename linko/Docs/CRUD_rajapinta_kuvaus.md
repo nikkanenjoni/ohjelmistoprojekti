@@ -530,7 +530,7 @@ Lists all orders
 > 
 > ```JSON
 > {
->     "datetime":"2021-03-07T13:27:44.
+>     "datetime":"2021-03-07T13:27:44."
 > }
 > ```
 > ```
@@ -765,7 +765,7 @@ Following JSON-body is required.
 
  ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44.
+>     "datetime":"2021-02-28T13:27:44."
 > }
 ```
 
@@ -1061,7 +1061,7 @@ Lists all tickettypes
 
 ## POST tickettype
 
-Allow creation of new events to database. 
+Allow creation of new tickettypes to database. 
 
 **URL** : `/api/tickettypes`
 
@@ -1074,10 +1074,10 @@ Allow creation of new events to database.
 Following JSON-body is required.
 
 ```JSON
-> {
->     "ticketTypeID":"id",
->     "ticketType": "tickettype",
-> }
+ {
+     "ticketTypeID":"id",
+     "ticketType": "tickettype",
+ }
 ```
 
 <details>
@@ -1085,18 +1085,18 @@ Following JSON-body is required.
 
 #### Success
 
-> **Condition** : If all information given was valid. 
-> 
-> **Code** : `201 CREATED`
-> 
-> **Content example**
-> 
-> ```JSON
-> {
->     "ticketTypeID":"id",
->     "ticketType": "tickettype",
-> }
-> ```
+ **Condition** : If all information given was valid. 
+ 
+ **Code** : `201 CREATED`
+ 
+ **Content example**
+ 
+ ```JSON
+ {
+     "ticketTypeID":"id",
+     "ticketType": "tickettype",
+ }
+ ```
  
 #### Error
  
