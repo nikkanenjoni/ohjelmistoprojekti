@@ -765,8 +765,8 @@ Following JSON-body is required.
 
  ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44."
-> }
+    "datetime":"2021-02-28T13:27:44."
+ }
 ```
 
 <details>
@@ -808,7 +808,19 @@ This endpoint allows deleting of a ticket from an order.
  
 <details>
 
--- ERROR ja SUCCESS-viestit tänne
+> **Condition** : Ticket with the `id` was found from order with the `id` in database. 
+> 
+> **Code** : `204 NO CONTENT`
+> 
+> **Content** : `{}`
+
+#### Error
+
+> **Condition** : Ticket with the `id` wasn't found from the order. 
+> 
+> **Code** : `404 NOT FOUND`
+> 
+> **Content** : `{}`
 
 </details>
 
