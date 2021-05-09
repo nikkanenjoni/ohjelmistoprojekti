@@ -1116,32 +1116,6 @@ Following JSON-body is required.
 </details>
 
 
-<details>
-
-#### Success
-
-> **Condition** : Tickettype with the `id` exists in the database. 
-> 
-> **Code** : `200 OK`
-> 
-> **Content example**
-> 
-> ```JSON
-> {
->     "ticketTypeID":"1259",
->     "ticketType": "Normaali",
-> }
-> ```
-
-#### Error
-
-> **Condition** : Tickettype with the `id` didn't exist in the database. 
-> 
-> **Code** : `404 NOT FOUND`
-> 
-> **Content** : `{}`
-
-</details>
 
 ## DELETE tickettype id
 
