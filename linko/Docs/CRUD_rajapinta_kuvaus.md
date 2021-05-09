@@ -670,7 +670,7 @@ No JSON-body is required.
 > 
 > ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44.
+>     "datetime":"2021-02-28T13:27:44."
 > }
 > ```
 
@@ -730,7 +730,7 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44.
+>     "datetime":"2021-02-28T13:27:44."
 > }
 > ```
 
@@ -743,7 +743,7 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44.
+>     "datetime":"2021-02-28T13:27:44."
 > }
 > ```
 
@@ -764,7 +764,7 @@ This endpoint allows updating of a specific order.
 Following JSON-body is required.
 
  ```JSON
-> {
+ {
     "datetime":"2021-02-28T13:27:44."
  }
 ```
@@ -781,7 +781,7 @@ Following JSON-body is required.
 > 
 > ```JSON
 > {
->     "datetime":"2021-02-28T13:27:44.
+>     "datetime":"2021-02-28T13:27:44."
 > }
 > ```
 
