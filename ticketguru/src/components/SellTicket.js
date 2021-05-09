@@ -97,7 +97,7 @@ const checkEvent = async () => {
         setEvent(data);
         //setTicket(data);
         setDisplayEvent(true);
-        setMessage('Lippuja löytyy, myy lippuja luomalla tyhjä tilaus');
+        //setMessage('Lippuja löytyy, myy lippuja luomalla tyhjä tilaus');
         
     } catch (error) {
         console.log(error);
