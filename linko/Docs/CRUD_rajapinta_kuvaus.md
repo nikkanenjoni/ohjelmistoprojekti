@@ -1,7 +1,6 @@
 # RestAPI 
 
-Currently only http://localhost:8080/ works as test base for the Rest-api. 
-All endpoints are open at the moment. Authentication is added later. 
+
 
 ## Contents
 
